@@ -34,6 +34,7 @@ gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 
 gem 'devise'
+gem 'epi_cas', gitlab: 'gems/epi_cas' #EpiCas gem
 gem 'devise_ldap_authenticatable'
 gem 'devise_cas_authenticatable'
 gem 'cancancan'
