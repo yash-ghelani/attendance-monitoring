@@ -4,7 +4,6 @@
 
 # Your basic boi ignores for Rails
 .bundle
-db/*.sqlite3
 config/database.yml
 config/settings.yml
 config/setup_load_paths.rb
@@ -35,8 +34,8 @@ coverage/index.html
 /.bundle
 
 # Ignore the default SQLite database.
-#/db/*.sqlite3
-#/db/*.sqlite3-journal
+/db/*.sqlite3
+/db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
