@@ -30,7 +30,7 @@
           .container
             .navbar-header
               = link_to :root, class: 'navbar-brand hidden-sm' do
-                Team11
+                %img{:src => "/assets/images/logo.svg",:height => 28}
             %button.navbar-toggler{ aria: { controls: "navbar-content", expanded: false, label: "Toggle navigation" }, data: { target: "#navbar-content", toggle: "collapse" }, type: "button" }
               %span.navbar-toggler-icon
 
@@ -39,9 +39,6 @@
                 = navbar_link_to :root, title: "Go to the home page", identifier: :home do
                   = icon 'fas', 'home'
                   Home
-                = navbar_link_to '#', title: "Go to an unavailable page", class: 'disabled', identifier: :unavailable_page do
-                  = icon 'fas', 'ban'
-                  Unavailable Page
               - if user_signed_in?
                 %ul.nav.navbar-nav.ml-auto
                   %li.nav-item.dropdown
