@@ -1,71 +1,15 @@
 - content_for :title, "Home"
 
-.jumbotron.mb-3
-  %h1.display-5 Welcome to COM attendance
-  %p.lead This is the homepage
-  //Display user information (dev testing only)
-  - if user_signed_in?
-    %h3.display-6 Current User info
-    %p 
-      = current_user.inspect
-    %h3.display-6 Permissions
-    %p 
-      Admin? :
-      - if(current_user.admin)
-        Yes
-      -else
-        No
-    %p
-      Lecturer? :
-      - if(current_user.admin)
-        Yes
-      -else
-        No
-    %p
-      Student? :
-      - if(!current_user.admin && !current_user.lecturer)
-        Yes
-      -else
-        No
+.code-div
+    .row.justify-content-center
+        .col-sm-6.col-lg-4
+            .card.card-light
+                = simple_form_for :form_examples do |f|
+                    .card-header
+                        Enter Code
+                    .card-body
+                        = f.input :code, autofocus: true, required: true
+                    .card-footer
+                        .row.justify-content-center
+                            = submit_button 'Sign In'
 
-
-.card.mb-3
-  .card-header
-    Flash Examples
-  .card-body
-    %button#show-flash.btn.btn-outline-primary{ type: :button }
-      = icon 'fas', 'exclamation-circle', 'Show flash message'
-
-.card.mb-3
-  .card-header
-    Form Examples
-  .card-body
-    - collection = %w(These Are Some Options)
-
-    = simple_form_for :form_examples do |f|
-      = f.input :string, as: :string
-
-      = f.input :text, as: :text
-
-      = f.input :select2, as: :select, collection: collection, input_html: { class: 'select2' }, include_blank: false
-      = f.input :select, as: :select, collection: collection
-
-      = f.input :radio_buttons, as: :radio_buttons, collection: collection
-      = f.input :inline_radio_buttons, as: :radio_buttons, collection: collection, wrapper: :vertical_collection_inline
-
-      = f.input :check_boxes, as: :check_boxes, collection: collection
-      = f.input :inline_check_boxes, as: :check_boxes, collection: collection, wrapper: :vertical_collection_inline
-
-      = f.input :boolean, as: :boolean
-
-      = f.input :input_group, wrapper: :input_group do
-        .input-group-prepend
-          %span.input-group-text Prepend
-        = f.input_field :input_group_field, class: "form-control"
-        .input-group-append
-          %span.input-group-text Append
-
-:coffee
-  $ ->
-    $('#show-flash').on 'click', ->
-      $.flashAlert('Hello world!', 'alert-success')
