@@ -8,14 +8,14 @@ class Ability
     user ||= User.new
 
     #Everyone can read sessions
-    can :read, Sessions
+    can :read, TimetabledSession
 
-    #Admin abilities (need to create Sessions class)
+    #Admin abilities (manage everything)
     if user.admin?
       can :manage, :all
-    #Lecturer Abilities
+    #Lecturer Abilities (only manage sessions)
     elsif(user.lecturer?)
-        can :manage, Sessions
+        can :manage, TimetabledSession
     end
 
 
