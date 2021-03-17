@@ -1,0 +1,17 @@
+-# frozen_string_literal: true
+= simple_form_for(@timetabled_session) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :session_code
+    = f.input :session_title
+    = f.input :session_desc
+    = f.input :department_code
+    = f.input :start_time
+    = f.input :end_time
+    = f.input :creator
+    = f.input :report_email
+
+  .form-actions
+    = f.button :submit

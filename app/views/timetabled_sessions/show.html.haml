@@ -1,0 +1,30 @@
+%p#notice= notice
+
+%p
+  %b Session code:
+  = @timetabled_session.session_code
+%p
+  %b Session title:
+  = @timetabled_session.session_title
+%p
+  %b Session desc:
+  = @timetabled_session.session_desc
+%p
+  %b Department code:
+  = @timetabled_session.department_code
+%p
+  %b Start time:
+  = @timetabled_session.start_time
+%p
+  %b End time:
+  = @timetabled_session.end_time
+%p
+  %b Creator:
+  = @timetabled_session.creator
+%p
+  %b Report email:
+  = @timetabled_session.report_email
+
+= link_to 'Edit', edit_timetabled_session_path(@timetabled_session)
+\|
+= link_to 'Back', timetabled_sessions_path
