@@ -28,6 +28,8 @@
 #
 class User < ApplicationRecord
   include EpiCas::DeviseHelper
+  has_many :session_attendances, foreign_key: :id
+  has_many :timetabled_sessions, through: :session_attendances
   
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   end

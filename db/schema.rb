@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_12_215452) do
+ActiveRecord::Schema.define(version: 2021_03_17_122317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,14 @@ ActiveRecord::Schema.define(version: 2021_03_12_215452) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
+  create_table "session_attendances", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "timetabled_session_id"
+    t.datetime "joined_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
@@ -37,6 +45,19 @@ ActiveRecord::Schema.define(version: 2021_03_12_215452) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
+  end
+
+  create_table "timetabled_sessions", force: :cascade do |t|
+    t.string "session_code"
+    t.string "session_title"
+    t.string "session_desc"
+    t.string "module_code"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer "creator"
+    t.string "report_email"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|

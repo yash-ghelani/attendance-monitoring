@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :timetabled_sessions
   mount EpiCas::Engine, at: "/"
   devise_for :users
   match "/403", to: "errors#error_403", via: :all
