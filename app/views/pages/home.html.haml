@@ -2,7 +2,13 @@
 
 .jumbotron.mb-3
   %h1.display-5 Welcome to COM attendance
+
   %p.lead This is the homepage
+
+  - if(current_user.lecturer || current_user.admin)
+    %a.btn.btn-primary{ :href => "/timetabled_sessions"}
+      Timetabled Sessions
+
   //Display user information (dev testing only)
   - if user_signed_in?
     %h3.display-6 Current User info
@@ -17,7 +23,7 @@
         No
     %p
       Lecturer? :
-      - if(current_user.admin)
+      - if(current_user.lecturer)
         Yes
       -else
         No

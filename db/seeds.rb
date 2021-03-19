@@ -5,6 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.where(email:
-'my.email.address@sheffield.ac.uk').first_or_create(password:
-'Password123', password_confirmation: 'Password123')
+superadmin = User.find_or_initialize_by(username: 'aca18mms', email: 'mmsarpatwar1@sheffield.ac.uk')
+superadmin.admin = true
+superadmin.save!

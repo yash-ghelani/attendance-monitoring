@@ -32,4 +32,6 @@
 
 %br
 
-= link_to 'New Timetabled session', new_timetabled_session_path
+//Only show this link to admins and lecturers
+- if can?(:edit, TimetabledSession)
+  = link_to 'New Timetabled session', new_timetabled_session_path
