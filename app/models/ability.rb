@@ -12,8 +12,8 @@ class Ability
 
     #Admin abilities (manage everything)
     if user.admin?
-      can :manage, AdminUserController
-      can :manage, :all
+      can :manage, AdminController
+      can :manage, :all #This means, admins will be able to access ALL student controller actions
     #Lecturer Abilities (only manage sessions)
     elsif(user.lecturer?)
       can :manage, LecturerController
