@@ -12,10 +12,15 @@ class Ability
 
     #Admin abilities (manage everything)
     if user.admin?
+      can :manage, AdminUserController
       can :manage, :all
     #Lecturer Abilities (only manage sessions)
     elsif(user.lecturer?)
-        can :manage, TimetabledSession
+      can :manage, LecturerController
+      can :manage, TimetabledSession
+    #Student abilities
+    else
+      can :manage, StudentController
     end
 
 

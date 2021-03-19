@@ -2,16 +2,12 @@
 #  for students
 
 class StudentController < ApplicationController
+  #Authorise without needing a model
+  authorize_resource :class => StudentController
 
   #Show the Dashboard
   def home
-    if(!current_user.admin && !current_user.lecturer)
-      #Render the student dashboard
-      render :dashboard
-    else
-      #If this user is not student go to root
-      redirect_to :root
-    end
+    render :dashboard
   end
 
 end
