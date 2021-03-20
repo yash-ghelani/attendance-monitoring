@@ -1,6 +1,7 @@
 class TimetabledSessionsController < ApplicationController
   before_action :set_timetabled_session, only: [:show, :edit, :update, :destroy]
-
+  #Authorise
+  authorize_resource
   # GET /timetabled_sessions
   def index
     @timetabled_sessions = TimetabledSession.all

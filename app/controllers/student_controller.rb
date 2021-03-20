@@ -1,5 +1,13 @@
-class StudentController < ApplicationController
+#  The student controller manages the actions
+#  for students
 
-    def code 
-    end
+class StudentController < ApplicationController
+  #Authorise without needing a model
+  authorize_resource :class => StudentController
+
+  #Show the Dashboard
+  def home
+    render :dashboard
+  end
+
 end

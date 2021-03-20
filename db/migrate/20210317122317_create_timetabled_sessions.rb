@@ -4,7 +4,7 @@ class CreateTimetabledSessions < ActiveRecord::Migration[6.0]
       t.string :session_code
       t.string :session_title
       t.string :session_desc
-      t.string :department_code
+      t.string :module_code
       t.datetime :start_time
       t.datetime :end_time
       t.integer :creator
