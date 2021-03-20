@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   get :ie_warning, to: 'errors#ie_warning'
   get :javascript_warning, to: 'errors#javascript_warning'
 
+  get "student", to: "student#code"
+  post "student", to: "student#success"
+
   root to: "dashboard#index"
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
 end
