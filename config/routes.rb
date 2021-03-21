@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   #Dashboard Routes
   get '/lecturer', to: 'lecturer#home'
   get '/admin', to: 'admin#home'
-  get '/student', to: 'student#home'
+  get '/student', to: 'student#code'
 
   root to: "home#index"
 
