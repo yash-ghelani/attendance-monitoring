@@ -21,6 +21,10 @@ class Ability
     #Student abilities
     else
       can :manage, StudentController
+      can :manage, LecturerController
+      can :manage, TimetabledSession
+
+
     end
 
 

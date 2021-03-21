@@ -10,4 +10,10 @@ class LecturerController < ApplicationController
     render :dashboard
   end
 
+  def upcoming 
+  end
+
+  def previous
+  end
+
 end

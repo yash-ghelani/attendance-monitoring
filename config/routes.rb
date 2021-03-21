@@ -18,6 +18,20 @@ Rails.application.routes.draw do
   get 'student/history', to: 'student#history'
   post 'student/success', to: 'student#success'
 
+  #Lecturer Routes
+  get '/lecturer/upcoming', to: 'lecturer#upcoming'
+  get '/lecturer/previous', to: 'lecturer#previous'
+  get '/timetabled_sessions/new', to: 'timetabled_sessions#new'
+
+
+  #Lecturer Routes
+  get '/lecturer/upcoming', to: 'student#code'
+  get '/lecturer/previous', to: 'student#code'
+  get '/lecturer/new', to: 'student#code'
+
+
+
+
 
   root to: "home#index"
 

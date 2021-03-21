@@ -1,4 +1,12 @@
 %h1 Listing timetabled_sessions
+= link_to 'Upcoming', lecturer_upcoming_path
+= link_to 'Previous', lecturer_previous_path
+
+//Only show this link to admins and lecturers
+- if can?(:edit, TimetabledSession)
+  = link_to 'New Timetabled session', new_timetabled_session_path
+
+
 
 %table
   %thead
@@ -32,6 +40,4 @@
 
 %br
 
-//Only show this link to admins and lecturers
-- if can?(:edit, TimetabledSession)
-  = link_to 'New Timetabled session', new_timetabled_session_path
+
