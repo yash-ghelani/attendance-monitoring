@@ -9,4 +9,9 @@ class StudentController < ApplicationController
   def code
   end
 
+  def history 
+    render :history
+  end
+
+
 end

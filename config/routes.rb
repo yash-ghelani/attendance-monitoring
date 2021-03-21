@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   get '/lecturer', to: 'lecturer#home'
   get '/admin', to: 'admin#home'
   get '/student', to: 'student#code'
+  get 'student/history', to: 'student#history'
+  get 'student/success', to: 'student#success'
+
 
   root to: "home#index"
 
