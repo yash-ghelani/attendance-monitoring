@@ -5,7 +5,7 @@ class LecturerController < ApplicationController
   #Authorise without needing a model
   authorize_resource :class => LecturerController
 
-  #Show the Dashboard
+  #Show the Dashboard for Lecturer
   def home
     render :dashboard
   end
