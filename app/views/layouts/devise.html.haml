@@ -1,3 +1,6 @@
+
+//This layout is used for views where the user is not logged in
+
 !!!
 %html
   %head
@@ -9,11 +12,6 @@
     = javascript_include_tag "application"
     = favicon_link_tag '/favicon.ico'
     = csrf_meta_tags
-    
-    / Bootstrap CSS
-    %link{:crossorigin => "anonymous", :href => "https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css", :integrity => "sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl", :rel => "stylesheet"}/
-    / JavaScript Bundle with Popper
-    %script{:crossorigin => "anonymous", :integrity => "sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0", :src => "https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"}
 
   %body{ class: environment_notice_body_class }
     = render 'layouts/environment_notice'
@@ -38,25 +36,6 @@
                 %img{:src => "/assets/images/logo.svg",:height => 28}
             %button.navbar-toggler{ aria: { controls: "navbar-content", expanded: false, label: "Toggle navigation" }, data: { target: "#navbar-content", toggle: "collapse" }, type: "button" }
               %span.navbar-toggler-icon
-
-            .collapse.navbar-collapse#navbar-content
-              %ul.nav.navbar-nav
-                = navbar_link_to :root, title: "Go to the home page", identifier: :home do
-                  = icon 'fas', 'home'
-                  Home
-                - if !current_user.admin && !current_user.lecturer
-                  = navbar_link_to student_history_path, title: "History", identifier: :history do
-                    = icon 'fas', 'history'
-                    History
-              - if user_signed_in?
-                %ul.nav.navbar-nav.ml-auto
-                  %li.nav-item.dropdown
-                    = link_to '#', aria: { haspopup: true, expanded: false }, data: { toggle: :dropdown }, id: 'navbar-user-link', class: 'nav-link dropdown-toggle', role: 'button' do
-                      = icon 'fas', 'user', current_user.email
-                      %b.caret
-                    .dropdown-menu{ aria: { labelledby: '#navbar-user-link' } }
-                      = link_to destroy_user_session_path, class: 'dropdown-item', method: :delete, title: "Log out of the system" do
-                        = icon 'fas', 'sign-out-alt', 'Log out'
 
       %main
         #main-container.container

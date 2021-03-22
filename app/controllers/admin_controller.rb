@@ -3,9 +3,9 @@
 
 class AdminController < LecturerController
   #Authorise without needing a model
-  authorize_resource :class => AdminController
+  authorize_resource :class => false
 
-  #TODO there is currently a bug where lecturers can access all admin methods
+  #Call the home method for lecturers
 	def home
 		super
 	end
