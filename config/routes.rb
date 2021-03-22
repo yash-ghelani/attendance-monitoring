@@ -16,6 +16,12 @@ Rails.application.routes.draw do
   get '/admin', to: 'admin#home'
   get '/student', to: 'student#home'
 
+
+  #Dev only routes TODO devOnly
+  get '/set-student', to: 'home#set_student'
+  get '/set-lecturer', to: 'home#set_lecturer'
+  get '/set-admin', to: 'home#set_admin'
+  #Index
   root to: "home#index"
 
 

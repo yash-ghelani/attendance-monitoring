@@ -30,7 +30,7 @@
           .container
             .navbar-header
               = link_to :root, class: 'navbar-brand hidden-sm' do
-                %img{:src => "/assets/images/logo.svg",:height => 28}
+                = image_tag "logo.svg", height: "28"
             %button.navbar-toggler{ aria: { controls: "navbar-content", expanded: false, label: "Toggle navigation" }, data: { target: "#navbar-content", toggle: "collapse" }, type: "button" }
               %span.navbar-toggler-icon
 
@@ -55,6 +55,14 @@
 
     %footer#footer
       .container
-        %p
-          &copy; #{Date.today.year}
-          = link_to 'epiGenesys', 'https://www.epigenesys.org.uk', target: '_blank', title: 'Go to the epiGenesys website'
+        .row.align-items-center.pb-4
+          .col-2
+            %p
+              &copy; #{Date.today.year}
+              = link_to 'epiGenesys', 'https://www.epigenesys.org.uk', target: '_blank', title: 'Go to the epiGenesys website'
+
+          .col-10
+            For testing only, quickly change role access
+            %a.btn.btn-outline-primary{href: "/set-student"} Student
+            %a.btn.btn-outline-success{href: "/set-lecturer"} Lecturer
+            %a.btn.btn-outline-danger{href: "/set-admin"} Admin
