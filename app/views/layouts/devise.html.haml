@@ -4,7 +4,7 @@
 !!!
 %html
   %head
-    %title Team11 - #{content_for(:title)}
+    %title #{content_for(:title)} - COM Attendance
     %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0" }
     %meta{ :'http-equiv' => 'X-UA-Compatible', content: 'IE=edge' }
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "content-type"}
@@ -33,7 +33,7 @@
           .container
             .navbar-header
               = link_to :root, class: 'navbar-brand hidden-sm' do
-                %img{:src => "/assets/images/logo.svg",:height => 28}
+                = image_tag "logo.svg", height: "28"
             %button.navbar-toggler{ aria: { controls: "navbar-content", expanded: false, label: "Toggle navigation" }, data: { target: "#navbar-content", toggle: "collapse" }, type: "button" }
               %span.navbar-toggler-icon
 
