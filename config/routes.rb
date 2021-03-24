@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :session_registered_lecturers
   resources :timetabled_sessions
   mount EpiCas::Engine, at: "/"
   devise_for :users

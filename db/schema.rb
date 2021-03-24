@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_17_122317) do
+ActiveRecord::Schema.define(version: 2021_03_24_093658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,13 @@ ActiveRecord::Schema.define(version: 2021_03_17_122317) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "session_registered_lecturers", force: :cascade do |t|
+    t.bigint "timetabled_session_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
@@ -50,7 +57,6 @@ ActiveRecord::Schema.define(version: 2021_03_17_122317) do
   create_table "timetabled_sessions", force: :cascade do |t|
     t.string "session_code"
     t.string "session_title"
-    t.string "session_desc"
     t.string "module_code"
     t.datetime "start_time"
     t.datetime "end_time"

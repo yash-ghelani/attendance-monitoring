@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Timetabled session:
+  = @session_registered_lecturer.timetabled_session_id
+%p
+  %b User:
+  = @session_registered_lecturer.user_id
+
+= link_to 'Edit', edit_session_registered_lecturer_path(@session_registered_lecturer)
+\|
+= link_to 'Back', session_registered_lecturers_path

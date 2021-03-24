@@ -8,7 +8,6 @@
 #  module_code   :string
 #  report_email  :string
 #  session_code  :string
-#  session_desc  :string
 #  session_title :string
 #  start_time    :datetime
 #  created_at    :datetime         not null
