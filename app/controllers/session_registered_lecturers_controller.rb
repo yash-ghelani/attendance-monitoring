@@ -1,6 +1,8 @@
 class SessionRegisteredLecturersController < ApplicationController
   before_action :set_session_registered_lecturer, only: [:show, :edit, :update, :destroy]
-
+  #Authorise
+  authorize_resource
+  
   # GET /session_registered_lecturers
   def index
     @session_registered_lecturers = SessionRegisteredLecturer.all

@@ -1,6 +1,8 @@
 class SessionAttendancesController < ApplicationController
   before_action :set_session_attendance, only: [:show, :edit, :update, :destroy]
-
+  #Authorise
+  authorize_resource
+  
   # GET /session_attendances
   def index
     @session_attendances = SessionAttendance.all
