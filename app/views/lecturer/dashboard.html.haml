@@ -8,7 +8,6 @@
 %table
     %thead
         %tr
-            %th ID
             %th Session Title
             %th Session Code
             %th
@@ -18,7 +17,6 @@
     %tbody
         - TimetabledSession.all.each do |timetabled_session|
             %tr
-                %td= timetabled_session.id
                 %td= timetabled_session.session_title
                 %td= timetabled_session.session_code
                 %td= link_to 'Show Code', timetabled_session 

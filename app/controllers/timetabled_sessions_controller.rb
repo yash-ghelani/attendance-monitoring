@@ -46,10 +46,6 @@ class TimetabledSessionsController < ApplicationController
     redirect_to lecturer_url, notice: 'Timetabled session was successfully destroyed.'
   end
 
-  def show_code
-    render :show_code
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_timetabled_session

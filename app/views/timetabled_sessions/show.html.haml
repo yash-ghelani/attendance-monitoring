@@ -1,13 +1,21 @@
-%p#notice= notice
-
-%p
-  %b Session title:
-  = @timetabled_session.session_title
+%h1
+  %b= @timetabled_session.session_title
 %p
   %b Module code:
   = @timetabled_session.module_code
 %p
-  %b Session code:
-  = @timetabled_session.session_code
+  %b Date:
+  = @timetabled_session.start_time.strftime("%d/%m/%Y")
+%p
+  %b Start Time:
+  = @timetabled_session.start_time.strftime("%R")
+%p
+  %b End Time:
+  = @timetabled_session.end_time.strftime('%R')
+%p
+  %center
+    %b Enter code: 
+    %br
+    %h1= @timetabled_session.session_code
 
-= link_to 'Back', lecturer_path
+= button_to 'Back', lecturer_url, :method => :get
