@@ -46,6 +46,10 @@ class TimetabledSessionsController < ApplicationController
     redirect_to timetabled_sessions_url, notice: 'Timetabled session was successfully destroyed.'
   end
 
+  def show_code
+    render :show_code
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_timetabled_session
@@ -54,6 +58,6 @@ class TimetabledSessionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def timetabled_session_params
-      params.require(:timetabled_session).permit(:session_code, :session_title, :session_desc, :department_code, :start_time, :end_time, :creator, :report_email)
+      params.require(:timetabled_session).permit(:session_code, :session_title, :module_code, :start_time, :end_time, :creator, :report_email)
     end
 end

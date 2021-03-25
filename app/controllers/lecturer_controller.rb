@@ -10,4 +10,8 @@ class LecturerController < ApplicationController
     render :dashboard
   end
 
+  def index
+    @timetabled_sessions = TimetabledSession.all
+  end
+
 end
