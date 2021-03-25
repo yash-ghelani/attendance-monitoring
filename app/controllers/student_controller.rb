@@ -6,8 +6,12 @@ class StudentController < ApplicationController
   authorize_resource :class => StudentController
 
   #Show the Dashboard
-  def home
-    render :dashboard
+  def code
   end
+
+  def history 
+    render :history
+  end
+
 
 end

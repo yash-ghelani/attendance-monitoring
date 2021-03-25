@@ -1,11 +1,11 @@
 // The dashboard for Students
 
-- content_for :title, "Home"
+- content_for :title, "Enter Code"
 .code-div
   .row.justify-content-center
     .col-sm-6.col-lg-4
       .card.card-light
-        = simple_form_for :form_examples do |f|
+        = simple_form_for :form_examples, url: student_success_path do |f|
           .card-header
             Enter Code
           .card-body
@@ -13,3 +13,4 @@
           .card-footer
             .row.justify-content-center
               = submit_button 'Sign In'
+               

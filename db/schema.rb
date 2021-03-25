@@ -57,7 +57,8 @@ ActiveRecord::Schema.define(version: 2021_03_24_093658) do
   create_table "timetabled_sessions", force: :cascade do |t|
     t.string "session_code"
     t.string "session_title"
-    t.string "module_code"
+    t.string "session_desc"
+    t.string "department_code"
     t.datetime "start_time"
     t.datetime "end_time"
     t.integer "creator"

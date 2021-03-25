@@ -2,16 +2,17 @@
 #
 # Table name: timetabled_sessions
 #
-#  id            :bigint           not null, primary key
-#  creator       :integer
-#  end_time      :datetime
-#  module_code   :string
-#  report_email  :string
-#  session_code  :string
-#  session_title :string
-#  start_time    :datetime
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id              :bigint           not null, primary key
+#  creator         :integer
+#  department_code :string
+#  end_time        :datetime
+#  report_email    :string
+#  session_code    :string
+#  session_desc    :string
+#  session_title   :string
+#  start_time      :datetime
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 FactoryBot.define do
   factory :timetabled_session do

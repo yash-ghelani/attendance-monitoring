@@ -15,6 +15,7 @@ coverage/assets
 coverage/index.html
 .sass-cache/
 
+vendor/cache/ruby/
 # Ignore those IDE files
 *.swp
 *.*~

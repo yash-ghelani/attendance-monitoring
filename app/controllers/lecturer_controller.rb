@@ -14,4 +14,10 @@ class LecturerController < ApplicationController
     @timetabled_sessions = TimetabledSession.all
   end
 
+  def upcoming 
+  end
+
+  def previous
+  end
+
 end

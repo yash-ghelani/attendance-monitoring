@@ -11,9 +11,9 @@ class HomeController < ApplicationController
     if(current_user.admin)
       redirect_to :controller => 'admin', :action => 'home'
     elsif (current_user.lecturer)
-      redirect_to :controller => 'lecturer', :action => 'home'
+      redirect_to :controller => 'lecturer', :action => 'upcoming'
     else
-      redirect_to :controller => 'student', :action => 'home'
+      redirect_to :controller => 'student', :action => 'code'
     end
   end
 
