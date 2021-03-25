@@ -4,7 +4,7 @@
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
   .form-inputs
-    = f.input :session_code
+    -#= f.input :session_code
     = f.input :session_title
     = f.input :module_code
     = f.datetime_field :start_time

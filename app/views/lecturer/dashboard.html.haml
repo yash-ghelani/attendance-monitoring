@@ -5,8 +5,6 @@
 .jumbotron.mb-3
     %h1.display-5 Admin/Lecturer Dashboard
 
-%h1 Listing timetabled_sessions
-
 %table
     %thead
         %tr
@@ -23,7 +21,8 @@
                 %td= timetabled_session.id
                 %td= timetabled_session.session_title
                 %td= timetabled_session.session_code
-                %td= link_to 'Show Code', timetabled_session
+                %td= link_to 'Show Code', timetabled_session 
+                %td /
                 %td= link_to 'Edit', edit_timetabled_session_path(timetabled_session)
 
 %br
