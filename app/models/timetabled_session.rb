@@ -25,7 +25,7 @@ class TimetabledSession < ApplicationRecord
 
   # generating random session code
   def init
-    self.session_code ||= generate_code(8)  #(0...8).map { (65 + rand(26)).chr }.join
+    self.session_code ||= generate_code(8)
   end
 
 end

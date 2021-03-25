@@ -24,6 +24,8 @@
                 %td= link_to 'Show Code', timetabled_session 
                 %td /
                 %td= link_to 'Edit', edit_timetabled_session_path(timetabled_session)
+                %td /
+                %td= link_to 'Delete', timetabled_session, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
 

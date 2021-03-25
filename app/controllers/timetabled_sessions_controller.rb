@@ -43,7 +43,7 @@ class TimetabledSessionsController < ApplicationController
   # DELETE /timetabled_sessions/1
   def destroy
     @timetabled_session.destroy
-    redirect_to timetabled_sessions_url, notice: 'Timetabled session was successfully destroyed.'
+    redirect_to lecturer_url, notice: 'Timetabled session was successfully destroyed.'
   end
 
   def show_code
