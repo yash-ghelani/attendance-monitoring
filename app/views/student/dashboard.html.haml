@@ -5,11 +5,11 @@
   .row.justify-content-center
     .col-sm-6.col-lg-4
       .card.card-light
-        = simple_form_for :form_examples do |f|
+        = simple_form_for 'session_code', url: "/student/validate", method: :post, data: { remote: true } do |f|
           .card-header
             Enter Code
           .card-body
-            = f.input :code, autofocus: true, required: true
+            = f.input :session_code, autofocus: true, required: true
           .card-footer
             .row.justify-content-center
               = submit_button 'Sign In'

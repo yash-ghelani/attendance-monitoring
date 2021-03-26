@@ -5,7 +5,7 @@ class SessionAttendancesController < ApplicationController
   
   # GET /session_attendances
   def index
-    @session_attendances = SessionAttendance.all
+    @session_attendances = SessionAttendance.all.includes(:user_id, :timetabled_session_id)
   end
 
   # GET /session_attendances/1
