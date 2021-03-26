@@ -6,6 +6,7 @@
 #  creator         :integer
 #  department_code :string
 #  end_time        :datetime
+#  module_code     :string
 #  report_email    :string
 #  session_code    :string
 #  session_desc    :string
