@@ -16,6 +16,12 @@
 class TimetabledSession < ApplicationRecord
   has_many :session_attendances, foreign_key: :id
   has_many :users, through: :session_attendances
+
+  validates :session_title, presence: true
+  validates :start_time, presence: true
+  validates :end_time, presence: true
+  validates :module_code, presence: true
+
   after_initialize :init
 
   def generate_code(number)
