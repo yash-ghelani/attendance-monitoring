@@ -1,5 +1,5 @@
-// - The accordian card component
-// - The variable used here is "session"
+-# The accordian card component
+-# The variable used here is "session"
 #accordian
   .card
     .card-header
@@ -13,12 +13,12 @@
         
         .container
           .row
-            //Left side
+            /Left side
             .col-md-6
               %table.table.borderless
                 %tbody
 
-                  //Session Date
+                  /Session Date
                   %tr
                     %td
                       %span.mr-2.text-muted
@@ -28,7 +28,7 @@
                     %td
                       = session.start_time.strftime("%d of %B, %Y")
 
-                  //Session Time
+                  /Session Time
                   %tr
                     %td
                       %span.mr-2.text-muted
@@ -38,7 +38,7 @@
                     %td
                       = session.start_time.to_s(:time)
 
-                  //Session Code
+                  /Session Code
                   %tr
                     %td
                       %span.mr-2.text-muted
@@ -48,11 +48,11 @@
                     %td
                       = session.session_code
 
-            //Right Side
+            /Right Side
             .col-md-6
               %table.table.borderless
                 %tbody
-                  //Lecturer (for loop will go here)
+                  /Lecturer (for loop will go here)
                   %tr
                     %td
                       %span.mr-2.text-muted
@@ -60,7 +60,7 @@
                     %th
                       Lecturer Name
 
-        //Bottom Bar
+        /Bottom Bar
         .mt-3.container
           .row
             .col-md-6
