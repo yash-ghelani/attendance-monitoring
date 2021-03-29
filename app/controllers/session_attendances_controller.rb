@@ -10,6 +10,7 @@ class SessionAttendancesController < ApplicationController
 
   # GET /session_attendances/1
   def show
+    @session_attendances = SessionAttendance.all.includes(:user_id, :timetabled_session_id)
   end
 
   # GET /session_attendances/new
@@ -55,6 +56,6 @@ class SessionAttendancesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def session_attendance_params
-      params.require(:session_attendance).permit(:joined_at)
+      params.require(:session_attendance).permit(:timetabled_session_id, :user_id)
     end
 end

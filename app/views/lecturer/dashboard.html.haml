@@ -10,7 +10,7 @@
         %tr
             %th Session Title
             %th Session Code
-            %th
+            %th Session ID
             %th
             %th
 
@@ -19,9 +19,12 @@
             %tr
                 %td= timetabled_session.session_title
                 %td= timetabled_session.session_code
+                %td= timetabled_session.id
                 %td= link_to 'Show Code', timetabled_session 
                 %td /
                 %td= link_to 'Edit', edit_timetabled_session_path(timetabled_session)
+                %td /
+                %td= link_to_if true, 'Attendance', session_attendance_path(SessionAttendance.where(timetabled_session_id: timetabled_session.id).ids)
                 %td /
                 %td= link_to 'Delete', timetabled_session, method: :delete, data: { confirm: 'Are you sure?' }
 

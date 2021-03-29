@@ -1,9 +1,25 @@
-%p#notice= notice
+%h1
+  Attendance
+  
+%table
+  %thead
+    %tr
+      %th Name
+      %th Username 
+      %th Email
+      %th Sign In Time
+      %th
+      %th
 
-%p
-  %b Joined at:
-  = @session_attendance.joined_at
+  %tbody
+    - User.where(id: SessionAttendance.select(:user_id)).all.each do |user|
+      %tr
+        %td= user.givenname
+        %td= user.username
+        %td= user.email
+        %td= @session_attendance.created_at.strftime('%X')
+%br
+  
 
-= link_to 'Edit', edit_session_attendance_path(@session_attendance)
-\|
-= link_to 'Back', session_attendances_path
+
+= link_to 'Back', lecturer_path
