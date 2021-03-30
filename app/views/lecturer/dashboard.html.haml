@@ -9,9 +9,9 @@
 %table
     %thead
         %tr
-            %th Session Title
-            %th Session Code
-            %th Session ID
+            %th Title
+            %th Module
+            %th Date
             %th
             %th
 
@@ -19,9 +19,8 @@
         - TimetabledSession.all.each do |timetabled_session|
             %tr
                 %td= timetabled_session.session_title
-                %td= timetabled_session.session_code
-                %td= timetabled_session.id 
-                %td= SessionAttendance.where(timetabled_session_id: timetabled_session.id).ids         
+                %td= timetabled_session.module_code
+                %td= timetabled_session.start_time.strftime("%d/%m/%Y")      
                 %td= link_to 'Show Code', timetabled_session 
                 %td /
                 %td= link_to 'Edit', edit_timetabled_session_path(timetabled_session)
@@ -33,4 +32,4 @@
 
 %br
 
-= link_to 'New Session', new_timetabled_session_path
+= button_to 'New Session', new_timetabled_session_url, :method => :get
