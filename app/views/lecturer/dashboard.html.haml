@@ -5,6 +5,7 @@
 .jumbotron.mb-3
     %h1.display-5 Admin/Lecturer Dashboard
 
+ 
 %table
     %thead
         %tr
@@ -19,13 +20,15 @@
             %tr
                 %td= timetabled_session.session_title
                 %td= timetabled_session.session_code
-                %td= timetabled_session.id
+                %td= timetabled_session.id 
+                %td= SessionAttendance.where(timetabled_session_id: timetabled_session.id).ids         
                 %td= link_to 'Show Code', timetabled_session 
                 %td /
                 %td= link_to 'Edit', edit_timetabled_session_path(timetabled_session)
                 %td /
-                %td= link_to_if true, 'Attendance', session_attendance_path(SessionAttendance.where(timetabled_session_id: timetabled_session.id).ids)
-                %td /
+                - if SessionAttendance.where(timetabled_session_id: timetabled_session.id).ids != []
+                    %td= link_to 'Attendance', session_attendance_path(SessionAttendance.where(timetabled_session_id: timetabled_session.id).ids)
+                    %td /
                 %td= link_to 'Delete', timetabled_session, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br

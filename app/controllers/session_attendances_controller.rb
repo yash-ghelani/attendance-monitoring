@@ -11,6 +11,7 @@ class SessionAttendancesController < ApplicationController
   # GET /session_attendances/1
   def show
     @session_attendances = SessionAttendance.all.includes(:user_id, :timetabled_session_id)
+    @timetabled_sessions = TimetabledSession.all
   end
 
   # GET /session_attendances/new
