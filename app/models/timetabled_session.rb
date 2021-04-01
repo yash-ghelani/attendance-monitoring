@@ -16,6 +16,12 @@
 class TimetabledSession < ApplicationRecord
   has_many :session_attendances, foreign_key: :id
   has_many :users, through: :session_attendances
+
+  validates :session_title, presence: true
+  validates :start_time, presence: true
+  validates :end_time, presence: true
+  validates :module_code, presence: true
+
   after_initialize :init
 
   def generate_code(number)
@@ -25,7 +31,12 @@ class TimetabledSession < ApplicationRecord
 
   # generating random session code
   def init
-    self.session_code ||= generate_code(8)
+    code = generate_code(8)
+    if TimetabledSession.where(:session_code => code) == []
+      self.session_code ||= generate_code(8)
+    else 
+      init
+    end
   end
 
 end

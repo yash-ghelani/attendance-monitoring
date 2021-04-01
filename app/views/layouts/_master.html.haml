@@ -1,0 +1,36 @@
+!!!
+%html
+  %head
+    %title #{content_for(:title)} - COM Attendance
+    %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0" }
+    %meta{ :'http-equiv' => 'X-UA-Compatible', content: 'IE=edge' }
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "content-type"}
+    = stylesheet_link_tag    "application", media: :all
+    = javascript_include_tag "application"
+    = favicon_link_tag '/favicon.ico'
+    = csrf_meta_tags
+ 
+  %body{ class: environment_notice_body_class }
+    = render 'layouts/environment_notice'
+    .flash-messages
+      - flash.each do |name, msg|
+        - next unless name == 'alert' || name == 'notice'
+        .alert.fade.in
+          .container
+            - if name == 'notice'
+              = icon('fas', 'check', class: 'flash-success')
+            - else
+              = icon('fas', 'exclamation-triangle', class: 'flash-error')
+            = msg
+            %a{ href: '#', title: 'Hide this message', data: { dismiss: :alert } } Dismiss
+
+    #wrap
+      %header
+        = yield :head
+
+      %main
+        #main-container.container
+          = yield :main
+
+    %footer#footer
+      = yield :foot

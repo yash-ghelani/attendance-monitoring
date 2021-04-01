@@ -4,7 +4,7 @@
 %table
   %thead
     %tr
-      %th Joined at
+      %th User
       %th
       %th
       %th
@@ -12,7 +12,7 @@
   %tbody
     - @session_attendances.each do |session_attendance|
       %tr
-        %td= session_attendance.joined_at
+        %td= session_attendance
         %td= link_to 'Show', session_attendance
         %td= link_to 'Edit', edit_session_attendance_path(session_attendance)
         %td= link_to 'Destroy', session_attendance, method: :delete, data: { confirm: 'Are you sure?' }

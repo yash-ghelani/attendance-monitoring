@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_24_093658) do
+ActiveRecord::Schema.define(version: 2021_03_26_163548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,18 +31,23 @@ ActiveRecord::Schema.define(version: 2021_03_24_093658) do
   end
 
   create_table "session_attendances", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "timetabled_session_id"
-    t.datetime "joined_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.bigint "timetabled_session_id", null: false
+    t.index ["timetabled_session_id"], name: "index_session_attendances_on_timetabled_session_id"
+    t.index ["user_id", "timetabled_session_id"], name: "index_session_attendances_on_user_id_and_timetabled_session_id", unique: true
+    t.index ["user_id"], name: "index_session_attendances_on_user_id"
   end
 
   create_table "session_registered_lecturers", force: :cascade do |t|
-    t.bigint "timetabled_session_id"
-    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.bigint "timetabled_session_id", null: false
+    t.index ["timetabled_session_id"], name: "index_session_registered_lecturers_on_timetabled_session_id"
+    t.index ["user_id", "timetabled_session_id"], name: "session_registered_index", unique: true
+    t.index ["user_id"], name: "index_session_registered_lecturers_on_user_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -88,4 +93,8 @@ ActiveRecord::Schema.define(version: 2021_03_24_093658) do
     t.index ["username"], name: "index_users_on_username"
   end
 
+  add_foreign_key "session_attendances", "timetabled_sessions"
+  add_foreign_key "session_attendances", "users"
+  add_foreign_key "session_registered_lecturers", "timetabled_sessions"
+  add_foreign_key "session_registered_lecturers", "users"
 end

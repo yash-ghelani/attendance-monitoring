@@ -56,4 +56,15 @@ class TimetabledSessionsController < ApplicationController
     def timetabled_session_params
       params.require(:timetabled_session).permit(:session_code, :session_title, :module_code, :start_time, :end_time, :creator, :report_email)
     end
+
+    def generate_code(number)
+      charset = Array('A'..'Z') + Array('a'..'z') + Array(['0','1','2','3','4','5','6','7','8','9'])
+      Array.new(number) { charset.sample }.join
+    end
+
+    def update_code
+      timetabled_session = TimetabledSession.find(params[:id])
+      timetabled_session.update_attribute(:session_code, generate_code(8))
+    end
+    helper_method :update_code
 end

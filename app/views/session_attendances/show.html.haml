@@ -1,9 +1,27 @@
-%p#notice= notice
+%h1= TimetabledSession.where(id: @session_attendance.timetabled_session_id).pluck(:session_title).first
+%p Module Code : #{TimetabledSession.where(id: @session_attendance.timetabled_session_id).pluck(:module_code).first}
+%p Date : #{TimetabledSession.where(id: @session_attendance.timetabled_session_id).pluck(:start_time).first.strftime('%d/%m/%Y')}
+  
+%table
+  %thead
+    %tr
+      %th Name
+      %th Surname
+      %th Username 
+      %th Email
+      %th Sign In Time
+      %th
 
-%p
-  %b Joined at:
-  = @session_attendance.joined_at
+  %tbody
+    - User.where(id: SessionAttendance.select(:user_id)).all.each do |user|
+      %tr
+        %td= user.givenname
+        %td= user.sn
+        %td= user.username
+        %td= user.email
+        %td= @session_attendance.created_at.strftime('%X')
+%br
+  
 
-= link_to 'Edit', edit_session_attendance_path(@session_attendance)
-\|
-= link_to 'Back', session_attendances_path
+
+= button_to 'Back', lecturer_url, :method => :get
