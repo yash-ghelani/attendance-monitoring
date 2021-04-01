@@ -2,13 +2,13 @@
 -# The variable used here is "session"
 #accordian
   .card
-    %a.card-header.py-3{"style" => "cursor: pointer;","data-toggle" => "collapse", "data-target" => "##{session.session_title.parameterize}-collapse"}
+    %a.card-header.py-3{"style" => "cursor: pointer;","data-toggle" => "collapse", "data-target" => "#collapse-#{session.id}"}
       %h5.mb-0.text-secondary
         = session.session_title
           
         
 
-    .collapse.show{:id => "#{session.session_title.parameterize}-collapse"}
+    .collapse.show{:id => "collapse-#{session.id}"}
       .card-body
         
         .container
@@ -31,19 +31,19 @@
                   %tr                     
                     %th
                       %span.mr-2.text-muted
-                        = icon "fas", "clock"
-                      Time
+                        = icon "fas", "hourglass-start"
+                      Start
                     %td
                       = session.start_time.to_s(:time)
 
-                  /Session Code
+                  /End Time
                   %tr                      
                     %th
                       %span.mr-2.text-muted
-                        = icon "fas", "hashtag"
-                      Code
+                        = icon "fas", "hourglass-end"
+                      End
                     %td
-                      = session.session_code
+                      = session.end_time.to_s(:time)
 
             /Right Side
             .col-md-6
