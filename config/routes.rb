@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get '/lecturer', to: 'lecturer#home'
   get '/admin', to: 'admin#home'
   get '/student', to: 'student#home'
+  post '/student/validate', to: 'student#validate'
 
 
   #Dev only routes TODO devOnly

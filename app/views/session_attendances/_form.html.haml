@@ -4,7 +4,8 @@
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
   .form-inputs
-    = f.input :joined_at
+    = f.input :timetabled_session_id
+    = f.input :user_id
 
   .form-actions
     = f.button :submit
