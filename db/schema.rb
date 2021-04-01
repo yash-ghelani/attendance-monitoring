@@ -93,8 +93,8 @@ ActiveRecord::Schema.define(version: 2021_03_26_163548) do
     t.index ["username"], name: "index_users_on_username"
   end
 
-  add_foreign_key "session_attendances", "timetabled_sessions"
-  add_foreign_key "session_attendances", "users"
-  add_foreign_key "session_registered_lecturers", "timetabled_sessions"
-  add_foreign_key "session_registered_lecturers", "users"
+  add_foreign_key "session_attendances", "timetabled_sessions", on_delete: :cascade
+  add_foreign_key "session_attendances", "users", on_delete: :cascade
+  add_foreign_key "session_registered_lecturers", "timetabled_sessions", on_delete: :cascade
+  add_foreign_key "session_registered_lecturers", "users", on_delete: :cascade
 end
