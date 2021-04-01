@@ -4,4 +4,7 @@
 
 = link_to 'Show', @timetabled_session
 \|
-= link_to 'Back', timetabled_sessions_path
+- if current_user.lecturer?
+    = link_to 'Back', lecturer_path
+- if current_user.admin?
+    = link_to 'Back', admin_path
