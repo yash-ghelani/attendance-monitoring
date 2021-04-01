@@ -76,9 +76,10 @@
                 .col-md-4.py-sm-2
                   %a.btn.btn-primary.btn-block{:href => timetabled_session_path(session)}
                     Show Code
-                .col-md-4.py-sm-2 
-                  %a.btn.btn-primary.btn-block{:href => session_attendance_path(session)}
-                    Attendance
+                - if SessionAttendance.where(timetabled_session_id: timetabled_session.id).ids != []
+                  .col-md-4.py-sm-2 
+                    %a.btn.btn-primary.btn-block{:href => session_attendance_path(SessionAttendance.where(timetabled_session_id: timetabled_session.id).ids)}
+                      Attendance
           
           
           
