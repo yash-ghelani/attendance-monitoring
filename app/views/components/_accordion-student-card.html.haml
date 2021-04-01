@@ -1,0 +1,65 @@
+-# The accordian card component
+-# The variable used here is "session"
+#accordian
+  .card
+    %a.card-header.py-3{"style" => "cursor: pointer;","data-toggle" => "collapse", "data-target" => "##{session.session_title.parameterize}-collapse"}
+      %h5.mb-0.text-secondary
+        = session.session_title
+          
+        
+
+    .collapse.show{:id => "#{session.session_title.parameterize}-collapse"}
+      .card-body
+        
+        .container
+          .row
+            /Left side
+            .col-md-6
+              %table.table.borderless
+                %tbody
+
+                  /Session Date
+                  %tr                      
+                    %th
+                      %span.mr-2.text-muted
+                        = icon "fas", "calendar"
+                      Date
+                    %td
+                      = session.start_time.strftime("%d of %B, %Y")
+
+                  /Session Time
+                  %tr                     
+                    %th
+                      %span.mr-2.text-muted
+                        = icon "fas", "clock"
+                      Time
+                    %td
+                      = session.start_time.to_s(:time)
+
+                
+            /Right Side
+            .col-md-6
+              %table.table.borderless
+                %thead
+                  %tr
+                    %th.text-center
+                      %span.mr-2.text-muted
+                        = icon "fas", "graduation-cap"
+                      Lecturers                      
+                %tbody
+                  /Lecturer (for loop will go here)
+                  %tr
+                    %td
+                      Bob Jones
+                  %tr
+                    %td
+                      John Smith
+                  
+                  
+          
+          
+          
+    
+          
+        
+

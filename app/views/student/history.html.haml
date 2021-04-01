@@ -1,2 +1,8 @@
 - content_for :title, "History"
 %h1 History 
+
+
+//Load all the sessions into an accordian
+#accordian.py-5
+    - TimetabledSession.all.each do |timetabled_session|
+        = render :partial => "components/accordion-student-card", locals: {session: timetabled_session}
