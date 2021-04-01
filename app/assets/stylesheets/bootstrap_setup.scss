@@ -1,2 +1,9 @@
 @import "variables";
 @import "bootstrap";
+
+/*
+ Custom styles for table
+ */
+.borderless td, .borderless th {
+    border: none;
+}

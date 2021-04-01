@@ -31,7 +31,12 @@ class TimetabledSession < ApplicationRecord
 
   # generating random session code
   def init
-    self.session_code ||= generate_code(8)
+    code = generate_code(8)
+    if TimetabledSession.where(:session_code => code) == []
+      self.session_code ||= generate_code(8)
+    else 
+      init
+    end
   end
 
 end
