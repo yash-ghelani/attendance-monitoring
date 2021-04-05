@@ -17,6 +17,9 @@
     %b Enter code: 
     %br
     %h1= @timetabled_session.session_code
+    %b.mt-5 QR Code
+    %br
+    %img{:src => "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=#{@url}"}
 
 - if current_user.lecturer?
   = button_to 'Back', lecturer_url, :method => :get
