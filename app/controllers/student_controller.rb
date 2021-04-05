@@ -7,6 +7,12 @@ class StudentController < ApplicationController
 
   #Show the Dashboard
   def code
+    # The qrcode variable is an optional variable that
+    # could exist in the URL, for example /student?qrcode=abc123
+    # This will be automatically added to the code field
+    @qrcode = params[:qrcode]
+    # Attempt to find timetable session for that code
+    @timetabled_session = TimetabledSession.find_by(session_code: @qrcode)
   end
 
   def history 
