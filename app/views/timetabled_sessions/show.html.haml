@@ -19,6 +19,6 @@
     %h1= @timetabled_session.session_code
 
 - if current_user.lecturer?
-  = link_to 'Back', lecturer_path
+  = button_to 'Back', lecturer_url, :method => :get
 - if current_user.admin?
-  = link_to 'Back', admin_path
+  = button_to 'Back', admin_url, :method => :get
