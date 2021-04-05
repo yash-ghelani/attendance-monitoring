@@ -10,6 +10,9 @@ class StudentController < ApplicationController
   end
 
   def history 
+    @session_attendances = SessionAttendance.all.includes(:user_id, :timetabled_session_id)
+    @timetabled_sessions = TimetabledSession.all.includes(:id)
+    @user = current_user
     render :history
   end
 
