@@ -21,7 +21,8 @@
         %td= user.email
         %td= @session_attendance.created_at.strftime('%X')
 %br
-  
 
-
-= button_to 'Back', lecturer_url, :method => :get
+- if current_user.lecturer?
+  = button_to 'Back', lecturer_url, :method => :get
+- if current_user.admin?
+  = button_to 'Back', admin_url, :method => :get
