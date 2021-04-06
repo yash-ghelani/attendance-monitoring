@@ -8,11 +8,15 @@
         New Session
 
 
-%h2.my-2
+%h1
     Sessions
 %hr
 
-//Load all the sessions into an accordian
-#accordian.py-5
-    - TimetabledSession.all.each do |timetabled_session|
-        = render :partial => "components/accordian-card", locals: {session: timetabled_session}
+-if TimetabledSession.all == []
+    %center
+        %p There are no timetabled sessions.
+-else
+    //Load all the sessions into an accordian
+    #accordian.py-5
+        - TimetabledSession.all.each do |timetabled_session|
+            = render :partial => "components/accordian-card", locals: {session: timetabled_session}

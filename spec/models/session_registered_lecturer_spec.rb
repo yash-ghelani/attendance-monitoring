@@ -16,8 +16,8 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (timetabled_session_id => timetabled_sessions.id) ON DELETE => cascade
-#  fk_rails_...  (user_id => users.id) ON DELETE => cascade
+#  fk_rails_...  (timetabled_session_id => timetabled_sessions.id)
+#  fk_rails_...  (user_id => users.id)
 #
 require 'rails_helper'
 
