@@ -12,9 +12,8 @@
     Sessions
 %hr
 
--if @timetabled_sessions.nil?
-    %center
-        %p There are no timetabled sessions.
+-if @timetabled_sessions.empty?
+    %center.alert.alert-warning There are no timetabled sessions.
 -else
     //Load all the sessions into an accordian
     #accordian.py-5
