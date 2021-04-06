@@ -6,9 +6,22 @@ class StudentController < ApplicationController
   authorize_resource :class => StudentController
 
   #Show the Dashboard
-  def home
-    render :dashboard
+  def code
+    # The qrcode variable is an optional variable that
+    # could exist in the URL, for example /student?qrcode=abc123
+    # This will be automatically added to the code field
+    @qrcode = params[:qrcode]
+    # Attempt to find timetable session for that code
+    @timetabled_session = TimetabledSession.find_by(session_code: @qrcode)
   end
+
+  def history 
+    @session_attendances = SessionAttendance.all.includes(:user_id, :timetabled_session_id)
+    @timetabled_sessions = TimetabledSession.all.includes(:id)
+    @user = current_user
+    render :history
+  end
+
 
   def validate
     @timetabled_session = TimetabledSession.find_by(validate_session_code_params)

@@ -1,0 +1,6 @@
+- content_for :title, "History"
+%h1 History 
+
+#accordian.py-5
+    - TimetabledSession.where(id: SessionAttendance.where(user_id: @user.id).select(:timetabled_session_id)).all.each do |timetabled_session|
+        = render :partial => "components/accordian-card", locals: {session: timetabled_session}

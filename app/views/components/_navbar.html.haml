@@ -11,6 +11,12 @@
         = navbar_link_to :root, title: "Go to the home page", identifier: :home do
           = icon 'fas', 'home'
           Home
+
+        - if !current_user.admin && !current_user.lecturer
+          = navbar_link_to student_history_path, title: "History", identifier: :history do
+            = icon 'fas', 'history'
+            History
+
       - if user_signed_in?
         %ul.nav.navbar-nav.ml-auto
           %li.nav-item.dropdown

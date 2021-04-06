@@ -1,3 +1,6 @@
+
+require 'uri'
+
 class TimetabledSessionsController < ApplicationController
   before_action :set_timetabled_session, only: [:show, :edit, :update, :destroy]
   #Authorise
@@ -9,6 +12,8 @@ class TimetabledSessionsController < ApplicationController
 
   # GET /timetabled_sessions/1
   def show
+    #Create a URL variable for the QR code to use
+    @url = URI.encode("#{root_url}student?qrcode=#{@timetabled_session.session_code}")
   end
 
   # GET /timetabled_sessions/new

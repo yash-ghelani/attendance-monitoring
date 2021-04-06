@@ -12,5 +12,15 @@
     = f.input :creator
     = f.input :report_email
 
+
+  %button#addLecturerField.btn.btn-outline-primary.mb-2{:type => "button"}
+    %span
+      = icon "fas", "plus"
+    %span.ml-1
+      Add Lecturer(s)
+
+  #addedLecturers.mb-5.mt-2
+
+
   .form-actions
-    = f.button :submit
+    = f.button :submit, class: "btn btn-primary"

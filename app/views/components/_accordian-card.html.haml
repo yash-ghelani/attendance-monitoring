@@ -2,13 +2,13 @@
 -# The variable used here is "session"
 #accordian
   .card
-    %a.card-header.py-3{"style" => "cursor: pointer;","data-toggle" => "collapse", "data-target" => "##{session.session_title.parameterize}-collapse"}
+    %a.card-header.py-3{"style" => "cursor: pointer;","data-toggle" => "collapse", "data-target" => "#collapse-#{session.id}"}
       %h5.mb-0.text-secondary
         = session.session_title
           
         
 
-    .collapse.show{:id => "#{session.session_title.parameterize}-collapse"}
+    .collapse.show{:id => "collapse-#{session.id}"}
       .card-body
         
         .container
@@ -31,19 +31,19 @@
                   %tr                     
                     %th
                       %span.mr-2.text-muted
-                        = icon "fas", "clock"
-                      Time
+                        = icon "fas", "hourglass-start"
+                      Start
                     %td
                       = session.start_time.to_s(:time)
 
-                  /Session Code
+                  /End Time
                   %tr                      
                     %th
                       %span.mr-2.text-muted
-                        = icon "fas", "hashtag"
-                      Code
+                        = icon "fas", "hourglass-end"
+                      End
                     %td
-                      = session.session_code
+                      = session.end_time.to_s(:time)
 
             /Right Side
             .col-md-6
@@ -64,22 +64,24 @@
                       John Smith
                   
                     
-
-        /Bottom Bar
-        .mt-3.container
-          .row
-            .col-lg-6.col-md-8
-              .row
-                .col-md-4.py-sm-2
-                  %a.btn.btn-outline-primary.btn-block{:href => edit_timetabled_session_path(session)}
-                    Edit
-                .col-md-4.py-sm-2
-                  %a.btn.btn-primary.btn-block{:href => timetabled_session_path(session)}
-                    Show Code
-                - if SessionAttendance.where(timetabled_session_id: session.id).ids != []
+        - if current_user.lecturer? or current_user.admin?
+          /Bottom Bar
+          .mt-3.container
+            .row
+              .col-lg-6.col-md-8
+                .row
+                  .col-md-4.py-sm-2
+                    %a.btn.btn-outline-primary.btn-block{:href => edit_timetabled_session_path(session)}
+                      Edit
+                  .col-md-4.py-sm-2
+                    %a.btn.btn-primary.btn-block{:href => timetabled_session_path(session)}
+                      Show Code
+                  - if SessionAttendance.where(timetabled_session_id: session.id).ids != []
+                    .col-md-4.py-sm-2 
+                      %a.btn.btn-primary.btn-block{:href => session_attendance_path(SessionAttendance.where(timetabled_session_id: session.id).ids)}
+                        Attendance
                   .col-md-4.py-sm-2 
-                    %a.btn.btn-primary.btn-block{:href => session_attendance_path(SessionAttendance.where(timetabled_session_id: session.id).ids)}
-                      Attendance
+                    = link_to 'Delete', session, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-block'
           
           
           

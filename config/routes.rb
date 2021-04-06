@@ -20,7 +20,10 @@ Rails.application.routes.draw do
   #Dashboard Routes
   get '/lecturer', to: 'lecturer#home'
   get '/admin', to: 'admin#home'
-  get '/student', to: 'student#home'
+  get '/student', to: 'student#code'
+
+  # Student Routes
+  get '/student/history', to: 'student#history'
   post '/student/validate', to: 'student#validate'
 
 
@@ -34,4 +37,5 @@ Rails.application.routes.draw do
 
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
 end
