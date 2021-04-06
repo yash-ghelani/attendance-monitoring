@@ -25,7 +25,7 @@
                         = icon "fas", "calendar"
                       Date
                     %td
-                      = session.start_time.strftime("%d of %B, %Y")
+                      = session.start_time.strftime('%d/%m/%Y')
 
                   /Session Time
                   %tr                     
@@ -44,6 +44,17 @@
                       End
                     %td
                       = session.end_time.to_s(:time)
+                  
+                  -unless current_user.lecturer? or current_user.admin?
+                    /Sign In Time
+                    %tr
+                      %th
+                        %span.mr-2.text-muted
+                          = icon "fas", "clock"
+                        Sign In
+                      %td
+                        = session.session_attendances.find_by(user: current_user).created_at.to_s(:time)
+
 
             /Right Side
             .col-md-6

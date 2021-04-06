@@ -1,6 +1,11 @@
 - content_for :title, "History"
 %h1 History 
+%hr
 
 #accordian.py-5
-    - @history.each do |timetabled_session|
-        = render :partial => "components/accordian-card", locals: {session: timetabled_session}
+    - if @history.nil?
+        %center
+        %p You have not attended any sessions.
+    - else
+        - @history.each do |timetabled_session|
+            = render :partial => "components/accordian-card", locals: {session: timetabled_session}
