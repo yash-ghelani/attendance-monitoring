@@ -20,6 +20,6 @@
 #  fk_rails_...  (user_id => users.id) ON DELETE => cascade
 #
 class SessionRegisteredLecturer < ApplicationRecord
-  belongs_to :users, optional: true
-  belongs_to :timetabled_sessions, optional: true
+  belongs_to :user, optional: true
+  belongs_to :timetabled_session, optional: true
 end

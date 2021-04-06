@@ -5,17 +5,21 @@
   %thead
     %tr
       %th User
+      %th Session
+      %th Joined At
       %th
       %th
       %th
 
   %tbody
-    - @session_attendances.each do |session_attendance|
+    - @session_attendances.each do |session|
       %tr
-        %td= session_attendance
-        %td= link_to 'Show', session_attendance
-        %td= link_to 'Edit', edit_session_attendance_path(session_attendance)
-        %td= link_to 'Destroy', session_attendance, method: :delete, data: { confirm: 'Are you sure?' }
+        %td= session.user.username
+        %td= session.timetabled_session.session_title
+        %td= session.created_at
+        %td= link_to 'Show', session
+        %td= link_to 'Edit', edit_session_attendance_path(session)
+        %td= link_to 'Destroy', session, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
 

@@ -28,9 +28,15 @@
 #
 class User < ApplicationRecord
   include EpiCas::DeviseHelper
-  has_many :session_attendances, foreign_key: :id
-  has_many :timetabled_sessions, through: :session_attendances
-  has_many :session_registered_lecturers, foreign_key: :id
+  has_many :session_attendances
+  has_many :timetabled_sessions, through: :session_attendance
+  has_many :timetabled_sessions, through: :session_registered_lecturers
+  has_many :timetabled_sessions, foreign_key: :creator_id
+  has_many :session_registered_lecturers
   
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+
+  def to_label
+    "#{email}"
   end
+end

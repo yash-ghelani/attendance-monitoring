@@ -5,13 +5,12 @@ class SessionAttendancesController < ApplicationController
   
   # GET /session_attendances
   def index
-    @session_attendances = SessionAttendance.all.includes(:user_id, :timetabled_session_id)
+    @session_attendances = SessionAttendance.includes(:user, :timetabled_session).all
   end
 
   # GET /session_attendances/1
   def show
-    @session_attendances = SessionAttendance.all.includes(:user_id, :timetabled_session_id)
-    @timetabled_sessions = TimetabledSession.all
+    @session_attendances = SessionAttendance.includes(:user, :timetabled_session).where(timetabled_session_id: params[:id])
   end
 
   # GET /session_attendances/new

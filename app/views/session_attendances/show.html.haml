@@ -1,6 +1,6 @@
-%h1= TimetabledSession.where(id: @session_attendance.timetabled_session_id).pluck(:session_title).first
-%p Module Code : #{TimetabledSession.where(id: @session_attendance.timetabled_session_id).pluck(:module_code).first}
-%p Date : #{TimetabledSession.where(id: @session_attendance.timetabled_session_id).pluck(:start_time).first.strftime('%d/%m/%Y')}
+%h1= @session_attendance.timetabled_session.session_title
+%p Module Code : #{@session_attendance.timetabled_session.module_code}
+%p Date : #{@session_attendance.timetabled_session.start_time.strftime('%d/%m/%Y')}
   
 %table
   %thead
@@ -13,7 +13,7 @@
       %th
 
   %tbody
-    - User.where(id: SessionAttendance.select(:user_id)).all.each do |user|
+    - @session_attendance.user do |user|
       %tr
         %td= user.givenname
         %td= user.sn

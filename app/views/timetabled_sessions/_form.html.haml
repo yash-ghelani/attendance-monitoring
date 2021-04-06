@@ -7,17 +7,14 @@
     -#= f.input :session_code
     = f.input :session_title
     = f.input :module_code
-    = f.datetime_field :start_time
-    = f.datetime_field :end_time
-    = f.input :creator
-    = f.input :report_email
-
-
-  %button#addLecturerField.btn.btn-outline-primary.mb-2{:type => "button"}
-    %span
-      = icon "fas", "plus"
-    %span.ml-1
-      Add Lecturer(s)
+    = f.datetime_local_field :start_time
+    = f.datetime_local_field :end_time
+    #lecturers
+    .h4.mt-2 Register Lecturers
+    = f.simple_fields_for :session_registered_lecturers do |lecturer|
+      = render 'session_registered_lecturer_fields', f: lecturer
+    .links
+      = link_to_add_association 'Register lecturer', f, :session_registered_lecturers, class: 'btn btn-outline-primary mb-2'
 
   #addedLecturers.mb-5.mt-2
 

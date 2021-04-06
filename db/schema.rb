@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_26_163548) do
+ActiveRecord::Schema.define(version: 2021_04_06_112437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,10 +65,11 @@ ActiveRecord::Schema.define(version: 2021_03_26_163548) do
     t.string "module_code"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.integer "creator"
     t.string "report_email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "creator_id", null: false
+    t.index ["creator_id"], name: "index_timetabled_sessions_on_creator_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -97,4 +98,5 @@ ActiveRecord::Schema.define(version: 2021_03_26_163548) do
   add_foreign_key "session_attendances", "users", on_delete: :cascade
   add_foreign_key "session_registered_lecturers", "timetabled_sessions", on_delete: :cascade
   add_foreign_key "session_registered_lecturers", "users", on_delete: :cascade
+  add_foreign_key "timetabled_sessions", "users", column: "creator_id", on_delete: :cascade
 end

@@ -57,11 +57,10 @@
                 %tbody
                   /Lecturer (for loop will go here)
                   %tr
-                    %td
-                      Bob Jones
-                  %tr
-                    %td
-                      John Smith
+                    %td= session.user.email
+                  - session.session_registered_lecturers.each do |lecturer|
+                    %tr
+                      %td= lecturer.user.email
                   
                     
         - if current_user.lecturer? or current_user.admin?
@@ -76,10 +75,9 @@
                   .col-md-4.py-sm-2
                     %a.btn.btn-primary.btn-block{:href => timetabled_session_path(session)}
                       Show Code
-                  - if SessionAttendance.where(timetabled_session_id: session.id).ids != []
-                    .col-md-4.py-sm-2 
-                      %a.btn.btn-primary.btn-block{:href => session_attendance_path(SessionAttendance.where(timetabled_session_id: session.id).ids)}
-                        Attendance
+                  .col-md-4.py-sm-2 
+                    %a.btn.btn-primary.btn-block{:href => session_attendance_path(session.id)}
+                      Attendance
                   .col-md-4.py-sm-2 
                     = link_to 'Delete', session, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-block'
           
