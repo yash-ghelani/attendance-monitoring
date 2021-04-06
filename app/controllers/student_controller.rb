@@ -16,30 +16,40 @@ class StudentController < ApplicationController
   end
 
   def history 
-    @session_attendances = SessionAttendance.all.includes(:user_id, :timetabled_session_id)
-    @timetabled_sessions = TimetabledSession.all.includes(:id)
-    @user = current_user
+    @history = TimetabledSession.includes(:session_attendances, :users).where(user: current_user)
     render :history
   end
 
 
   def validate
-    @timetabled_session = TimetabledSession.find_by(validate_session_code_params)
+    if /^[\d\w-]+$/.match(validate_params["session_code"]).nil?
+      redirect_to student_path, alert: 'Code must contain only digits, letters and dashes'
+    elsif /^[\d\w]{8,}$/.match(validate_params["session_code"]).nil?
+      redirect_to student_path, alert: 'Code must be of length 8'
+    else
+      @timetabled_session = TimetabledSession.find_by(validate_params)
 
-    unless @timetabled_session.nil?
-      @attendance = SessionAttendance.new(timetabled_session_id: @timetabled_session.id, user_id: current_user.id)
-      if @attendance.save
-        puts "---------------------------------"
-        puts "Attendance registered succesfully"
-        puts "---------------------------------"
-        # redirect_to student_success_path, notice: 'Timetabled session was successfully created.'
+      if @timetabled_session.nil?
+        redirect_to student_path, alert: 'No session found for that code'
+      elsif @timetabled_session.start_time > Time.now.utc-15.minutes
+        redirect_to student_path, alert: 'Session has not opened attendance yet'
+      elsif Time.now > @timetabled_session.end_time
+        redirect_to student_path, alert: 'Session has ended. Deadline for signing in has passed for the session'
+      else
+        @attendance = SessionAttendance.new(timetabled_session: @timetabled_session, user: current_user)
+        if @attendance.save
+          puts "---------------------------------"
+          puts "Attendance registered succesfully"
+          puts "---------------------------------"
+          redirect_to student_history_path, notice: 'Successfully signed in!'
+        end
       end
     end
   end
 
   private
     # Only allow a trusted parameter "white list" through.
-    def validate_session_code_params
+    def validate_params
       params.require(:session_code).permit(:session_code)
     end
 end

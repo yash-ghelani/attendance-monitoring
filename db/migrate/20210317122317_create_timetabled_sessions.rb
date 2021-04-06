@@ -6,7 +6,6 @@ class CreateTimetabledSessions < ActiveRecord::Migration[6.0]
       t.string :module_code
       t.datetime :start_time
       t.datetime :end_time
-      t.integer :creator
       t.string :report_email
 
       t.timestamps

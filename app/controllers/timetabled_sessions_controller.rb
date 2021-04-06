@@ -27,9 +27,10 @@ class TimetabledSessionsController < ApplicationController
 
   # POST /timetabled_sessions
   def create
+    
     @timetabled_session = TimetabledSession.new(timetabled_session_params)
 
-    if @timetabled_session.save
+    if @timetabled_session.save!
       redirect_to @timetabled_session, notice: 'Timetabled session was successfully created.'
     else
       render :new
@@ -59,7 +60,10 @@ class TimetabledSessionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def timetabled_session_params
-      params.require(:timetabled_session).permit(:session_code, :session_title, :module_code, :start_time, :end_time, :creator, :report_email)
+      params.require(:timetabled_session).permit(
+        :session_title, :module_code, :start_time, :end_time, 
+        session_registered_lecturers_attributes: [:user_id, :id, :_destroy]
+      ).merge(creator_id: current_user.id, report_email: current_user.email)
     end
 
     def generate_code(number)

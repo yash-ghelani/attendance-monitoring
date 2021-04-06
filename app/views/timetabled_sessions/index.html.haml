@@ -1,6 +1,4 @@
 %h1 Listing timetabled_sessions
-= link_to 'Upcoming', lecturer_upcoming_path
-= link_to 'Previous', lecturer_previous_path
 
 //Only show this link to admins and lecturers
 - if can?(:edit, TimetabledSession)
@@ -30,7 +28,7 @@
         %td= timetabled_session.module_code
         %td= timetabled_session.start_time
         %td= timetabled_session.end_time
-        %td= timetabled_session.creator
+        %td= timetabled_session.creator_id
         %td= timetabled_session.report_email
         %td= link_to 'Show', timetabled_session
         %td= link_to 'Edit', edit_timetabled_session_path(timetabled_session)
