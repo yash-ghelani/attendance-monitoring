@@ -1,5 +1,6 @@
 -# The accordian card component
 -# The variable used here is "session"
+- @session_attendance = session.session_attendances.find_by(user: current_user)
 #accordian
   .card
     %a.card-header.py-3{"style" => "cursor: pointer;","data-toggle" => "collapse", "data-target" => "#collapse-#{session.id}"}
@@ -45,15 +46,14 @@
                     %td
                       = session.end_time.to_s(:time)
                   
-                  -unless current_user.lecturer? or current_user.admin?
+                  -unless current_user.lecturer? or current_user.admin? or @session_attendance.nil?
                     /Sign In Time
                     %tr
                       %th
                         %span.mr-2.text-muted
                           = icon "fas", "clock"
                         Sign In
-                      %td
-                        = session.session_attendances.find_by(user: current_user).created_at.to_s(:time)
+                        %td= @session_attendance.created_at.to_s(:time)
 
 
             /Right Side

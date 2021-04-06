@@ -10,7 +10,7 @@ class SessionAttendancesController < ApplicationController
 
   # GET /session_attendances/1
   def show
-    @session_attendances = SessionAttendance.includes(:user, :timetabled_session).where(timetabled_session_id: params[:id])
+    @timetabled_session = TimetabledSession.includes(:users, :session_attendances).find(params[:id])
   end
 
   # GET /session_attendances/new
@@ -51,7 +51,7 @@ class SessionAttendancesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_session_attendance
-      @session_attendance = SessionAttendance.find(params[:id])
+      @session_attendance = SessionAttendance.find_by(id: params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
