@@ -10,3 +10,4 @@
 //= require select2
 //= require select2_init
 //= require cocoon
+//= require datetime_picker_input 
