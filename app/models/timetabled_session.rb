@@ -14,7 +14,7 @@
 #  updated_at    :datetime         not null
 #
 class TimetabledSession < ApplicationRecord
-  has_many :session_attendances, foreign_key: :id
+  has_many :session_attendances, foreign_key: :id, dependent: :destroy
   has_many :users, through: :session_attendances
 
   validates :session_title, presence: true

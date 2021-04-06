@@ -16,8 +16,8 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (timetabled_session_id => timetabled_sessions.id)
-#  fk_rails_...  (user_id => users.id)
+#  fk_rails_...  (timetabled_session_id => timetabled_sessions.id) ON DELETE => cascade
+#  fk_rails_...  (user_id => users.id) ON DELETE => cascade
 #
 FactoryBot.define do
   factory :session_registered_lecturer do
