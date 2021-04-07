@@ -12,6 +12,17 @@
     Sessions
 %hr
 
+%nav{"aria-label" => "..."}
+    %ul.pagination
+        %li.page-item{:class => ("disabled" if @page == 0)}
+            %a.page-link{:href => "#{admin_path}?offset=#{@offset-@limit}", :tabindex => "-1"} Previous
+        - (0..(@count/@limit)-1).each do |page|
+            %li.page-item{:class => ("active" if page == @page)}
+                %a.page-link{:href => "#{admin_path}?offset=#{page*@limit}"}
+                    = page+1
+        %li.page-item{:class => ("disabled" if @page == (@count/@limit-1))}
+            %a.page-link{:href => "#{admin_path}?offset=#{@offset+@limit}"} Next
+
 -if @sessions.empty?
     %center.alert.alert-warning There are no timetabled sessions.
 -else

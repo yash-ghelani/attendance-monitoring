@@ -8,6 +8,11 @@ class LecturerController < ApplicationController
   #Show the Dashboard for Lecturer
   def home
     @sessions = SessionRegisteredLecturer.includes(:timetabled_session, :user).where(user: current_user)
+    @count = @sessions.size
+    @limit = 1
+    @offset = params[:offset].to_i || 0
+    @sessions = @sessions.order(created_at: :desc).offset(@offset).limit(@limit)
+    @page = @offset*@limit
     render :dashboard
   end
 

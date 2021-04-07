@@ -17,6 +17,11 @@ class StudentController < ApplicationController
 
   def history 
     @history = SessionAttendance.includes(:timetabled_session, :user).where(user: current_user)
+    @count = @history.size
+    @limit = 1
+    @offset = params[:offset].to_i || 0
+    @page = @offset*@limit
+    @history = @history.order(created_at: :desc).offset(@offset).limit(1)
     render :history
   end
 
