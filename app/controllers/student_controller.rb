@@ -16,7 +16,7 @@ class StudentController < ApplicationController
   end
 
   def history 
-    @history = TimetabledSession.includes(:session_attendances, :users).where(user: current_user)
+    @history = SessionAttendance.includes(:timetabled_session, :user).where(user: current_user)
     render :history
   end
 

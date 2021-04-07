@@ -12,10 +12,10 @@
     Sessions
 %hr
 
--if @timetabled_sessions.empty?
+-if @sessions.empty?
     %center.alert.alert-warning There are no timetabled sessions.
 -else
     //Load all the sessions into an accordian
     #accordian.py-5
-        - @timetabled_sessions.each do |timetabled_session|
-            = render :partial => "components/accordian-card", locals: {session: timetabled_session}
+        - @sessions.each do |session|
+            = render :partial => "components/accordian-card#{current_user.admin ? '-admin' : ''}", locals: {session: session}

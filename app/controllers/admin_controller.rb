@@ -7,7 +7,7 @@ class AdminController < LecturerController
 
   #Call the home method for lecturers
 	def home
-    @timetabled_sessions = TimetabledSession.includes(:session_registered_lecturers, :user).all
+    @sessions = TimetabledSession.includes(:session_registered_lecturers, :user).all
     render :dashboard
 	end
 end

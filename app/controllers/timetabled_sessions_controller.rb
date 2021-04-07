@@ -31,6 +31,10 @@ class TimetabledSessionsController < ApplicationController
     @timetabled_session = TimetabledSession.new(timetabled_session_params)
 
     if @timetabled_session.save!
+      if current_user.lecturer?
+        SessionRegisteredLecturer.create(user: current_user, timetabled_session: @timetabled_session)
+      end
+
       redirect_to @timetabled_session, notice: 'Timetabled session was successfully created.'
     else
       render :new

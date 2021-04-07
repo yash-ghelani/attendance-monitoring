@@ -4,7 +4,7 @@
   .card
     %a.card-header.py-3{"style" => "cursor: pointer;","data-toggle" => "collapse", "data-target" => "#collapse-#{session.id}"}
       %h5.mb-0.text-secondary
-        = session.timetabled_session.session_title
+        = session.session_title
           
         
 
@@ -25,7 +25,7 @@
                         = icon "fas", "calendar"
                       Date
                     %td
-                      = session.timetabled_session.start_time.strftime('%d/%m/%Y')
+                      = session.start_time.strftime('%d/%m/%Y')
 
                   /Session Time
                   %tr                     
@@ -34,7 +34,7 @@
                         = icon "fas", "hourglass-start"
                       Start
                     %td
-                      = session.timetabled_session.start_time.to_s(:time)
+                      = session.start_time.to_s(:time)
 
                   /End Time
                   %tr                      
@@ -43,17 +43,7 @@
                         = icon "fas", "hourglass-end"
                       End
                     %td
-                      = session.timetabled_session.end_time.to_s(:time)
-                  
-                  -unless current_user.lecturer? or current_user.admin?
-                    /Sign In Time
-                    %tr
-                      %th
-                        %span.mr-2.text-muted
-                          = icon "fas", "clock"
-                        Sign In
-                        %td= session.created_at.to_s(:time)
-
+                      = session.end_time.to_s(:time)
 
             /Right Side
             .col-md-6
@@ -67,7 +57,7 @@
                 %tbody
                   /Lecturer (for loop will go here)
                   %tr
-                  - session.timetabled_session.session_registered_lecturers.each do |lecturer|
+                  - session.session_registered_lecturers.each do |lecturer|
                     %tr
                       %td= lecturer.user.email
                   
@@ -89,3 +79,10 @@
                       Attendance
                   .col-md-4.py-sm-2 
                     = link_to 'Delete', session, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-block'
+          
+          
+          
+    
+          
+        
+

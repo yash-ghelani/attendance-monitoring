@@ -7,7 +7,7 @@ class LecturerController < ApplicationController
 
   #Show the Dashboard for Lecturer
   def home
-    @timetabled_sessions = TimetabledSession.includes(:session_registered_lecturers, :user).where(user: current_user)
+    @sessions = SessionRegisteredLecturer.includes(:timetabled_session, :user).where(user: current_user)
     render :dashboard
   end
 
