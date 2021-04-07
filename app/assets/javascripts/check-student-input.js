@@ -7,19 +7,25 @@
  document.addEventListener("DOMContentLoaded", function() {
 
   //setup before functions
-  var typingTimer;                //timer identifier
-  var doneTypingInterval = 500;  //time in ms
   var running = false; //Is a search running?
   var inputBox = $("#session_code_session_code")
   var spinnyBoi = $("#loadingIcon")
   var resultsBox = $("#results")
+  var submitButton = $("#submitButton")
+
+  //Regex
+  var formatRegex = /^[\d\w-]+$/;
+  var lengthRegex = /^[\d\w]{8,8}$/;
+
+
   //When student starts typing start countdown
   inputBox.keyup(function(){
-    //Reset timer if still typing
-    clearTimeout(typingTimer);
-    if (inputBox.val()) {
-      typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    val = $(this).val()
+    if (val.match(formatRegex) && val.match(lengthRegex)){
+      //Run check
+      doneTyping()
     }else{
+      submitButton.prop( "disabled", true );
       resultsBox.empty()
     }
   });
@@ -61,6 +67,7 @@
             <p><b>${title}</b></p>
             `
             resultsBox.append(formHtml);
+            submitButton.prop( "disabled", false );
           }else{
             formHtml=`
             <p class="text-danger">Code Invalid</p>
