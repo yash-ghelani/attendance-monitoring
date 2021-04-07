@@ -7,6 +7,10 @@ class LecturerController < ApplicationController
 
   #Show the Dashboard for Lecturer
   def home
+    #Prevent admins from viewing dashboards as a lecturer
+    if(current_user.admin)
+      return redirect_to :controller => 'admin', :action => 'home'
+    end
     @sessions = SessionRegisteredLecturer.includes(:timetabled_session, :user).where(user: current_user)
     render :dashboard
   end
