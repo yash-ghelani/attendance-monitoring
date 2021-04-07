@@ -47,9 +47,18 @@ class StudentController < ApplicationController
     end
   end
 
+  def quickValidate
+    #THE ajax function for student, will attempt to find session matching request
+    @timetabled_session = TimetabledSession.find_by(session_code: params[:session_code])
+    respond_to do |format|
+      format.html
+      format.json {render json: @timetabled_session}
+    end
+  end
+
   private
     # Only allow a trusted parameter "white list" through.
     def validate_params
       params.require(:session_code).permit(:session_code)
     end
-end
+  end
