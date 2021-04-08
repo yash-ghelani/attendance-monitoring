@@ -18,7 +18,7 @@
   var lengthRegex = /^[\d\w]{8,8}$/;
 
 
-  //When student starts typing start countdown
+  //When student starts typing
   inputBox.keyup(function(){
     val = $(this).val()
     if (val.match(formatRegex) && val.match(lengthRegex)){
@@ -45,7 +45,6 @@
   //Student finished typing, execute
   function doneTyping () {
     if(!running){
-      //TODO we can add REGEX validation here to take load off SERVER
       startRunning()
       //Empty the current contents to avoid duplication
       resultsBox.empty()
@@ -60,7 +59,7 @@
         success: function (result) {
           //If the result isn't false (code valid)
           if(result){
-            //HTML to inject
+            //HTML to inject (valid code)
             var title = result["session_title"]
             formHtml=`
             <p class="text-success">Code Valid</p>
@@ -69,6 +68,7 @@
             resultsBox.append(formHtml);
             submitButton.prop( "disabled", false );
           }else{
+            //HTML to inject (invalid code)
             formHtml=`
             <p class="text-danger">Code Invalid</p>
             `

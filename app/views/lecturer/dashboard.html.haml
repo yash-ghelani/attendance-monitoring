@@ -16,6 +16,7 @@
     %center.alert.alert-warning There are no timetabled sessions.
 -else
     //Load all the sessions into an accordian
-    #accordian.py-5
+
+    #accordians.pb-5
         - @sessions.each do |timetabled_session|
             = render :partial => "components/accordian-card", locals: {session: timetabled_session}

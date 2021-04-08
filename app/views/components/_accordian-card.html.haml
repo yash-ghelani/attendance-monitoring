@@ -2,9 +2,13 @@
 -# The variable used here is "session"
 #accordian
   .card
-    %a.card-header.py-3{"style" => "cursor: pointer;","data-toggle" => "collapse", "data-target" => "#collapse-#{session.id}"}
-      %h5.mb-0.text-secondary
-        = session.session_title
+    %a.container{"style" => "cursor: pointer;text-decoration: none","data-toggle" => "collapse", "data-target" => "#collapse-#{session.id}"}
+      .row
+        .bg-primary.py-3.text-white.px-2.text-center.col-md-2.col-5{"style" => "border-top-left-radius: 0.25rem;"}
+          = session.module_code
+        .bg-accordion-right.col.py-3{"style" => "border-top-right-radius: 0.25rem;"}
+          %h5.mb-0.text-secondary
+            = session.session_title
           
         
 
@@ -79,21 +83,24 @@
           /Bottom Bar
           .mt-3.container
             .row
-              .col-lg-6.col-md-8
-                .row
-                  .col-md-4.py-sm-2
-                    %a.btn.btn-outline-primary.btn-block{:href => edit_timetabled_session_path(session)}
-                      Edit
-                  .col-md-4.py-sm-2
-                    %a.btn.btn-primary.btn-block{:href => timetabled_session_path(session)}
+              .col-lg-6
+                .row.justify-content-center
+                  .col.py-2
+                    %a.btn.btn-light-blue.btn-block{:href => timetabled_session_path(session)}
                       Show Code
-                  .col-md-4.py-sm-2 
-                    %a.btn.btn-primary.btn-block{:href => session_attendance_path(session.id)}
+                  .col.py-2
+                    %a.btn.btn-light-blue.btn-block{:href => session_attendance_path(session.id)}
                       Attendance
+
                   -if current_user.admin?
-                    .col-md-4.py-sm-2
-                      %a.btn.btn-warning.btn-block{:href => admin_path}
+                    .col-12.col-md.py-2
+                      %a.btn.btn-light-pink.btn-block{:href => admin_path}
                         SAM Report
-                  .col-md-4.py-sm-2 
+
+              .col-lg-6
+                .row.justify-content-center
+                  .col-md-5.py-2
+                    %a.btn.btn-light-grey.btn-block{:href => edit_timetabled_session_path(session)}
+                      Edit
+                  .col-md-5.py-2
                     = link_to 'Delete', session, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-block'
-                  
