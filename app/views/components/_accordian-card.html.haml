@@ -90,5 +90,10 @@
                   .col-md-4.py-sm-2 
                     %a.btn.btn-primary.btn-block{:href => session_attendance_path(session.id)}
                       Attendance
+                  -if current_user.admin?
+                    .col-md-4.py-sm-2
+                      %a.btn.btn-warning.btn-block{:href => admin_path}
+                        SAM Report
                   .col-md-4.py-sm-2 
                     = link_to 'Delete', session, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-block'
+                  

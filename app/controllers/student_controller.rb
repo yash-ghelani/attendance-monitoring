@@ -24,7 +24,7 @@ class StudentController < ApplicationController
 
   def validate
     if /^[\d\w-]+$/.match(validate_params["session_code"]).nil?
-      redirect_to student_path, alert: 'Code must contain only digits, letters and dashes'
+      redirect_to student_path, alert: 'Code must contain only digits and letters.'
     elsif /^[\d\w]{8,}$/.match(validate_params["session_code"]).nil?
       redirect_to student_path, alert: 'Code must be of length 8'
     else
