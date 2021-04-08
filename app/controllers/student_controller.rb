@@ -32,7 +32,7 @@ class StudentController < ApplicationController
 
       if @timetabled_session.nil?
         redirect_to student_path, alert: 'No session found for that code'
-      elsif @timetabled_session.start_time > Time.now.utc-15.minutes
+      elsif @timetabled_session.start_time-15.minutes > Time.now.utc
         redirect_to student_path, alert: 'Session has not opened attendance yet'
       elsif Time.now > @timetabled_session.end_time
         redirect_to student_path, alert: 'Session has ended. Deadline for signing in has passed for the session'
