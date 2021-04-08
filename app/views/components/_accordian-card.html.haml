@@ -46,13 +46,15 @@
                       = session.end_time.to_s(:time)
                   
                   -unless current_user.lecturer? or current_user.admin?
-                    /Sign In Time
-                    %tr
-                      %th
-                        %span.mr-2.text-muted
-                          = icon "fas", "clock"
-                        Sign In
-                        %td= session.created_at.to_s(:time)
+                    - @attendance = session.session_attendances.find_by(user: current_user)
+                    - unless @attendance.nil?
+                      /Sign In Time
+                      %tr
+                        %th
+                          %span.mr-2.text-muted
+                            = icon "fas", "clock"
+                          Sign In
+                          %td= @attendance.created_at.to_s(:time)
 
 
             /Right Side

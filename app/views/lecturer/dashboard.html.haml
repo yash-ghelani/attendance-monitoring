@@ -17,5 +17,5 @@
 -else
     //Load all the sessions into an accordian
     #accordian.py-5
-        - @sessions.each do |session|
-            = render :partial => "components/accordian-card", locals: {session: current_user.admin ? session : session.timetabled_session}
+        - @sessions.each do |timetabled_session|
+            = render :partial => "components/accordian-card", locals: {session: timetabled_session}
