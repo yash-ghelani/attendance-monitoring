@@ -2,9 +2,8 @@
 %h1 History 
 %hr
 
-#accordian.py-5
+#accordians.py-5
     - if @history.empty?
         %center.alert.alert-warning You have not attended any sessions.
     - else
-        - @history.each do |timetabled_session|
-            = render :partial => "components/accordian-card", locals: {session: timetabled_session}
+        = render :partial => "components/week-view", locals: {sessions: @history}

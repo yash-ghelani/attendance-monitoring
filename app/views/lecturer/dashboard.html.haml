@@ -12,11 +12,12 @@
     Sessions
 %hr
 
--if @sessions.empty?
-    %center.alert.alert-warning There are no timetabled sessions.
--else
-    //Load all the sessions into an accordian
+#accordians.py-5
+    -if @sessions.empty?
+        %center.alert.alert-warning There are no timetabled sessions.
+    -else
+        = render :partial => "components/week-view", locals: {sessions: @sessions}
 
-    #accordians.pb-5
-        - @sessions.each do |timetabled_session|
-            = render :partial => "components/accordian-card", locals: {session: timetabled_session}
+
+
+    
