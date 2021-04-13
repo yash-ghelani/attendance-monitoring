@@ -11,11 +11,11 @@
 %nav
     %ul.pagination.justify-content-center
         %li.page-item
-            %a.page-link{"href" => "#{admin_path}?week=#{@week-1}"}
+            %a.page-link{:href => "#{admin_path}?week=#{@week-1}"}
                 %span
                     = icon "fas", "chevron-left"
         %li.page-item
-            %a.page-link{"href" => "#{admin_path}?week=#{@week}"}
+            %a.page-link{:href => "#{admin_path}?week=#{@week}"}
                 - if @week_start.month == @week_end.month
                     = "#{@week_start.strftime('%B')} #{@week_start.day} - #{@week_end.day}"
                 - else
@@ -23,7 +23,7 @@
 
 
         %li.page-item
-            %a.page-link{"href" => "#{admin_path}?week=#{@week+1}"}
+            %a.page-link{:href => "#{admin_path}?week=#{@week+1}"}
                 %span
                     = icon "fas", "chevron-right"
         

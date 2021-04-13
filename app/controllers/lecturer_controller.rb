@@ -18,7 +18,6 @@ class LecturerController < ApplicationController
     @week_end = Time.now.utc.end_of_week+@week.week
     
     @sessions = @sessions.where(session_registered_lecturers: {user: current_user}, start_time: @week_start..@week_end)
-    @count = @sessions.size
     @sessions = @sessions.order(created_at: :asc)
     render :dashboard
   end

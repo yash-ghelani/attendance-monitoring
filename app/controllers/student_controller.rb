@@ -23,8 +23,7 @@ class StudentController < ApplicationController
     @week_end = Time.now.utc.end_of_week+@week.week
     
     @history = @history.where(start_time: @week_start..@week_end)
-    @count = @sessions.size
-    @sessions = @sessions.order(created_at: :asc)
+    @history = @history.order(created_at: :asc)
 
     render :history
   end
