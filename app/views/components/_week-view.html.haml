@@ -1,17 +1,10 @@
 - # Will display the sessions in a week format Monday - Sunday
-- Date::DAYNAMES.each do |week|
-    - show = false
-    - sessions.each do |timetabled_session|
-        - if (timetabled_session.start_time.strftime('%A').upcase == week.upcase)
-            - show = true
-            - break
-    - if show == true
+- Date::DAYNAMES.each do |day|
+    - sessions.select{|record| record.start_time.strftime('%A').upcase == day.upcase}.each do |timetabled_session|
         .mb-5
             %h3
-                = week
+                = day
             %hr
             //Load all the sessions into an accordian
             .py-2
-                - sessions.each do |timetabled_session|
-                    - if (timetabled_session.start_time.strftime('%A').upcase == week.upcase)
-                        = render :partial => "components/accordian-card", locals: {session: timetabled_session}
+                = render :partial => "components/accordian-card", locals: {session: timetabled_session}

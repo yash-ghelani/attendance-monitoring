@@ -1,6 +1,7 @@
 - content_for :title, "History"
 %h1 History 
 %hr
+= @week
 
 %nav
     %ul.pagination.justify-content-center
@@ -8,13 +9,20 @@
             %a.page-link{:href => "#{student_history_path}?week=#{@week-1}"}
                 %span
                     = icon "fas", "chevron-left"
-        %li.page-item
-            %a.page-link{:href => "#{student_history_path}?week=#{@week}"}
-                - if @week_start.month == @week_end.month
-                    = "#{@week_start.strftime('%B')} #{@week_start.day} - #{@week_end.day}"
-                - else
-                    = "#{@week_start.strftime('%B')} #{@week_start.day} - #{@week_end.strftime('%B')} #{@week_end.day}"
-
+        %li.page-item.dropdown
+            %a.page-link.dropdown-toggle{"role" => "button", "data-toggle" => "dropdown", "data-target" => "#", "data-display" => "static"} 
+                = "#{@week_start.strftime('%B')} #{@week_start.day} - #{@week_end.strftime('%B') if @week_start.month < @week_end.month} #{@week_end.day}"
+                %b.caret
+            %ul.dropdown-menu{"role" => "menu", "class" => "p-0"}
+                %li.page-item
+                - 0.downto(-6).each do |offset|
+                    %a.page-link{:href => "#{student_history_path}?week=#{@week+offset}"} 
+                        - @start = @week_start-offset.week
+                        - @end = @week_end-offset.week
+                        - if offset == 0
+                            Current Week
+                        - else
+                            = "#{@start.strftime('%B')} #{@start.day} - #{@end.strftime('%B') if @start.month < @end.month} #{@end.day}"
         %li.page-item{:class => ('disabled' if @week == 0)}
             %a.page-link{:href => "#{student_history_path}?week=#{@week+(@week < 0 ? 1 : 0)}"}
                 %span

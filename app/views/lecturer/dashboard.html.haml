@@ -14,14 +14,20 @@
             %a.page-link{:href => "#{admin_path}?week=#{@week-1}"}
                 %span
                     = icon "fas", "chevron-left"
-        %li.page-item
-            %a.page-link{:href => "#{admin_path}?week=#{@week}"}
-                - if @week_start.month == @week_end.month
-                    = "#{@week_start.strftime('%B')} #{@week_start.day} - #{@week_end.day}"
-                - else
-                    = "#{@week_start.strftime('%B')} #{@week_start.day} - #{@week_end.strftime('%B')} #{@week_end.day}"
-
-
+        %li.page-item.dropdown
+            %a.page-link.dropdown-toggle{"role" => "button", "data-toggle" => "dropdown", "data-target" => "#", "data-display" => "static"} 
+                = "#{@week_start.strftime('%B')} #{@week_start.day} - #{@week_end.strftime('%B') if @week_start.month < @week_end.month} #{@week_end.day}"
+                %b.caret
+            %ul.dropdown-menu{"role" => "menu", "class" => "p-0"}
+                %li.page-item
+                - 3.downto(-3).each do |offset|
+                    %a.page-link{:href => "#{admin_path}?week=#{@week+offset}"} 
+                        - @start = @week_start-offset.week
+                        - @end = @week_end-offset.week
+                        - if offset == 0
+                            Current Week
+                        - else
+                            = "#{@start.strftime('%B')} #{@start.day} - #{@end.strftime('%B') if @start.month < @end.month} #{@end.day}"
         %li.page-item
             %a.page-link{:href => "#{admin_path}?week=#{@week+1}"}
                 %span
@@ -31,17 +37,6 @@
 %h1
     Sessions
 %hr
-
--# %nav{"aria-label" => "..."}
--#     %ul.pagination
--#         %li.page-item{:class => ("disabled" if @page == 0)}
--#             %a.page-link{:href => "#{admin_path}?offset=#{@offset-@limit}", :tabindex => "-1"} Previous
--#         - (0..(@count/@limit)-1).each do |page|
--#             %li.page-item{:class => ("active" if page == @page)}
--#                 %a.page-link{:href => "#{admin_path}?offset=#{page*@limit}"}
--#                     = page+1
--#         %li.page-item{:class => ("disabled" if @page == (@count/@limit-1))}
--#             %a.page-link{:href => "#{admin_path}?offset=#{@offset+@limit}"} Next
 
 #accordians.py-5
     -if @sessions.empty?

@@ -17,7 +17,8 @@ class StudentController < ApplicationController
 
   def history 
     @history = TimetabledSession.joins(:session_attendances => :user).where(session_attendances: {user: current_user})
-    @week = params[:week].to_i || 0
+    @week = params[:week] || "0"
+    @week = @week.length < 4 ? @week.to_i : 0
     @week = @week > 0 ? 0 : @week
     @week_start = Time.now.utc.beginning_of_week+@week.week
     @week_end = Time.now.utc.end_of_week+@week.week
