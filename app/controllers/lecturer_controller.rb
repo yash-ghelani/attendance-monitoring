@@ -11,9 +11,11 @@ class LecturerController < ApplicationController
     if(current_user.admin)
       return redirect_to :controller => 'admin', :action => 'home'
     end
+
     @sessions = TimetabledSession.joins(:session_registered_lecturers => :user)
 
-    @week = params[:week].to_i || 0
+    @week = params[:week] || "0"
+    @week = @week.length < 4 ? @week.to_i : 0
     @week_start = Time.now.utc.beginning_of_week+@week.week
     @week_end = Time.now.utc.end_of_week+@week.week
     

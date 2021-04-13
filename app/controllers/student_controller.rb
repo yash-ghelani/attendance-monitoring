@@ -56,7 +56,7 @@ class StudentController < ApplicationController
     end
   end
 
-  def quickValidate
+  def quick_validate
     #THE ajax function for student, will attempt to find session matching request
     @timetabled_session = TimetabledSession.find_by(session_code: params[:session_code])
     respond_to do |format|
