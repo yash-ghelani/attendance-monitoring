@@ -11,7 +11,7 @@
                 = "#{week_start.strftime('%B')} #{week_start.day} - #{week_end.strftime('%B') if week_start.month < week_end.month} #{week_end.day}"
                 %b.caret
             %ul.dropdown-menu.w-100.text-center{"role" => "menu", "class" => "p-0"}
-                %a.dropdown-item.text-success.py-2{:href => "#{path}"}
+                %a.dropdown-item.py-2{:href => "#{path}"}
                     %b Current week
                 .dropdown-divider
                 - offsetTop = isStudent ? 0 : 3
@@ -21,8 +21,13 @@
                         - start = week_start-offset.week
                         - endVar = week_end-offset.week
                         %span{class: [('font-weight-bold text-primary' if offset == 0)]}
+                            .row
+                                .col.text-left.px-1 #{start.strftime('%b')}
+                                .col.px-1 #{start.day}
+                                .col.px-1 -
+                                .col.px-1 #{endVar.strftime('%b') if start.month < endVar.month} #{endVar.day}
 
-                            = "#{start.strftime('%B')} #{start.day} - #{endVar.strftime('%B') if start.month < endVar.month} #{endVar.day}"
+                            / = "#{start.strftime('%B')} #{start.day} - #{endVar.strftime('%B') if start.month < endVar.month} #{endVar.day}"
                             
         %li.page-item{:class => ('disabled' if (@week == 0 && isStudent == true))}
             %a.page-link{:href => "#{path}?week=#{week+1}"}
