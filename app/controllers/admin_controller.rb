@@ -6,13 +6,14 @@ class AdminController < LecturerController
   authorize_resource :class => false
 
   #Call the home method for lecturers
-	def home
-    @sessions = TimetabledSession.includes(:session_registered_lecturers, :user).all
+  def home
+    @week = params[:week].to_i || 0
+    @week_start = Time.now.utc.beginning_of_week+@week.week
+    @week_end = Time.now.utc.end_of_week+@week.week
+    
+    @sessions = TimetabledSession.all.where(start_time: @week_start..@week_end)
     @count = @sessions.size
-    @limit = 1
-    @offset = params[:offset].to_i || 0
-    @sessions = @sessions.order(start_time: :desc).offset(params[:offset] || 0).limit(@limit)
-    @page = @offset*@limit
+    @sessions = @sessions.order(created_at: :asc)
     render :dashboard
-	end
+  end
 end

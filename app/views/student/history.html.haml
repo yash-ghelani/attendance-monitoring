@@ -2,6 +2,25 @@
 %h1 History 
 %hr
 
+%nav
+    %ul.pagination.justify-content-center
+        %li.page-item
+            %a.page-link{"href" => "#{admin_path}?week=#{@week-1}"}
+                %span
+                    = icon "fas", "chevron-left"
+        %li.page-item
+            %a.page-link{"href" => "#{admin_path}?week=#{@week}"}
+                - if @week_start.month == @week_end.month
+                    = "#{@week_start.strftime('%B')} #{@week_start.day} - #{@week_end.day}"
+                - else
+                    = "#{@week_start.strftime('%B')} #{@week_start.day} - #{@week_end.strftime('%B')} #{@week_end.day}"
+
+
+        %li.page-item
+            %a.page-link{"href" => "#{student_path}?week=#{@week+1}", :class => ("disabled" if @week == 0)}}
+                %span
+                    = icon "fas", "chevron-right"
+
 #accordians.py-5
     - if @history.empty?
         %center.alert.alert-warning You have not attended any sessions.

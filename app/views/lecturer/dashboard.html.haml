@@ -11,15 +11,19 @@
 %nav
     %ul.pagination.justify-content-center
         %li.page-item
-            %a.page-link{"href" => "#"}
+            %a.page-link{"href" => "#{admin_path}?week=#{@week-1}"}
                 %span
                     = icon "fas", "chevron-left"
         %li.page-item
-            %a.page-link{"href" => "#"}
-                Week goes here
+            %a.page-link{"href" => "#{admin_path}?week=#{@week}"}
+                - if @week_start.month == @week_end.month
+                    = "#{@week_start.strftime('%B')} #{@week_start.day} - #{@week_end.day}"
+                - else
+                    = "#{@week_start.strftime('%B')} #{@week_start.day} - #{@week_end.strftime('%B')} #{@week_end.day}"
+
 
         %li.page-item
-            %a.page-link{"href" => "#"}
+            %a.page-link{"href" => "#{admin_path}?week=#{@week+1}"}
                 %span
                     = icon "fas", "chevron-right"
         
@@ -28,16 +32,16 @@
     Sessions
 %hr
 
-%nav{"aria-label" => "..."}
-    %ul.pagination
-        %li.page-item{:class => ("disabled" if @page == 0)}
-            %a.page-link{:href => "#{admin_path}?offset=#{@offset-@limit}", :tabindex => "-1"} Previous
-        - (0..(@count/@limit)-1).each do |page|
-            %li.page-item{:class => ("active" if page == @page)}
-                %a.page-link{:href => "#{admin_path}?offset=#{page*@limit}"}
-                    = page+1
-        %li.page-item{:class => ("disabled" if @page == (@count/@limit-1))}
-            %a.page-link{:href => "#{admin_path}?offset=#{@offset+@limit}"} Next
+-# %nav{"aria-label" => "..."}
+-#     %ul.pagination
+-#         %li.page-item{:class => ("disabled" if @page == 0)}
+-#             %a.page-link{:href => "#{admin_path}?offset=#{@offset-@limit}", :tabindex => "-1"} Previous
+-#         - (0..(@count/@limit)-1).each do |page|
+-#             %li.page-item{:class => ("active" if page == @page)}
+-#                 %a.page-link{:href => "#{admin_path}?offset=#{page*@limit}"}
+-#                     = page+1
+-#         %li.page-item{:class => ("disabled" if @page == (@count/@limit-1))}
+-#             %a.page-link{:href => "#{admin_path}?offset=#{@offset+@limit}"} Next
 
 #accordians.py-5
     -if @sessions.empty?

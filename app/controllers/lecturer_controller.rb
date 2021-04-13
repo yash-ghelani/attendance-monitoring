@@ -11,13 +11,15 @@ class LecturerController < ApplicationController
     if(current_user.admin)
       return redirect_to :controller => 'admin', :action => 'home'
     end
+    @sessions = TimetabledSession.joins(:session_registered_lecturers => :user)
+
+    @week = params[:week].to_i || 0
+    @week_start = Time.now.utc.beginning_of_week+@week.week
+    @week_end = Time.now.utc.end_of_week+@week.week
     
-    @sessions = TimetabledSession.joins(:session_registered_lecturers => :user).where(session_registered_lecturers: {user: current_user})
+    @sessions = @sessions.where(session_registered_lecturers: {user: current_user}, start_time: @week_start..@week_end)
     @count = @sessions.size
-    @limit = 1
-    @offset = params[:offset].to_i || 0
-    @sessions = @sessions.order(created_at: :desc).offset(@offset).limit(@limit)
-    @page = @offset*@limit
+    @sessions = @sessions.order(created_at: :asc)
     render :dashboard
   end
 

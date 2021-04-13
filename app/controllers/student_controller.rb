@@ -17,11 +17,14 @@ class StudentController < ApplicationController
 
   def history 
     @history = TimetabledSession.joins(:session_attendances => :user).where(session_attendances: {user: current_user})
-    @count = @history.size
-    @limit = 1
-    @offset = params[:offset].to_i || 0
-    @page = @offset*@limit
-    @history = @history.order(created_at: :desc).offset(@offset).limit(1)
+    @week = params[:week].to_i || 0
+    @week = @week > 0 ? 0 : @week
+    @week_start = Time.now.utc.beginning_of_week+@week.week
+    @week_end = Time.now.utc.end_of_week+@week.week
+    
+    @history = @history.where(start_time: @week_start..@week_end)
+    @count = @sessions.size
+    @sessions = @sessions.order(created_at: :asc)
 
     render :history
   end
