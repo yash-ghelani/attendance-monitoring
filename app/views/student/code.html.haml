@@ -11,18 +11,12 @@
           .card-body
             = f.input :session_code, autofocus: true, required: true, input_html: { :value => @qrcode}
 
-            -# If the user joins with a QR code then display this bit
-            - if (!@qrcode.nil?)
-              - if(!@timetabled_session.nil?)
-                .text-success
-                  QR code valid
-                %b
-                  Title: 
-                = @timetabled_session.session_title
-              - else
-                .text-danger
-                  QR code is not valid
+            - # Where the AJAX results are displayed
+            #loadingIcon.spinner-border.d-none
+            #results
+
           .card-footer
             .row.justify-content-center
-              = submit_button 'Sign In'
+              = submit_button 'Sign In', id: "submitButton", disabled: true
                
+= javascript_include_tag "check-student-input"

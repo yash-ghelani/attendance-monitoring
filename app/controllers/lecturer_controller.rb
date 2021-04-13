@@ -7,7 +7,12 @@ class LecturerController < ApplicationController
 
   #Show the Dashboard for Lecturer
   def home
-    @sessions = SessionRegisteredLecturer.includes(:timetabled_session, :user).where(user: current_user)
+    #Prevent admins from viewing dashboards as a lecturer
+    if(current_user.admin)
+      return redirect_to :controller => 'admin', :action => 'home'
+    end
+    
+    @sessions = TimetabledSession.joins(:session_registered_lecturers => :user).where(session_registered_lecturers: {user: current_user})
     @count = @sessions.size
     @limit = 1
     @offset = params[:offset].to_i || 0

@@ -20,7 +20,7 @@ class Ability
         #Models
         can :manage, TimetabledSession
         can :manage, SessionRegisteredLecturer
-        can :manage, SessionAttendance
+        can :read, SessionAttendance
         
     #Student abilities only
     else

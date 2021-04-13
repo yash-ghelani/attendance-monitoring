@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   # Student Routes
   get '/student/history', to: 'student#history'
   post '/student/validate', to: 'student#validate'
-
+  post '/student/quick', to: 'student#quickValidate'
 
   #Dev only routes TODO devOnly
   get '/set-student', to: 'home#set_student'

@@ -8,6 +8,22 @@
         New Session
 
 
+%nav
+    %ul.pagination.justify-content-center
+        %li.page-item
+            %a.page-link{"href" => "#"}
+                %span
+                    = icon "fas", "chevron-left"
+        %li.page-item
+            %a.page-link{"href" => "#"}
+                Week goes here
+
+        %li.page-item
+            %a.page-link{"href" => "#"}
+                %span
+                    = icon "fas", "chevron-right"
+        
+    
 %h1
     Sessions
 %hr
@@ -23,10 +39,12 @@
         %li.page-item{:class => ("disabled" if @page == (@count/@limit-1))}
             %a.page-link{:href => "#{admin_path}?offset=#{@offset+@limit}"} Next
 
--if @sessions.empty?
-    %center.alert.alert-warning There are no timetabled sessions.
--else
-    //Load all the sessions into an accordian
-    #accordian.py-5
-        - @sessions.each do |session|
-            = render :partial => "components/accordian-card#{current_user.admin ? '-admin' : ''}", locals: {session: session}
+#accordians.py-5
+    -if @sessions.empty?
+        %center.alert.alert-warning There are no timetabled sessions.
+    -else
+        = render :partial => "components/week-view", locals: {sessions: @sessions}
+
+
+
+    
