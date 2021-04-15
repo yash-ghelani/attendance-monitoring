@@ -1,0 +1,37 @@
+-# Date Picker partial
+- isStudent = !(current_user.admin || current_user.lecturer)
+%nav.my-4
+    %ul.pagination.justify-content-center
+        %li.page-item
+            %a.page-link{:href => "#{path}?start_date=#{(week_start-1.week).strftime('%Y-%m-%d')}"}
+                %span
+                    = icon "fas", "chevron-left"
+        %li.page-item.dropdown.w-100.text-center{"style"=>"max-width: 15rem"}
+            %a.page-link.dropdown-toggle{"role" => "button", "data-toggle" => "dropdown", "data-target" => "#", "data-display" => "static"} 
+                = "#{week_start.strftime('%B')} #{week_start.day} - #{week_end.strftime('%B') if week_start.month < week_end.month} #{week_end.day}"
+                %b.caret
+            %ul.dropdown-menu.w-100.text-center{"role" => "menu", "class" => "p-0"}
+                %a.dropdown-item.py-2{:href => "#{path}"}
+                    %b Current week
+                .dropdown-divider.m-0
+                - offset_top = isStudent ? 0 : 3
+                - offset_bottom = isStudent ? -6 : -3
+                - offset_top.downto(offset_bottom).each do |offset|
+                    - start_date = week_start-offset.week
+                    - end_date = week_end-offset.week
+                    %a.dropdown-item{:href => "#{path}?start_date=#{start_date.strftime('%Y-%m-%d')}", class: [ ('disabled' if offset == 0)]} 
+                        %span{class: [('font-weight-bold text-primary' if offset == 0)]}
+                            -# .row
+                            -#     .col.text-left.px-1 #{start_date.strftime('%b')}
+                            -#     .col.px-1 #{start_date.day}
+                            -#     .col.px-1 -
+                            -#     .col.px-1 #{end_date.strftime('%b') if start_date.month < end_date.month} #{end_date.day}
+
+                            = "#{start_date.strftime('%B')} #{start_date.day} - #{end_date.strftime('%B') if start_date.month < end_date.month} #{end_date.day}"
+                            
+        %li.page-item{:class => ('disabled' if (week_start == current_week && isStudent))}
+            %a.page-link{:href => "#{path}?start_date=#{(week_start+1.week).strftime('%Y-%m-%d')}"}
+                %span
+                    = icon "fas", "chevron-right"
+        
+  

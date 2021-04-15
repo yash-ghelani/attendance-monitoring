@@ -8,7 +8,7 @@
         New Session
 
 
-= render :partial => "components/date-picker", locals: {week: @week,week_start: @week_start,week_end: @week_end,start: @start,endVar: @end, path: current_user.admin ? admin_path : lecturer_path}
+= render :partial => "components/week-pagination", locals: {week_start: @week_start, week_end: @week_end, current_week: @current_week, path: current_user.admin ? admin_path : lecturer_path}
 
 .d-flex.justify-content-between.align-items-center
     %h1.mb-0
