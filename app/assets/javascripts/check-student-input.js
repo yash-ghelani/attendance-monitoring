@@ -6,8 +6,9 @@
 
  document.addEventListener("DOMContentLoaded", function() {
 
-  //setup before functions
+  //Globals
   var running = false; //Is a search running?
+  var lastSearch = "" //Store last searched code to prevent duplication
   var inputBox = $("#session_code_session_code")
   var spinnyBoi = $("#loadingIcon")
   var resultsBox = $("#results")
@@ -16,17 +17,20 @@
   //Regex
   var formatRegex = /^[\d\w-]+$/;
   var lengthRegex = /^[\d\w]{8,8}$/;
-
-
+  
+  
   //When student starts typing
   inputBox.keyup(function(){
     val = $(this).val()
-    if (val.match(formatRegex) && val.match(lengthRegex)){
-      //Run check
-      doneTyping()
-    }else{
-      submitButton.prop( "disabled", true );
-      resultsBox.empty()
+    //Check input has changed
+    if(val != lastSearch){
+      if (val.match(formatRegex) && val.match(lengthRegex)){
+        //Run check
+        doneTyping()
+      }else{
+        submitButton.prop( "disabled", true );
+        resultsBox.empty()
+      }
     }
   });
 
@@ -49,6 +53,7 @@
       //Empty the current contents to avoid duplication
       resultsBox.empty()
       var code = inputBox.val()
+      lastSearch=code //Update global
       //Send an AJAX request to the controller
       $.ajax({
         type: "POST",

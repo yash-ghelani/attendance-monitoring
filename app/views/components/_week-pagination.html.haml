@@ -1,0 +1,36 @@
+-# Week Pagination partial
+- is_student = !(current_user.admin || current_user.lecturer)
+%nav.my-4
+    %ul.pagination.justify-content-center
+        %li.page-item.w-100.text-center{"style"=>"max-width: 8rem"}
+            %a.page-link.h-100{:href => "#{path}?start_date=#{(week_start-1.week).strftime('%Y-%m-%d')}"}
+                %span
+                    = icon "fas", "chevron-left"
+                .d-none.d-sm-inline-block
+                    Previous
+        %li.page-item.dropdown.w-100.text-center{"style"=>"max-width: 15rem"}
+            %a.page-link.dropdown-toggle.h-100{"role" => "button", "data-toggle" => "dropdown", "data-target" => "#", "data-display" => "static"} 
+                = "#{week_start.strftime('%B')} #{week_start.day} - #{week_end.strftime('%B') if week_start.month < week_end.month} #{week_end.day}"
+                %b.caret
+            %ul.dropdown-menu.w-100.text-center{"role" => "menu", "class" => "p-0"}
+                %a.dropdown-item.py-2{:href => "#{path}"}
+                    %b Current week
+                .dropdown-divider.m-0
+                - offset_top = is_student ? 0 : 3
+                - offset_bottom = is_student ? -6 : -3
+                - offset_top.downto(offset_bottom).each do |offset|
+                    - start_date = week_start-offset.week
+                    - end_date = week_end-offset.week
+                    %a.dropdown-item{:href => "#{path}?start_date=#{start_date.strftime('%Y-%m-%d')}", class: [ ('disabled' if offset == 0)]} 
+                        %span{class: [('font-weight-bold text-primary' if offset == 0)]}
+                            = "#{start_date.strftime('%B')} #{start_date.day} - #{end_date.strftime('%B') if start_date.month < end_date.month} #{end_date.day}"
+                            
+        %li.page-item.w-100.text-center{"style" => "max-width: 8rem",:class => ('disabled' if (week_start == current_week && is_student))}
+            %a.page-link.h-100{:href => "#{path}?start_date=#{(week_start+1.week).strftime('%Y-%m-%d')}"}
+                .d-none.d-sm-inline-block
+                    Next
+                %span
+                    = icon "fas", "chevron-right"
+                
+        
+  

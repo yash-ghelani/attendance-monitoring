@@ -7,11 +7,15 @@ class AdminController < LecturerController
 
   #Call the home method for lecturers
   def home
-    @week = params[:week] || "0"
-    @week = @week.length < 4 ? @week.to_i : 0
-    @week_start = Time.now.utc.beginning_of_week+@week.week
-    @week_end = Time.now.utc.end_of_week+@week.week
-    
+    @current_week = Time.now.utc.beginning_of_week
+    begin
+      @week_start = (params[:start_date] || "").to_datetime || @current_week
+    rescue ArgumentError => e
+      @week_start = @current_week
+    end
+    @week_start = @week_start.beginning_of_week
+    @week_end = @week_start.end_of_week
+
     @sessions = TimetabledSession.all.where(start_time: @week_start..@week_end)
     @sessions = @sessions.order(created_at: :asc)
     render :dashboard
