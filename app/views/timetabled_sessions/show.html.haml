@@ -1,27 +1,70 @@
-%h1
-  %b= @timetabled_session.session_title
-%p
-  %b Module code:
-  = @timetabled_session.module_code
-%p
-  %b Date:
-  = @timetabled_session.start_time.strftime("%d/%m/%Y")
-%p
-  %b Start Time:
-  = @timetabled_session.start_time.strftime("%R")
-%p
-  %b End Time:
-  = @timetabled_session.end_time.strftime('%R')
-%p
-  %center
-    %b Enter code: 
-    %br
-    %h1= @timetabled_session.session_code
-    %b.mt-5 QR Code
-    %br
-    %img{:src => "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=#{@url}"}
+.w-100.text-center
+  %h1
+    %b
+      =@timetabled_session.module_code
+      \-
+      =@timetabled_session.session_title
+
+  .py-4.bg-light.rounded.mt-3
+    .row.align-items-center
+      .col
+
+        %h6
+          Enter code
+        %h2
+          %b 
+            = @timetabled_session.session_code
+      .col
+        %img{:src => "https://api.qrserver.com/v1/create-qr-code/?size=150x150&&data=#{@url}"}
+
+.container.mt-5
+  
+  -# Details
+  .my-4
+    %table.table.borderless
+      %thead
+        %tr
+          %th{:colspan => 2}
+            Details
+      %tbody
+        %tr
+          %td
+            Date
+          %td
+            =@timetabled_session.start_time.strftime("%d/%m/%Y")
+        %tr
+          %td
+            Start Time
+          %td
+            = @timetabled_session.start_time.strftime("%R")
+
+        %tr
+          %td
+            End Time
+          %td
+            = @timetabled_session.end_time.strftime('%R')
+    
+  - #Joined
+  .my-4
+    %table.table.borderless
+      %thead
+        %tr
+          %th{:colspan => 2}
+            Joined
+    
+    #studentSection
+      -# Where the joining students will go
+      .row#newStudents{"code"=>@timetabled_session.id}
+        
+        
+          
+
+
 
 - if current_user.lecturer?
   = button_to 'Back', lecturer_url, :method => :get
 - if current_user.admin?
   = button_to 'Back', admin_url, :method => :get
+
+
+= javascript_include_tag "check-joining-students"

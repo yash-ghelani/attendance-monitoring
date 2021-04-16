@@ -27,6 +27,9 @@ Rails.application.routes.draw do
   post '/student/validate', to: 'student#validate'
   post '/student/quick', to: 'student#quick_validate'
 
+  # Attendance routes
+  post '/attendance/quick', to: 'session_attendances#quick_get_students'
+  
   #Dev only routes TODO devOnly
   get '/set-student', to: 'home#set_student'
   get '/set-lecturer', to: 'home#set_lecturer'
