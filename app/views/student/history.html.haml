@@ -1,9 +1,20 @@
 - content_for :title, "History"
-%h1 History 
+
+
+= render :partial => "components/week-pagination", locals: {week_start: @week_start, week_end: @week_end, current_week: @current_week, path: student_history_path}
+
+
+.d-flex.justify-content-between.align-items-center
+    %h1.mb-0
+        History
+
+    %h3
+        %span.badge.badge-secondary
+            =@history.length()
 %hr
 
 #accordians.py-5
     - if @history.empty?
-        %center.alert.alert-warning You have not attended any sessions.
+        %center.alert.alert-warning You have not attended any sessions for this week.
     - else
         = render :partial => "components/week-view", locals: {sessions: @history}

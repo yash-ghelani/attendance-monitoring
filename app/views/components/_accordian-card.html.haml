@@ -7,13 +7,12 @@
         .bg-primary.py-3.text-white.px-2.text-center.col-md-2.col-5{"style" => "border-top-left-radius: 0.25rem;"}
           = session.module_code
         .bg-accordion-right.col.py-3{"style" => "border-top-right-radius: 0.25rem;"}
-          .row
-            .col
-              %h5.mb-0.text-secondary
-                %span{:class => ("text-muted" unless Time.now < session.start_time)}
-                  = session.session_title
+          .d-flex.justify-content-between
+            %h5.mb-0.text-secondary
+              %span{:class => ("text-muted" unless Time.now < session.start_time)}
+                = session.session_title
             - if Time.now > session.start_time
-              %span.mr-4.text-muted
+              %span.text-muted
                 = icon "fas", "check"
 
           

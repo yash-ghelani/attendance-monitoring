@@ -11,7 +11,20 @@ class LecturerController < ApplicationController
     if(current_user.admin)
       return redirect_to :controller => 'admin', :action => 'home'
     end
-    @sessions = TimetabledSession.joins(:session_registered_lecturers => :user).where(session_registered_lecturers: {user: current_user})
+
+    @sessions = TimetabledSession.joins(:session_registered_lecturers => :user)
+
+    @current_week = Time.now.utc.beginning_of_week
+    begin
+      @week_start = (params[:start_date] || "").to_datetime || @current_week
+    rescue ArgumentError => e
+      @week_start = @current_week
+    end
+    @week_start = @week_start.beginning_of_week
+    @week_end = @week_start.end_of_week
+    
+    @sessions = @sessions.where(session_registered_lecturers: {user: current_user}, start_time: @week_start..@week_end)
+    @sessions = @sessions.order(created_at: :asc)
     render :dashboard
   end
 

@@ -17,6 +17,18 @@ class StudentController < ApplicationController
 
   def history 
     @history = TimetabledSession.joins(:session_attendances => :user).where(session_attendances: {user: current_user})
+    
+    @current_week = Time.now.utc.beginning_of_week
+    begin
+      @week_start = (params[:start_date] || "").to_datetime || @current_week
+    rescue ArgumentError => e
+      @week_start = @current_week
+    end
+    @week_start = @week_start.beginning_of_week
+    @week_end = @week_start.end_of_week
+    
+    @history = @history.where(start_time: @week_start..@week_end)
+    @history = @history.order(created_at: :asc)
 
     render :history
   end
@@ -48,7 +60,7 @@ class StudentController < ApplicationController
     end
   end
 
-  def quickValidate
+  def quick_validate
     #THE ajax function for student, will attempt to find session matching request
     @timetabled_session = TimetabledSession.find_by(session_code: params[:session_code])
     respond_to do |format|
