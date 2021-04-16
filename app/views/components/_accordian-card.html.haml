@@ -20,14 +20,14 @@
 
     .collapse{:id => "collapse-#{session.id}"}
       .card-body
-        
         .container
           .row
             /Left side
             .col-md-6
+              .w-100.text-center.border-bottom.mb-2.py-2
+                %b Details
               %table.table.borderless
                 %tbody
-
                   /Session Date
                   %tr                      
                     %th
@@ -69,19 +69,25 @@
 
             /Right Side
             .col-md-6
-              %table.table.borderless
-                %thead
-                  %tr
-                    %th.text-center
-                      %span.mr-2.text-muted
-                        = icon "fas", "graduation-cap"
-                      Lecturers                      
-                %tbody
-                  /Lecturer (for loop will go here)
-                  %tr
-                  - session.session_registered_lecturers.each do |lecturer|
-                    %tr
-                      %td= lecturer.user.email
+
+              .w-100.text-center.border-bottom.mb-2.py-2
+                %span.mr-2.text-muted
+                  = icon "fas", "graduation-cap"
+                %b 
+                  Lecturers
+                  - lect_count = session.session_registered_lecturers.length()
+                  - if (lect_count > 1)
+                    (#{lect_count})
+
+              .table-wrapper-scroll-y.table-custom-scrollbar
+                %table.table.borderless                     
+                  %tbody
+                    - session.session_registered_lecturers.each do |lecturer|
+                      %tr
+                        %td
+                          = lecturer.user.email
+                          
+              
                   
                     
         - if current_user.lecturer? or current_user.admin?

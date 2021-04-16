@@ -9,3 +9,13 @@
   *= require custom_flash
   *= require environment_notice
 */
+
+
+.table-custom-scrollbar {
+  position: relative;
+  height: 150px;
+  overflow: auto;
+}
+.table-wrapper-scroll-y {
+  display: block;
+}
