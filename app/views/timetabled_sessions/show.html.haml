@@ -1,9 +1,11 @@
+
+- content_for :title, @timetabled_session.session_title
+
 .w-100.text-center
   %h1
-    %b
-      =@timetabled_session.module_code
-      \-
-      =@timetabled_session.session_title
+    =@timetabled_session.module_code
+    \-
+    =@timetabled_session.session_title
 
   .py-4.bg-light.rounded.mt-3
     .row.align-items-center
