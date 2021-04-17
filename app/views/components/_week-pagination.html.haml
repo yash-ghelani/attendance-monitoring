@@ -1,6 +1,6 @@
 -# Week Pagination partial
 - is_student = !(current_user.admin || current_user.lecturer)
-%nav.my-4
+%nav.my-4.sticky-top{"style"=> "top: 57px;"}
     %ul.pagination.justify-content-center
         %li.page-item.w-100.text-center{"style"=>"max-width: 8rem"}
             %a.page-link.h-100{:href => "#{path}?start_date=#{(week_start-1.week).strftime('%Y-%m-%d')}"}
