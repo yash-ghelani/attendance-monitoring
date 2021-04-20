@@ -7,8 +7,8 @@
     -#= f.input :session_code
     = f.input :session_title
     = f.input :module_code
-    = f.input :start_time
-    = f.input :end_time
+    = f.datetime_local_field :start_time, :value => Time.now.localtime.strftime('%Y-%m-%dT%H:%M')
+    = f.datetime_local_field :end_time, :value => (Time.now.localtime+30.minutes).strftime('%Y-%m-%dT%H:%M')
 
     #lecturers
     .h4.mt-2 Register Lecturers
