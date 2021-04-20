@@ -1,8 +1,44 @@
-%h1= @timetabled_session.session_title
-%p Module Code : #{@timetabled_session.module_code}
-%p Date : #{@timetabled_session.start_time.strftime('%d/%m/%Y')}
+- content_for :title, "Session Attendance"
 
-%table
+%nav.mb-3
+  %ol.breadcrumb.bg-white.pl-0
+    %li.breadcrumb-item
+      %a{"href"=> "/"} Dashboard
+    %li.breadcrumb-item.active
+      Attendance
+
+.w-100
+  %h1.display-4 
+    =@timetabled_session.session_title
+  %p
+    Here you can view the attendance for a session
+
+%hr
+
+-# Details
+.col-md-6.my-2.p-0
+  %table.table.borderless
+    %tbody
+
+      /Module Code
+      %tr                      
+        %th
+          %span.mr-2.text-muted
+            = icon "fas", "font"
+          Module
+        %td
+          = @timetabled_session.module_code
+
+      /Session Date
+      %tr                      
+        %th
+          %span.mr-2.text-muted
+            = icon "fas", "calendar"
+          Date
+        %td
+          = @timetabled_session.start_time.strftime('%d/%m/%Y')
+
+%table.table
   %thead
     %tr
       %th Name
@@ -26,8 +62,3 @@
         %td= link_to 'Edit', edit_session_attendance_path(session)
         %td= link_to 'Destroy', session, method: :delete, data: { confirm: 'Are you sure?' }
 %br
-
-- if current_user.lecturer?
-  = button_to 'Back', lecturer_url, :method => :get
-- if current_user.admin?
-  = button_to 'Back', admin_url, :method => :get

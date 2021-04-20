@@ -1,10 +1,22 @@
-%h1 Editing timetabled_session
+- content_for :title, "Edit Session"
+
+
+%nav.mb-3
+  %ol.breadcrumb.bg-white.pl-0
+    %li.breadcrumb-item
+      %a{"href"=> "/"} Dashboard
+    %li.breadcrumb-item.active
+      Edit
+
+.w-100
+  %h1.display-4 
+    Edit Session
+  %p
+    Here you can edit session details
+
+%hr
+
 
 = render 'form'
 
 = link_to 'Show', @timetabled_session
-\|
-- if current_user.lecturer?
-    = link_to 'Back', lecturer_path
-- if current_user.admin?
-    = link_to 'Back', admin_path

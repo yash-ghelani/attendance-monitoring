@@ -3,7 +3,7 @@
 - content_for :title, "Home"
 
 .w-100
-    %h1.display-4 
+    %h1.display-4
         Welcome
         %b
             = current_user.givenname
@@ -19,7 +19,7 @@
                 %a.btn.btn-success{:href => "/admin/manage"}
                     New User  
   
-%hr
+%hr.mb-3
 
 = render :partial => "components/week-pagination", locals: {week_start: @week_start, week_end: @week_end, current_week: @current_week, path: current_user.admin ? admin_path : lecturer_path}
 
