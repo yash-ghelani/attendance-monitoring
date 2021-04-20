@@ -2,7 +2,7 @@
 
 - content_for :title, "Home"
 
-.w-100.text-center
+.w-100
     %h1.display-4 
         Welcome
         %b
@@ -10,13 +10,13 @@
     %p
         Welcome to COM attendance, from here you can view sessions as well as create new ones.
 
-    .my-3.d-flex.justify-content-center
+    .my-3.d-flex
         .p-2
             %a.btn.btn-success{:href => new_timetabled_session_path}
                 New Session
         - if (current_user.admin?)
             .p-2
-                %a.btn.btn-success{:href => new_timetabled_session_path}
+                %a.btn.btn-success{:href => "/admin/manage"}
                     New User  
   
 %hr

@@ -20,4 +20,9 @@ class AdminController < LecturerController
     @sessions = @sessions.order(created_at: :asc)
     render :dashboard
   end
+
+  def manage_users
+  end
+
+  
 end

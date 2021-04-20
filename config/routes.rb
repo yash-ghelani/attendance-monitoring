@@ -30,6 +30,9 @@ Rails.application.routes.draw do
   # Attendance routes
   post '/attendance/quick', to: 'session_attendances#quick_get_students'
   
+  # Admin Routes
+  get '/admin/manage', to: 'admin#manage_users'
+ 
   #Dev only routes TODO devOnly
   get '/set-student', to: 'home#set_student'
   get '/set-lecturer', to: 'home#set_lecturer'
