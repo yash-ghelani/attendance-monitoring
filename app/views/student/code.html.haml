@@ -1,22 +1,94 @@
 // The dashboard for Students
 
 - content_for :title, "Enter Code"
-.code-div
-  .row.justify-content-center
-    .col-sm-6.col-lg-4
-      .card.card-light
-        = simple_form_for 'session_code', url: "/student/validate", method: :post do |f|
-          .card-header
-            Enter Code
-          .card-body
-            = f.input :session_code, autofocus: true, required: true, input_html: { :value => @qrcode}
 
-            - # Where the AJAX results are displayed
-            #loadingIcon.spinner-border.d-none
-            #results
 
-          .card-footer
-            .row.justify-content-center
-              = submit_button 'Sign In', id: "submitButton", disabled: true
+.w-100.text-center
+  %h1.display-4 
+    Enter Code
+  %p
+    Here you can enter the code and join an existing session
+
+%hr.mb-4
+
+
+#codeInput.col-md-6.col-lg-5.mx-auto.px-0
+  - # QR-CODE hidden input
+  %input{:type=>"hidden", :value=>@qrcode, :name=>"qrcodeValue", :id=>"qrcodeValue"}
+
+  .input-group.input-group-lg
+    - (1..8).each do |i|
+      %input.form-control.text-center.code-box.p-0{"maxlength"=>"1"}
+
+
+  .mt-3.d-flex.justify-content-center    
+    .p-1
+      %button#pasteButton.btn.btn-light-blue.btn-sm
+        Paste 
+    .p-1
+      %button#clearButton.btn.btn-light-pink.btn-sm
+        Clear  
+
+  .mt-4
+    
+    - # Spinny boi
+    #loadingIcon.alert.text-center.d-none
+      .spinner-border
+
+    - # Valid code
+    #validCode.alert.text-center{"style"=>"display: none;background-color: #f9f9f9"}
+      %h5.alert-heading
+        Code Valid
+      %hr
+      = simple_form_for 'session_code', url: "/student/validate", method: :post do |f|
+        = f.input :session_code, :as => :hidden, :input_html => {:id => "SessionHiddenField" }
+        %button.btn.btn-success.w-100{"type" => "submit"}
+          Sign in
+      %hr
+      %table.table.borderless
+        %tbody
+
+          /Session Name
+          %tr                      
+            %th Name
+            %td
+              %span#SessionNameField
+
+          /Session Date
+          %tr                      
+            %th Date
+            %td
+              %span#SessionDateField
+
+          /Session Time
+          %tr                      
+            %th Start
+            %td
+              %span#SessionTimeField
+      
+
+    - # Invalid code
+    #invalidCode.alert.alert-danger.text-center{"style"=>"display: none;"}
+      %h5.alert-heading.text-danger.mb-0
+        Code Invalid
+      
+
+/ .code-di
+/   .row.justify-content-center
+/     .col-sm-6.col-lg-4
+/       .card.card-light
+/         = simple_form_for 'session_code', url: "/student/validate", method: :post do |f|
+/           .card-header
+/             Enter Code
+/           .card-body
+/             = f.input :session_code, autofocus: true, required: true, input_html: { :value => @qrcode}
+
+/             - # Where the AJAX results are displayed
+/             #loadingIcon.spinner-border.d-none
+/             #results
+
+/           .card-footer
+/             .row.justify-content-center
+/               = submit_button 'Sign In', id: "submitButton", disabled: true
                
 = javascript_include_tag "check-student-input"
