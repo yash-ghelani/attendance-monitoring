@@ -1,0 +1,21 @@
+- content_for :title, "History"
+
+.w-100
+    %h1.display-4 
+        Welcome
+        %b
+            = current_user.givenname
+    %p
+        Welcome to COM attendance, here you can view all your past sessions.
+
+%hr
+
+
+= render :partial => "components/week-pagination", locals: {week_start: @week_start, week_end: @week_end, current_week: @current_week, path: student_history_path}
+
+
+#accordians.py-5
+    - if @history.empty?
+        %center.alert.alert-warning You have not attended any sessions for this week.
+    - else
+        = render :partial => "components/week-view", locals: {sessions: @history}

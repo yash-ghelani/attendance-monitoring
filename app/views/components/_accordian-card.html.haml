@@ -1,0 +1,118 @@
+-# The accordian card component
+-# The variable used here is "session"
+#accordian
+  .card
+    %a.container{"style" => "cursor: pointer;text-decoration: none","data-toggle" => "collapse", "data-target" => "#collapse-#{session.id}"}
+      .row
+        .bg-primary.py-3.text-white.px-2.text-center.col-md-2.col-5{"style" => "border-top-left-radius: 0.25rem;"}
+          = session.module_code
+        .bg-accordion-right.col.py-3{"style" => "border-top-right-radius: 0.25rem;"}
+          .d-flex.justify-content-between
+            %h5.mb-0.text-secondary
+              %span{:class => ("text-muted" unless Time.now < session.start_time)}
+                = session.session_title
+            - if Time.now > session.start_time
+              %span.text-muted
+                = icon "fas", "check"
+
+          
+        
+
+    .collapse{:id => "collapse-#{session.id}"}
+      .card-body
+        .container
+          .row
+            /Left side
+            .col-md-6
+              .w-100.text-center.border-bottom.mb-2.py-2
+                %b Details
+              %table.table.borderless
+                %tbody
+                  /Session Date
+                  %tr                      
+                    %th
+                      %span.mr-2.text-muted
+                        = icon "fas", "calendar"
+                      Date
+                    %td
+                      = session.start_time.strftime('%d/%m/%Y')
+
+                  /Session Time
+                  %tr                     
+                    %th
+                      %span.mr-2.text-muted
+                        = icon "fas", "hourglass-start"
+                      Start
+                    %td
+                      = session.start_time.to_s(:time)
+
+                  /End Time
+                  %tr                      
+                    %th
+                      %span.mr-2.text-muted
+                        = icon "fas", "hourglass-end"
+                      End
+                    %td
+                      = session.end_time.to_s(:time)
+                  
+                  -unless current_user.lecturer? or current_user.admin?
+                    - @attendance = session.session_attendances.find_by(user: current_user)
+                    - unless @attendance.nil?
+                      /Sign In Time
+                      %tr
+                        %th
+                          %span.mr-2.text-muted
+                            = icon "fas", "clock"
+                          Sign In
+                          %td= @attendance.created_at.to_s(:time)
+
+
+            /Right Side
+            .col-md-6
+
+              .w-100.text-center.border-bottom.mb-2.py-2
+                %span.mr-2.text-muted
+                  = icon "fas", "graduation-cap"
+                %b 
+                  Lecturers
+                  - lect_count = session.session_registered_lecturers.length()
+                  - if (lect_count > 1)
+                    (#{lect_count})
+
+              .table-wrapper-scroll-y.table-custom-scrollbar
+                %table.table.borderless                     
+                  %tbody
+                    - session.session_registered_lecturers.each do |lecturer|
+                      %tr
+                        %td
+                          = lecturer.user.email
+                          
+              
+                  
+                    
+        - if current_user.lecturer? or current_user.admin?
+          %hr
+          /Bottom Bar
+          .mt-3.container
+            .row
+              .col-lg-6
+                .row.justify-content-center
+                  .col.py-2
+                    %a.btn.btn-light-blue.btn-block{:href => timetabled_session_path(session)}
+                      Show Code
+                  .col.py-2
+                    %a.btn.btn-light-blue.btn-block{:href => session_attendance_path(session.id)}
+                      Attendance
+
+                  -if current_user.admin?
+                    .col-12.col-md.py-2
+                      %a.btn.btn-light-pink.btn-block{:href => admin_path}
+                        SAM Report
+
+              .col-lg-6
+                .row.justify-content-center
+                  .col-md-5.py-2
+                    %a.btn.btn-light-grey.btn-block{:href => edit_timetabled_session_path(session)}
+                      Edit
+                  .col-md-5.py-2
+                    = link_to 'Delete', session, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-block'

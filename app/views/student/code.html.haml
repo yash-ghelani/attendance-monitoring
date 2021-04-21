@@ -1,0 +1,22 @@
+// The dashboard for Students
+
+- content_for :title, "Enter Code"
+.code-div
+  .row.justify-content-center
+    .col-sm-6.col-lg-4
+      .card.card-light
+        = simple_form_for 'session_code', url: "/student/validate", method: :post do |f|
+          .card-header
+            Enter Code
+          .card-body
+            = f.input :session_code, autofocus: true, required: true, input_html: { :value => @qrcode}
+
+            - # Where the AJAX results are displayed
+            #loadingIcon.spinner-border.d-none
+            #results
+
+          .card-footer
+            .row.justify-content-center
+              = submit_button 'Sign In', id: "submitButton", disabled: true
+               
+= javascript_include_tag "check-student-input"

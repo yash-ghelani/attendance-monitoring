@@ -1,0 +1,17 @@
+
+//This layout is used for views where the user is not logged in
+
+= content_for :head do
+  = render "components/navbar-devise" 
+
+= content_for :main do
+  = yield
+
+= content_for :foot do
+  .container
+    %p
+      &copy; #{Date.today.year}
+      = link_to 'epiGenesys', 'https://www.epigenesys.org.uk', target: '_blank', title: 'Go to the epiGenesys website'
+
+
+= render "layouts/master"

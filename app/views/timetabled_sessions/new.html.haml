@@ -1,0 +1,21 @@
+
+- content_for :title, "New Session"
+
+
+%nav.mb-3
+    %ol.breadcrumb.bg-white.pl-0
+        %li.breadcrumb-item
+            %a{"href"=> "/"} Dashboard
+        %li.breadcrumb-item.active
+            New Session
+
+.w-100
+    %h1.display-4 
+        New Session
+    %p
+        Here you can create a new timetable session.
+
+%hr.mb-5
+
+
+= render 'form'

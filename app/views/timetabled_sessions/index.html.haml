@@ -1,0 +1,39 @@
+%h1 Listing timetabled_sessions
+
+//Only show this link to admins and lecturers
+- if can?(:edit, TimetabledSession)
+  = link_to 'New Timetabled session', new_timetabled_session_path
+
+
+
+%table
+  %thead
+    %tr
+      %th Session code
+      %th Session title
+      %th Module code
+      %th Start time
+      %th End time
+      %th Creator
+      %th Report email
+      %th
+      %th
+      %th
+
+  %tbody
+    - @timetabled_sessions.each do |timetabled_session|
+      %tr
+        %td= timetabled_session.session_code
+        %td= timetabled_session.session_title
+        %td= timetabled_session.module_code
+        %td= timetabled_session.start_time
+        %td= timetabled_session.end_time
+        %td= timetabled_session.creator_id
+        %td= timetabled_session.report_email
+        %td= link_to 'Show', timetabled_session
+        %td= link_to 'Edit', edit_timetabled_session_path(timetabled_session)
+        %td= link_to 'Destroy', timetabled_session, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+

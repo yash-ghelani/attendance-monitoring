@@ -1,0 +1,26 @@
+%h1 Listing session_attendances
+
+
+%table
+  %thead
+    %tr
+      %th User
+      %th Session
+      %th Joined At
+      %th
+      %th
+      %th
+
+  %tbody
+    - @session_attendances.each do |session|
+      %tr
+        %td= session.user.username
+        %td= session.timetabled_session.session_title
+        %td= session.created_at
+        / %td= link_to 'Show', session
+        / %td= link_to 'Edit', edit_session_attendance_path(session)
+        / %td= link_to 'Destroy', session, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Session attendance', new_session_attendance_path

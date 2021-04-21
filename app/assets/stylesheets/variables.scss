@@ -3,3 +3,23 @@
 
 $footer-height: 60px;
 $environment-notice-height: 2rem;
+
+
+/*
+ * Our system colours go here to override the Bootstrap
+ * variables
+ */
+$theme-colors: (
+  primary: #3797D5,
+  secondary: #156498,
+  success: #34BD56,
+  danger: #D6587C,
+  warning: #DAB526,
+  info: #6771BD,
+  
+  "accordion-left": #809591,
+  "accordion-right": #ECEFEF,
+  "light-grey": #ebebeb,
+  "light-blue":#e8eef9,
+  "light-pink": #F8DFEF,
+);

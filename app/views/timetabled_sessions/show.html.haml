@@ -1,0 +1,88 @@
+
+- content_for :title, @timetabled_session.session_title
+
+%nav.mb-3
+  %ol.breadcrumb.bg-white.pl-0
+    %li.breadcrumb-item
+      %a{"href"=> "/"} Dashboard
+    %li.breadcrumb-item.active
+      =@timetabled_session.session_title
+
+.w-100
+  %h1.display-4 
+    = @timetabled_session.session_title
+  %p
+    Here you can present your session code and see students that join the session
+
+%hr
+
+
+-# Details
+.col-md-6.my-2.p-0
+  %table.table.borderless
+    %tbody
+
+      /Module Code
+      %tr                      
+        %th
+          %span.mr-2.text-muted
+            = icon "fas", "font"
+          Module
+        %td
+          = @timetabled_session.module_code
+
+      /Session Date
+      %tr                      
+        %th
+          %span.mr-2.text-muted
+            = icon "fas", "calendar"
+          Date
+        %td
+          = @timetabled_session.start_time.strftime('%d/%m/%Y')
+
+      /Session Time
+      %tr                     
+        %th
+          %span.mr-2.text-muted
+            = icon "fas", "hourglass-start"
+          Start
+        %td
+          = @timetabled_session.start_time.to_s(:time)
+
+      /End Time
+      %tr                      
+        %th
+          %span.mr-2.text-muted
+            = icon "fas", "hourglass-end"
+          End
+        %td
+          = @timetabled_session.end_time.to_s(:time)
+  
+
+.w-100.text-center
+  .py-4.bg-light.rounded.mt-3
+    .row.align-items-center
+      .col
+
+        %h6
+          Enter code
+        %h2
+          %b 
+            = @timetabled_session.session_code
+      .col
+        %img{:src => "https://api.qrserver.com/v1/create-qr-code/?size=150x150&&data=#{@url}"}
+
+.container.mt-5
+  - #Joined
+  .my-4
+    %table.table.borderless
+      %thead
+        %tr
+          %th{:colspan => 2}
+            Joined
+    
+    #studentSection
+      -# Where the joining students will go
+      .row#newStudents{"code"=>@timetabled_session.id}
+        
+= javascript_include_tag "check-joining-students"

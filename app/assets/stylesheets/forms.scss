@@ -7,3 +7,15 @@
     margin-bottom: 8px;
   }
 }
+.code-div {
+    position: absolute;
+    text-align: center;
+    width: 1000px;
+    height: 300px;
+
+    /* Center form on page horizontally & vertically */
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -500px;
+}
