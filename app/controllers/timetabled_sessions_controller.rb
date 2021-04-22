@@ -5,6 +5,17 @@ class TimetabledSessionsController < ApplicationController
   before_action :set_timetabled_session, only: [:show, :edit, :update, :destroy]
   #Authorise
   authorize_resource
+
+  #Ajax function
+  def quick_get_students
+    @users_id = TimetabledSession.includes(:users, :session_attendances).find(params[:session_id]).session_attendances.pluck(:user_id)
+    @users = User.find(@users_id).pluck(:username,:email)
+    respond_to do |format|
+      format.html
+      format.json {render json: @users}
+    end
+  end
+
   # GET /timetabled_sessions
   def index
     @timetabled_sessions = TimetabledSession.all

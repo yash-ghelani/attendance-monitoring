@@ -3,14 +3,6 @@ class SessionAttendancesController < ApplicationController
   #Authorise
   authorize_resource
   
-  def quick_get_students
-    @users_id = TimetabledSession.includes(:users, :session_attendances).find(params[:session_id]).session_attendances.pluck(:user_id)
-    @users = User.find(@users_id).pluck(:username,:email)
-    respond_to do |format|
-      format.html
-      format.json {render json: @users}
-    end
-  end
 
   # GET /session_attendances
   def index
