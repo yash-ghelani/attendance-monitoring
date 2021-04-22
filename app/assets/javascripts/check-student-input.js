@@ -11,6 +11,8 @@
   var lastSearch = "" //Store last searched code to prevent duplication
   var inputBox = $(".code-box")
   var qrcodeField =$("#qrcodeValue")
+  var errorSection =$("#errorSection")
+  var submitSection =$("#submitSection")
 
   //States
   var validView = $("#validCode")
@@ -116,6 +118,21 @@
     }
   }
 
+  //Display an error message on screen
+  function showErrorMessage(message){
+    //Hide the submit button
+    submitSection.hide()
+    //Show the error section
+    errorSection.show()
+    errorSection.text(message)
+  }
+
+  //Code is valid - enable submit button
+  function enableSubmit(){
+    submitSection.show()
+    errorSection.hide()
+  }
+
   //Send the AJAX request
   function sendRequest (code) {
     if(!running){
@@ -130,25 +147,49 @@
         dataType: "json",
 
         success: function (result) {
-          //If the result isn't false (code valid)
+          //If the result isn't null
           if(result){
+
             console.log(result)
-            var title = result["session_title"]
-            var date = new Date(result["start_time"])
 
-            let day = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
-            let time = date.getHours() + ":" + date.getMinutes()
+            //Parse errors
+            if("errors" in result){
+              errors = result["errors"]
+              //Invalid code (error exists)
+              if (errors.length > 0){
+                errorMessage = errors[0]
+                showErrorMessage(errorMessage)
+              }
+              //Valid code (no error, show button)
+              else{
+                enableSubmit()
+              }
+            }
 
-            console.log("Session title: "+title)
-            console.log("Date: "+date)
+            //Then parse the details
+            if("session" in result){
+              sessionDetails = result["session"]
+              //If the session is not found
+              if(sessionDetails == null){
+                loadView("invalid")
+              }
+              else{
+                //Parse session details
+                var title = sessionDetails["session_title"]
+                var date = new Date(sessionDetails["start_time"])
+                let day = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+                let time = date.getHours() + ":" + date.getMinutes()
+
+                //Update session details on screen
+                sessionNameField.text(title)
+                sessionDateField.text(day)
+                sessionTimeField.text(time)
+                sessionHiddenField.val(code)
+                loadView("valid")
+              }
+              
+            }
             
-            sessionNameField.text(title)
-            sessionDateField.text(day)
-            sessionTimeField.text(time)
-            sessionHiddenField.val(code)
-
-            loadView("valid")
-
           }else{
             //Show the invalid code view
             loadView("invalid")

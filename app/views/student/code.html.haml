@@ -21,12 +21,12 @@
       %input.form-control.text-center.code-box.p-0{"maxlength"=>"1"}
 
 
-  .mt-3.d-flex.justify-content-center    
-    .p-1
-      %button#pasteButton.btn.btn-light-blue.btn-sm
+  .mt-3.d-flex.justify-content-center
+    .col.col-md-4 
+      %button#pasteButton.btn.btn-light-blue.btn-sm.btn-block
         Paste 
-    .p-1
-      %button#clearButton.btn.btn-light-pink.btn-sm
+    .col.col-md-4 
+      %button#clearButton.btn.btn-light-pink.btn-sm.btn-block
         Clear  
 
   .mt-4
@@ -36,14 +36,18 @@
       .spinner-border
 
     - # Valid code
-    #validCode.alert.text-center{"style"=>"display: none;background-color: #f9f9f9"}
+    #validCode.alert.text-center.boxy{"style"=>"display: none;"}
       %h5.alert-heading
-        Code Valid
+        Session Found
       %hr
-      = simple_form_for 'session_code', url: "/student/attend", method: :post do |f|
-        = f.input :session_code, :as => :hidden, :input_html => {:id => "SessionHiddenField" }
-        %button.btn.btn-success.w-100{"type" => "submit"}
-          Sign in
+      - # For error messages
+      #errorSection.alert.alert-warning{"style"=>"display: none"}
+      - # Submit button
+      #submitSection
+        = simple_form_for 'session_code', url: "/student/attend", method: :post do |f|
+          = f.input :session_code, :as => :hidden, :input_html => {:id => "SessionHiddenField" }
+          %button.btn.btn-success.w-100{"type" => "submit"}
+            Sign in
       %hr
       %table.table.borderless
         %tbody
