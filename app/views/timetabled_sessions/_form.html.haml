@@ -7,8 +7,11 @@
     -#= f.input :session_code
     = f.input :session_title
     = f.input :module_code
-    = f.datetime_local_field :start_time, id: 'start', :value => Time.now.localtime.strftime('%Y-%m-%dT%H:%M'), class: 'datetimepicker'
-    = f.datetime_local_field :end_time, id: 'end', :value => (Time.now.localtime+30.minutes).strftime('%Y-%m-%dT%H:%M'), class: 'datetimepicker'
+    = f.hidden_field :start_time, id: 'start_time'
+    = f.hidden_field :end_time, id: 'end_time'
+
+    %input{:type => "datetime-local", :value => Time.now.localtime.strftime('%Y-%m-%dT%H:%M'), id: 'start_time_picker', class: 'datetimepicker'}
+    %input{:type => "datetime-local", :value => (Time.now.localtime+30.minutes).strftime('%Y-%m-%dT%H:%M'), id: 'end_time_picker', class: 'datetimepicker'}
 
     #lecturers
     .h4.mt-2 Register Lecturers
@@ -22,3 +25,18 @@
 
   .form-actions
     = f.button :submit, class: "btn btn-primary"
+
+:javascript
+  $(document).ready( function() {
+    const start = $("#start_time_picker.datetimepicker");
+    const end = $("#end_time_picker.datetimepicker");
+
+    start.on('change', function(){
+      $('#start_time').val(moment(start.val()).utc().format("YYYY-MM-DDTHH:mm"));
+    })
+    end.on('change', function(){
+      $('#end_time').val(moment(end.val()).utc().format("YYYY-MM-DDTHH:mm"));
+    })
+    start.change()
+    end.change()
+  });

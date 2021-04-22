@@ -66,18 +66,18 @@ class StudentController < ApplicationController
     def validation_errors(session_code)
       errors = []
       timetabled_session = nil
+
       if /^[\d\w-]+$/.match(session_code).nil?
         errors.push 'Code must contain only digits and letters.'
       elsif /^[\d\w]{8,}$/.match(session_code).nil?
         errors.push 'Code must be of length 8'
       else
         timetabled_session = TimetabledSession.find_by(session_code: session_code)
-
         if timetabled_session.nil?
           errors.push 'No session found for that code'
-        elsif timetabled_session.start_time-15.minutes > Time.now
+        elsif timetabled_session.start_time - 15.minutes > Time.now.utc
           errors.push 'Session has not opened attendance yet'
-        elsif Time.now > timetabled_session.end_time
+        elsif Time.now.utc > timetabled_session.end_time
           errors.push 'Session has ended. Deadline for signing in has passed for the session'
         end
 
