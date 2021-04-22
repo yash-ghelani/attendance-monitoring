@@ -40,7 +40,7 @@
       %h5.alert-heading
         Code Valid
       %hr
-      = simple_form_for 'session_code', url: "/student/validate", method: :post do |f|
+      = simple_form_for 'session_code', url: "/student/attend", method: :post do |f|
         = f.input :session_code, :as => :hidden, :input_html => {:id => "SessionHiddenField" }
         %button.btn.btn-success.w-100{"type" => "submit"}
           Sign in

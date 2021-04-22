@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   # Student Routes
   get '/student/history', to: 'student#history'
   post '/student/validate', to: 'student#validate'
-  post '/student/quick', to: 'student#quick_validate'
+  post '/student/attend', to: 'student#attend'
 
   # Attendance routes
   post '/attendance/quick', to: 'session_attendances#quick_get_students'

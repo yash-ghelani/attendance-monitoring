@@ -33,7 +33,7 @@ $(document).on('ready', function () {
                     })
                 },
             });
-        }else if(this.type === 'date'){
+        }else if(this.type === 'datetime-local'){
             // Add logic for native datetimepicker
         }
     })

@@ -125,13 +125,14 @@
       $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
-        url: "/student/quick",
+        url: "/student/validate",
         data : JSON.stringify({session_code:code}),
         dataType: "json",
 
         success: function (result) {
           //If the result isn't false (code valid)
           if(result){
+            console.log(result)
             var title = result["session_title"]
             var date = new Date(result["start_time"])
 

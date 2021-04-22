@@ -47,7 +47,7 @@
             = icon "fas", "hourglass-start"
           Start
         %td
-          = @timetabled_session.start_time.to_s(:time)
+          = @timetabled_session.start_time.localtime.to_s(:time)
 
       /End Time
       %tr                      
@@ -56,7 +56,7 @@
             = icon "fas", "hourglass-end"
           End
         %td
-          = @timetabled_session.end_time.to_s(:time)
+          = @timetabled_session.end_time.localtime.to_s(:time)
   
 
 .w-100.text-center

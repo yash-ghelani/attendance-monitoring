@@ -33,39 +33,27 @@ class StudentController < ApplicationController
     render :history
   end
 
-
   def validate
-    if /^[\d\w-]+$/.match(validate_params["session_code"]).nil?
-      redirect_to student_path, alert: 'Code must contain only digits and letters.'
-    elsif /^[\d\w]{8,}$/.match(validate_params["session_code"]).nil?
-      redirect_to student_path, alert: 'Code must be of length 8'
-    else
-      @timetabled_session = TimetabledSession.find_by(validate_params)
+    @timetabled_session, errors = validation_errors(params[:session_code])
 
-      if @timetabled_session.nil?
-        redirect_to student_path, alert: 'No session found for that code'
-      elsif @timetabled_session.start_time-15.minutes > Time.now
-        redirect_to student_path, alert: 'Session has not opened attendance yet'
-      elsif Time.now > @timetabled_session.end_time
-        redirect_to student_path, alert: 'Session has ended. Deadline for signing in has passed for the session'
-      else
-        @attendance = SessionAttendance.new(timetabled_session: @timetabled_session, user: current_user)
-        if @attendance.save
-          puts "---------------------------------"
-          puts "Attendance registered succesfully"
-          puts "---------------------------------"
-          redirect_to student_history_path, notice: 'Successfully signed in!'
-        end
-      end
+    respond_to do |format|
+      response = {session: @timetabled_session, errors: errors}
+      format.json {render json: response}
     end
   end
 
-  def quick_validate
-    #THE ajax function for student, will attempt to find session matching request
-    @timetabled_session = TimetabledSession.find_by(session_code: params[:session_code])
-    respond_to do |format|
-      format.html
-      format.json {render json: @timetabled_session}
+  def attend
+    @timetabled_session, errors = validation_errors(validate_params['session_code'])
+    if errors.length > 0
+      redirect_to student_path, alert: errors.last
+    else
+      @attendance = SessionAttendance.new(timetabled_session: @timetabled_session, user: current_user)
+      if @attendance.save
+        puts "---------------------------------"
+        puts "Attendance registered succesfully"
+        puts "---------------------------------"
+        redirect_to student_history_path, notice: 'Successfully signed in!'
+      end
     end
   end
 
@@ -73,5 +61,34 @@ class StudentController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def validate_params
       params.require(:session_code).permit(:session_code)
+    end
+
+    def validation_errors(session_code)
+      errors = []
+      timetabled_session = nil
+      if /^[\d\w-]+$/.match(session_code).nil?
+        errors.push 'Code must contain only digits and letters.'
+      elsif /^[\d\w]{8,}$/.match(session_code).nil?
+        errors.push 'Code must be of length 8'
+      else
+        timetabled_session = TimetabledSession.find_by(session_code: session_code)
+
+        if timetabled_session.nil?
+          errors.push 'No session found for that code'
+        elsif timetabled_session.start_time-15.minutes > Time.now
+          errors.push 'Session has not opened attendance yet'
+        elsif Time.now > timetabled_session.end_time
+          errors.push 'Session has ended. Deadline for signing in has passed for the session'
+        end
+
+        unless timetabled_session.nil?
+          attendance = SessionAttendance.find_by(timetabled_session: timetabled_session, user: current_user)
+          unless attendance.nil?
+            errors.push 'You have already marked attendance for this session'
+          end
+        end
+      end
+
+      return timetabled_session, errors
     end
   end
