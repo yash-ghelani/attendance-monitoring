@@ -37,6 +37,7 @@ class StudentController < ApplicationController
     @timetabled_session, errors = validation_errors(params[:session_code])
 
     respond_to do |format|
+      format.html
       response = {session: @timetabled_session, errors: errors}
       format.json {render json: response}
     end

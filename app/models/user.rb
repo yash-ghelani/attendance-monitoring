@@ -29,10 +29,10 @@
 class User < ApplicationRecord
   include EpiCas::DeviseHelper
   has_many :session_attendances
-  has_many :timetabled_sessions, through: :session_attendance
-  has_many :timetabled_sessions, through: :session_registered_lecturers
+  
+  has_many :attendances, through: :session_attendances, source: :timetabled_session
+  has_many :registrations, through: :session_registered_lecturers, source: :timetabled_session
   has_many :timetabled_sessions, foreign_key: :creator_id
-  has_many :session_registered_lecturers
   
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 

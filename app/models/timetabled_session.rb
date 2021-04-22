@@ -24,10 +24,10 @@
 class TimetabledSession < ApplicationRecord
   has_many :session_attendances, dependent: :destroy, inverse_of: :timetabled_session
   has_many :session_registered_lecturers, dependent: :destroy, inverse_of: :timetabled_session
-  has_many :users, through: :session_attendance
-  has_many :users, through: :session_registered_lecturers
+  has_many :attendees, through: :session_attendances, source: :user
+  has_many :registrees, through: :session_registered_lecturers, source: :user
 
-  belongs_to :user, foreign_key: :id, optional: true
+  belongs_to :creator, class_name: 'User', foreign_key: :creator_id
   
   validates :session_title, presence: true
   validates :start_time, presence: true

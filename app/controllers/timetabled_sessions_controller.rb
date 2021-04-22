@@ -8,8 +8,7 @@ class TimetabledSessionsController < ApplicationController
 
   #Ajax function
   def quick_get_students
-    @users_id = TimetabledSession.includes(:users, :session_attendances).find(params[:session_id]).session_attendances.pluck(:user_id)
-    @users = User.find(@users_id).pluck(:username,:email)
+    @users = TimetabledSession.find(params[:session_id]).attendees.pluck(:username,:email)
 
     respond_to do |format|
       format.html
@@ -29,7 +28,7 @@ class TimetabledSessionsController < ApplicationController
   end
 
   def attendances
-    @timetabled_session = TimetabledSession.includes(:users, :session_attendances).find(params[:id])
+    @timetabled_session = TimetabledSession.includes(:session_attendances => :user).find(params[:id])
   end
 
   # GET /timetabled_sessions/new
@@ -82,7 +81,7 @@ class TimetabledSessionsController < ApplicationController
       params.require(:timetabled_session).permit(
         :session_title, :module_code, :start_time, :end_time, 
         session_registered_lecturers_attributes: [:user_id, :id, :_destroy]
-      ).merge(creator_id: current_user.id, report_email: current_user.email)
+      ).merge(creator: current_user, report_email: current_user.email)
     end
 
     def generate_code(number)
