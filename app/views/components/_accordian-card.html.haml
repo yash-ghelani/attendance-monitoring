@@ -101,7 +101,7 @@
                     %a.btn.btn-light-blue.btn-block{:href => timetabled_session_path(session)}
                       Show Code
                   .col.py-2
-                    %a.btn.btn-light-blue.btn-block{:href => session_attendance_path(session.id)}
+                    %a.btn.btn-light-blue.btn-block{:href => attendances_timetabled_session_path(session.id)}
                       Attendance
 
                   -if current_user.admin?

@@ -10,6 +10,7 @@ class TimetabledSessionsController < ApplicationController
   def quick_get_students
     @users_id = TimetabledSession.includes(:users, :session_attendances).find(params[:session_id]).session_attendances.pluck(:user_id)
     @users = User.find(@users_id).pluck(:username,:email)
+
     respond_to do |format|
       format.html
       format.json {render json: @users}
@@ -27,6 +28,10 @@ class TimetabledSessionsController < ApplicationController
     @url = URI.encode("#{root_url}student?qrcode=#{@timetabled_session.session_code}")
   end
 
+  def attendances
+    @timetabled_session = TimetabledSession.includes(:users, :session_attendances).find(params[:id])
+  end
+
   # GET /timetabled_sessions/new
   def new
     @timetabled_session = TimetabledSession.new
@@ -38,7 +43,6 @@ class TimetabledSessionsController < ApplicationController
 
   # POST /timetabled_sessions
   def create
-    
     @timetabled_session = TimetabledSession.new(timetabled_session_params)
 
     if @timetabled_session.save!
