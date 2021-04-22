@@ -106,7 +106,7 @@
 
                   -if current_user.admin?
                     .col-12.col-md.py-2
-                      %a.btn.btn-light-pink.btn-block{:href => admin_path}
+                      %a.btn.btn-light-pink.btn-block{:href => session_attendances_path(format: :csv)}
                         SAM Report
 
               .col-lg-6

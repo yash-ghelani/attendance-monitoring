@@ -7,6 +7,12 @@ class SessionAttendancesController < ApplicationController
   # GET /session_attendances
   def index
     @session_attendances = SessionAttendance.includes(:user, :timetabled_session).all
+
+    respond_to do |format|
+      format.html
+      format.csv {send_data @session_attendances.to_csv, filename: "doesthiswork?.csv", type: 'text/csv; charset=utf-8'}
+    end
+
   end
 
   # GET /session_attendances/1
