@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   #Resource Controllers
+  resources :session_registered_lecturers
+  resources :session_attendances
   resources :timetabled_sessions do
     get :attendances, on: :member
   end
