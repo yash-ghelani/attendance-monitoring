@@ -19,6 +19,12 @@ class TimetabledSessionsController < ApplicationController
   # GET /timetabled_sessions
   def index
     @timetabled_sessions = TimetabledSession.all
+
+    respond_to do |format|
+      format.html
+      format.csv {send_data @timetabled_sessions.to_csv, filename: "SAM_REPORT.csv", type: 'text/csv; charset=utf-8'}
+    end
+    
   end
 
   # GET /timetabled_sessions/1

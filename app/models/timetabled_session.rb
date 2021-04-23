@@ -53,4 +53,26 @@ class TimetabledSession < ApplicationRecord
     end
   end
 
+  def time
+    "#{start_time.strftime('%R')}"
+  end
+
+  def date
+    "#{start_time.strftime('%Y-%m-%d')}"
+  end
+
+  def self.to_csv
+    first_line = %w{COM current_user.email}
+    #attributes = ['registration_no', 'email', :start_time, '', 'time', :session_title, 'attendance code']
+    attributes = %w{session_title time date}
+    CSV.generate(headers: true) do |csv|
+      csv << first_line
+      csv << attributes
+
+      all.each do |timetabled_session|
+        csv << attributes.map{ |attr| timetabled_session.send(attr)}
+      end
+    end
+  end
+
 end
