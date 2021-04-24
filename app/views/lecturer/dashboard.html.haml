@@ -12,12 +12,16 @@
 
     .my-3.d-flex
         .p-2
-            %a.btn.btn-success{:href => new_timetabled_session_path}
+            %a.btn.btn-success{:href => new_timetabled_session_path,:title => "Create a new Timetabled Session"}
                 New Session
         - if (current_user.admin?)
             .p-2
-                %a.btn.btn-success{:href => "/admin/manage"}
-                    New User  
+                %a.btn.btn-success{:href => "/admin/manage",:title => "Create a new User"}
+                    New User
+            .p-2  
+                %button.btn.btn-info{:title => "Download this weeks SAM reports"}
+                    Weekly SAM  
+                
   
 %hr.mb-3
 

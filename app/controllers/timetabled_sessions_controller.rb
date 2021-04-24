@@ -6,13 +6,12 @@ class TimetabledSessionsController < ApplicationController
   #Authorise
   authorize_resource
 
-  #Ajax function
-  def quick_get_students
-    @users = TimetabledSession.find(params[:session_id]).attendees.pluck(:username,:email)
-
+  #Ajax function, returns number of attendees for session
+  def quick_get_attendance_count
+    @count = TimetabledSession.find(params[:session_id]).attendees.count
     respond_to do |format|
       format.html
-      format.json {render json: @users}
+      format.json {render json: @count}
     end
   end
 

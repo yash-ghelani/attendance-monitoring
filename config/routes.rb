@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   post '/student/attend', to: 'student#attend'
 
   # Attendance routes
-  post '/attendance/quick', to: 'timetabled_sessions#quick_get_students'
+  post '/attendance/quick', to: 'timetabled_sessions#quick_get_attendance_count'
   
   # Admin Routes
   get '/admin/manage', to: 'admin#manage_users'

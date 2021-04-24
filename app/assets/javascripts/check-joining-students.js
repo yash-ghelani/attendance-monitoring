@@ -7,29 +7,19 @@
  document.addEventListener("DOMContentLoaded", function() {
 
   //Globals
-  var resultsBox = $("#newStudents")
+  var resultsBox = $("#studentCounter")
   var checkInterval = 3000
 
   //Will wait before sending next request
   function reset(){
-    setTimeout(check_join,checkInterval)
+    setTimeout(get_count,checkInterval)
   }
 
-  //Prevent duplicates
-  function is_student_on_screen(username){
-    var duplicate = false;
-    resultsBox.children().each(function() {
-      if($(this).attr("name") == username){
-        return duplicate = true
-      }
-    });
-    return duplicate;
-  }
-
-  //Check for new students joining
-  function check_join () {
+  //Main ajax call to get count
+  function get_count(){
+    //Extract session ID from html
     session_id = resultsBox.attr("code")
-    console.log("Using session ID: "+session_id)
+    //Call ajax request
     $.ajax({
       type: "POST",
       contentType: "application/json; charset=utf-8",
@@ -37,18 +27,13 @@
       data : JSON.stringify({session_id:session_id}),
       dataType: "json",
       success: function (result) {
-        for (var i = 0; i < result.length; i++) {
-          data=result[i]
-          username=data[0].toUpperCase()
-          if(!is_student_on_screen(username)){
-            formData=
-            `
-            <div name=${username} class="col mt-3"><div class="p-2 bg-success text-white rounded text-center">${username}</div></div>
-            `
-            resultsBox.prepend(formData);
-          }
-          
+        //Check result is integer and update text
+        if (result === parseInt(result, 10)){
+          resultsBox.text(result)
+        }else{
+          resultsBox.text("N/A")
         }
+        
         reset()
       },
       error: function (){
@@ -59,6 +44,6 @@
   }
 
   //Call on page load
-  check_join()
+  get_count()
 
 });

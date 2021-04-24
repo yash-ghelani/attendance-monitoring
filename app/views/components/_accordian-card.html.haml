@@ -98,21 +98,21 @@
               .col-lg-6
                 .row.justify-content-center
                   .col.py-2
-                    %a.btn.btn-light-blue.btn-block{:href => timetabled_session_path(session)}
-                      Show Code
-                  .col.py-2
-                    %a.btn.btn-light-blue.btn-block{:href => attendances_timetabled_session_path(session.id)}
+                    %a.btn.btn-light-blue.btn-block.h-100{:href => attendances_timetabled_session_path(session.id)}
                       Attendance
 
                   -if current_user.admin?
                     .col-12.col-md.py-2
-                      %a.btn.btn-light-pink.btn-block{:href => timetabled_sessions_path(format: :csv)}
+                      %a.btn.btn-light-blue.btn-block.h-100{:href => timetabled_sessions_path(format: :csv)}
                         SAM Report
+                  .col.py-2
+                    %a.btn.btn-light-green.btn-block.h-100{:href => timetabled_session_path(session)}
+                      Show Code
 
               .col-lg-6
                 .row.justify-content-center
                   .col-md-5.py-2
-                    %a.btn.btn-light-grey.btn-block{:href => edit_timetabled_session_path(session)}
+                    %a.btn.btn-light-grey.btn-block.h-100{:href => edit_timetabled_session_path(session)}
                       Edit
                   .col-md-5.py-2
                     = link_to 'Delete', session, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-block'
