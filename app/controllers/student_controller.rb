@@ -53,7 +53,9 @@ class StudentController < ApplicationController
         puts "---------------------------------"
         puts "Attendance registered succesfully"
         puts "---------------------------------"
-        redirect_to student_history_path, notice: 'Successfully signed in!'
+        @session_name = "#{@timetabled_session.module_code} - #{@timetabled_session.session_title}"
+        render "success"
+        #redirect_to student_history_path, notice: 'Successfully signed in!'
       end
     end
   end
