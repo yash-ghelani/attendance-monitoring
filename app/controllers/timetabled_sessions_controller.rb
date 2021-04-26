@@ -62,7 +62,7 @@ class TimetabledSessionsController < ApplicationController
   def create
     @timetabled_session = TimetabledSession.new(timetabled_session_params)
 
-    if @timetabled_session.save!
+    if @timetabled_session.save
       if current_user.lecturer?
         SessionRegisteredLecturer.create(user: current_user, timetabled_session: @timetabled_session)
       end
