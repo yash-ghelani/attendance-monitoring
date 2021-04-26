@@ -10,11 +10,11 @@
     = f.hidden_field :start_time, id: 'start_time'
     = f.hidden_field :end_time, id: 'end_time'
 
-    %input{:type => "datetime-local", :value => Time.now.localtime.strftime('%Y-%m-%dT%H:%M'), id: 'start_time_picker', class: 'datetimepicker'}
+    %input.mt-2{:type => "datetime-local", :value => Time.now.localtime.strftime('%Y-%m-%dT%H:%M'), id: 'start_time_picker', class: 'datetimepicker'}
     %input{:type => "datetime-local", :value => (Time.now.localtime+30.minutes).strftime('%Y-%m-%dT%H:%M'), id: 'end_time_picker', class: 'datetimepicker'}
 
     #lecturers
-    .h4.mt-2 Register Lecturers
+    .h4.mt-3 Register Lecturers
     = f.simple_fields_for :session_registered_lecturers do |lecturer|
       = render 'session_registered_lecturer_fields', f: lecturer
     .links
