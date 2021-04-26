@@ -98,12 +98,12 @@
               .col-lg-6
                 .row.justify-content-center
                   .col.py-2
-                    %a.btn.btn-light-blue.btn-block.h-100{:href => attendances_timetabled_session_path(session.id)}
+                    %a.btn.btn-light-blue.btn-block.h-100{:href => attendances_timetabled_session_path(session)}
                       Attendance
 
                   -if current_user.admin?
                     .col-12.col-md.py-2
-                      %a.btn.btn-light-blue.btn-block.h-100{:href => timetabled_sessions_path(format: :csv)}
+                      %a.btn.btn-light-blue.btn-block.h-100{:href => sam_timetabled_session_path(session, format: :csv)}
                         SAM Report
                   .col.py-2
                     %a.btn.btn-light-green.btn-block.h-100{:href => timetabled_session_path(session)}

@@ -53,46 +53,30 @@ class TimetabledSession < ApplicationRecord
     end
   end
 
-  def dept_code
-    "COM"
+  def to_csv
+    CSV.generate(headers: false) do |csv|
+      # First line
+      csv << [self.creator.ou, self.report_email]
+      self.attendees.each do |attendee|
+        start_time = self.start_time
+        # Empty strings for optional fields
+        # csv columns -> ["Student Registration Number", "Student Email", "Date", "Week", "Time", "Event Description", "Attendance Code"]
+        csv << [nil, attendee.email, start_time.strftime('%Y-%m-%d'), nil, start_time.strftime('%H:%m'), self.session_title, 1]
+      end
+    end
   end
 
-  def registration_number
-    "123456789"
-  end
-
-  def email
-    "nheath2@sheffield.ac.uk"
-  end
-
-  def date
-    "#{start_time.strftime('%Y-%m-%d')}"
-  end
-
-  def week_number
-    ""
-  end
-
-  def time
-    "#{start_time.strftime('%R')}"
-  end
-
-  def event_description
-    "#{session_title}"
-  end
-
-  def attendance_code
-    "1"
-  end
-
-  def self.to_csv
-    first_line = %w{dept_code current_user.email}
-    attributes = %w{registration_number email date week_number time event_description attendance_code}
-    CSV.generate(headers: true) do |csv|
-      csv << first_line
-
-      all.each do |timetabled_session|
-        csv << attributes.map{ |attr| timetabled_session.send(attr)}
+  def self.to_csv(current_user)
+    CSV.generate(headers: false) do |csv|
+      # First line
+      csv << [current_user.ou, current_user.email]
+      all.each do |session|
+        session.attendees.each do |attendee|
+          start_time = session.start_time
+          # Empty strings for optional fields
+          # csv columns -> ["Student Registration Number", "Student Email", "Date", "Week", "Time", "Event Description", "Attendance Code"]
+          csv << [nil, attendee.email, start_time.strftime('%Y-%m-%d'), nil, start_time.strftime('%H:%m'), session.session_title, 1]
+        end
       end
     end
   end

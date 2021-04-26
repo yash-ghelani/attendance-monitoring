@@ -2,7 +2,7 @@
 require 'uri'
 
 class TimetabledSessionsController < ApplicationController
-  before_action :set_timetabled_session, only: [:show, :edit, :update, :destroy]
+  before_action :set_timetabled_session, only: [:show, :edit, :update, :destroy, :sam]
   #Authorise
   authorize_resource
 
@@ -18,12 +18,6 @@ class TimetabledSessionsController < ApplicationController
   # GET /timetabled_sessions
   def index
     @timetabled_sessions = TimetabledSession.all
-
-    respond_to do |format|
-      format.html
-      format.csv {send_data @timetabled_sessions.to_csv, filename: "SAM_REPORT.csv", type: 'text/csv; charset=utf-8'}
-    end
-    
   end
 
   # GET /timetabled_sessions/1
@@ -34,6 +28,25 @@ class TimetabledSessionsController < ApplicationController
 
   def attendances
     @timetabled_session = TimetabledSession.includes(:session_attendances => :user).find(params[:id])
+  end
+
+  def sam
+    respond_to do |format|
+      format.html
+      format.csv {send_data @timetabled_session.to_csv, filename: "SAM_REPORT.csv", type: 'text/csv; charset=utf-8'}
+    end
+  end
+
+  def bulk_sam
+    if params[:start_date] && params[:end_date]
+      start_date = params[:start_date].to_datetime
+      end_date = params[:end_date].to_datetime
+      @timetabled_sessions = TimetabledSession.where(start_time: start_date..end_date)
+      respond_to do |format|
+        format.html
+        format.csv {send_data @timetabled_sessions.to_csv(current_user), filename: "SAM_REPORT.csv", type: 'text/csv; charset=utf-8'}
+      end
+    end
   end
 
   # GET /timetabled_sessions/new
