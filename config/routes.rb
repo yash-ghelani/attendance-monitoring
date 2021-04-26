@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   resources :timetabled_sessions do
     get :attendances, on: :member
     get :sam, on: :member
-    get :sam, on: :member
   end
   get '/timetabled_session/sam', :to => 'timetabled_sessions#bulk_sam'
 

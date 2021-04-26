@@ -33,7 +33,7 @@ class TimetabledSessionsController < ApplicationController
   def sam
     respond_to do |format|
       format.html
-      format.csv {send_data @timetabled_session.to_csv, filename: "SAM_REPORT.csv", type: 'text/csv; charset=utf-8'}
+      format.csv {send_data @timetabled_session.to_csv, filename: "SAM-#{@timetabled_session.session_title.parameterize}.csv", type: 'text/csv; charset=utf-8'}
     end
   end
 
@@ -44,7 +44,7 @@ class TimetabledSessionsController < ApplicationController
       @timetabled_sessions = TimetabledSession.where(start_time: start_date..end_date)
       respond_to do |format|
         format.html
-        format.csv {send_data @timetabled_sessions.to_csv(current_user), filename: "SAM_REPORT.csv", type: 'text/csv; charset=utf-8'}
+        format.csv {send_data @timetabled_sessions.to_csv(current_user), filename: "SAM-#{start_date.strftime('%Y%m%d')}-#{end_date.strftime('%Y%m%d')}.csv", type: 'text/csv; charset=utf-8'}
       end
     end
   end
