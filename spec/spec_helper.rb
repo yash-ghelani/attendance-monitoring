@@ -20,6 +20,7 @@ $: << File.expand_path('../../app', __FILE__)
 
 RSpec.configure do |config|
   # Store status of every example run so failures can be re-run with --only-failures
+  
   config.example_status_persistence_file_path = '.rspec-examples'
 
 # The settings below are suggested to provide a good initial experience
