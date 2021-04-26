@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   #Resource Controllers
   resources :session_registered_lecturers
   resources :session_attendances
-  resources :timetabled_sessions
+  resources :timetabled_sessions do
+    get :attendances, on: :member
+    get :sam, on: :member
+  end
+  get '/timetabled_session/sam', :to => 'timetabled_sessions#bulk_sam'
 
   #Devise Stuff
   mount EpiCas::Engine, at: "/"
@@ -25,10 +29,10 @@ Rails.application.routes.draw do
   # Student Routes
   get '/student/history', to: 'student#history'
   post '/student/validate', to: 'student#validate'
-  post '/student/quick', to: 'student#quick_validate'
+  post '/student/attend', to: 'student#attend'
 
   # Attendance routes
-  post '/attendance/quick', to: 'session_attendances#quick_get_students'
+  post '/attendance/quick', to: 'timetabled_sessions#quick_get_attendance_count'
   
   # Admin Routes
   get '/admin/manage', to: 'admin#manage_users'

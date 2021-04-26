@@ -24,10 +24,10 @@
 class TimetabledSession < ApplicationRecord
   has_many :session_attendances, dependent: :destroy, inverse_of: :timetabled_session
   has_many :session_registered_lecturers, dependent: :destroy, inverse_of: :timetabled_session
-  has_many :users, through: :session_attendance
-  has_many :users, through: :session_registered_lecturers
+  has_many :attendees, through: :session_attendances, source: :user
+  has_many :registrees, through: :session_registered_lecturers, source: :user
 
-  belongs_to :user, foreign_key: :id, optional: true
+  belongs_to :creator, class_name: 'User', foreign_key: :creator_id
   
   validates :session_title, presence: true
   validates :start_time, presence: true
@@ -50,6 +50,34 @@ class TimetabledSession < ApplicationRecord
       self.session_code ||= generate_code(8)
     else 
       init
+    end
+  end
+
+  def to_csv
+    CSV.generate(headers: false) do |csv|
+      # First line
+      csv << [self.creator.ou, self.report_email]
+      self.attendees.each do |attendee|
+        start_time = self.start_time
+        # Empty strings for optional fields
+        # csv columns -> ["Student Registration Number", "Student Email", "Date", "Week", "Time", "Event Description", "Attendance Code"]
+        csv << [nil, attendee.email, start_time.strftime('%Y-%m-%d'), nil, start_time.strftime('%H:%m'), self.session_title, 1]
+      end
+    end
+  end
+
+  def self.to_csv(current_user)
+    CSV.generate(headers: false) do |csv|
+      # First line
+      csv << [current_user.ou, current_user.email]
+      all.each do |session|
+        session.attendees.each do |attendee|
+          start_time = session.start_time
+          # Empty strings for optional fields
+          # csv columns -> ["Student Registration Number", "Student Email", "Date", "Week", "Time", "Event Description", "Attendance Code"]
+          csv << [nil, attendee.email, start_time.strftime('%Y-%m-%d'), nil, start_time.strftime('%H:%m'), session.session_title, 1]
+        end
+      end
     end
   end
 

@@ -2,9 +2,19 @@
 require 'uri'
 
 class TimetabledSessionsController < ApplicationController
-  before_action :set_timetabled_session, only: [:show, :edit, :update, :destroy]
+  before_action :set_timetabled_session, only: [:show, :edit, :update, :destroy, :sam]
   #Authorise
   authorize_resource
+
+  #Ajax function, returns number of attendees for session
+  def quick_get_attendance_count
+    @count = TimetabledSession.find(params[:session_id]).attendees.count
+    respond_to do |format|
+      format.html
+      format.json {render json: @count}
+    end
+  end
+
   # GET /timetabled_sessions
   def index
     @timetabled_sessions = TimetabledSession.all
@@ -14,6 +24,29 @@ class TimetabledSessionsController < ApplicationController
   def show
     #Create a URL variable for the QR code to use
     @url = URI.encode("#{root_url}student?qrcode=#{@timetabled_session.session_code}")
+  end
+
+  def attendances
+    @timetabled_session = TimetabledSession.includes(:session_attendances => :user).find(params[:id])
+  end
+
+  def sam
+    respond_to do |format|
+      format.html
+      format.csv {send_data @timetabled_session.to_csv, filename: "SAM-#{@timetabled_session.session_title.parameterize}.csv", type: 'text/csv; charset=utf-8'}
+    end
+  end
+
+  def bulk_sam
+    if params[:start_date] && params[:end_date]
+      start_date = params[:start_date].to_datetime
+      end_date = params[:end_date].to_datetime
+      @timetabled_sessions = TimetabledSession.where(start_time: start_date..end_date)
+      respond_to do |format|
+        format.html
+        format.csv {send_data @timetabled_sessions.to_csv(current_user), filename: "SAM-#{start_date.strftime('%Y%m%d')}-#{end_date.strftime('%Y%m%d')}.csv", type: 'text/csv; charset=utf-8'}
+      end
+    end
   end
 
   # GET /timetabled_sessions/new
@@ -27,7 +60,6 @@ class TimetabledSessionsController < ApplicationController
 
   # POST /timetabled_sessions
   def create
-    
     @timetabled_session = TimetabledSession.new(timetabled_session_params)
 
     if @timetabled_session.save!
@@ -67,7 +99,7 @@ class TimetabledSessionsController < ApplicationController
       params.require(:timetabled_session).permit(
         :session_title, :module_code, :start_time, :end_time, 
         session_registered_lecturers_attributes: [:user_id, :id, :_destroy]
-      ).merge(creator_id: current_user.id, report_email: current_user.email)
+      ).merge(creator: current_user, report_email: current_user.email)
     end
 
     def generate_code(number)

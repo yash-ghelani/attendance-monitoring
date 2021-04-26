@@ -11,12 +11,13 @@
 //= require select2_init
 //= require cocoon
 //= require jquery-datetimepicker
+//= require moment
 
 
 $(document).on('ready', function () {
     $('.datetimepicker').each(function () {
-        const start = $("#start.datetimepicker");
-        const end = $("#end.datetimepicker");
+        const start = $("#start_time_picker.datetimepicker");
+        const end = $("#end_time_picker.datetimepicker");
         if (this.type === 'text') {
             // Native datepicker is not available
             start.datetimepicker({
@@ -33,7 +34,7 @@ $(document).on('ready', function () {
                     })
                 },
             });
-        }else if(this.type === 'date'){
+        }else if(this.type === 'datetime-local'){
             // Add logic for native datetimepicker
         }
     })

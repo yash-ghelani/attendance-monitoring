@@ -35,6 +35,7 @@ gem 'bootstrap-will_paginate'
 
 gem "cocoon"
 #gem 'datetime_picker_input' 
+gem 'momentjs-rails'
 
 gem 'devise'
 gem 'epi_cas', gitlab: 'gems/epi_cas' #EpiCas gem

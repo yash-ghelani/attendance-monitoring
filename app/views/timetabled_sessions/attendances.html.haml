@@ -49,24 +49,22 @@
           to
           = @timetabled_session.end_time.strftime('%R')
 
-%table.table
-  %thead
-    %tr
-      %th Name
-      %th Surname
-      %th Username 
-      %th Email
-      %th Sign In Time
-      %th
-      %th
-      %th
-
-  %tbody
-    - @timetabled_session.session_attendances.each do |session|
+.table-responsive
+  %table.table
+    %thead
       %tr
-        %td= session.user.givenname
-        %td= session.user.sn
-        %td= session.user.username
-        %td= session.user.email
-        %td= session.created_at.strftime("%R")
+        %th Name
+        %th Surname
+        %th Username 
+        %th Email
+        %th Sign In Time
+
+    %tbody
+      - @timetabled_session.session_attendances.each do |session|
+        %tr
+          %td= session.user.givenname
+          %td= session.user.sn
+          %td= session.user.username
+          %td= session.user.email
+          %td= session.created_at.strftime("%R")
 %br

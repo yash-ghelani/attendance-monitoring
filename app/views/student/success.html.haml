@@ -1,4 +1,26 @@
 - content_for :title, "Signed In"
 
-.jumbotron.mb-3
-    %h1.display-5 Successfully signed in!
+
+.text-center.rounded.p-4
+  = image_tag "sign_in", height: "60"
+  %h1.display-4.mt-4.h2{"style" => "font-size: 2.5rem;"}
+    You're signed in
+  %p
+    You have been signed in succesfully to...
+
+  %p.my-5
+    %b
+      = @session_name
+
+  /Buttons
+  .row.justify-content-center
+    .col-12.col-md-4.my-2
+      %a.btn.btn-light-blue.btn-sm.btn-block{"href" => student_history_path}
+        Your Sessions 
+      
+    .col-12.col-md-4.my-2
+      %a.btn.btn-light-blue.btn-sm.btn-block{"href" => student_path}
+        Join Another Session
+    
+
+/%hr.mb-4
