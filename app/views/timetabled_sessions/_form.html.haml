@@ -14,13 +14,13 @@
       %label{:for => "start_time_picker"}
         Start Time
         %abbr{:title => "required"} *
-      %input.form-control{:type => "datetime-local", :value => Time.now.localtime.strftime('%Y-%m-%dT%H:%M'), id: 'start_time_picker', class: 'datetimepicker required'}
+      %input.form-control{:type => "datetime-local", :value => Time.now.utc.strftime('%Y-%m-%dT%H:%M'), id: 'start_time_picker', class: 'datetimepicker required'}
     
     .form-group
       %label{:for => "end_time_picker"}
         End Time
         %abbr{:title => "required"} *
-      %input.form-control{:type => "datetime-local", :value => (Time.now.localtime+30.minutes).strftime('%Y-%m-%dT%H:%M'), id: 'end_time_picker', class: 'datetimepicker required'}
+      %input.form-control{:type => "datetime-local", :value => (Time.now.utc+30.minutes).strftime('%Y-%m-%dT%H:%M'), id: 'end_time_picker', class: 'datetimepicker required'}
 
     %label Registered Lecturers
     - unless f.object.registrees.empty?
@@ -39,13 +39,16 @@
   $(document).ready( function() {
     const start = $("#start_time_picker.datetimepicker");
     const end = $("#end_time_picker.datetimepicker");
-
+    
     start.on('change', function(){
       $('#start_time').val(moment(start.val()).utc().format("YYYY-MM-DDTHH:mm"));
     })
     end.on('change', function(){
       $('#end_time').val(moment(end.val()).utc().format("YYYY-MM-DDTHH:mm"));
     })
+    
+    start.val(moment.utc(start.val()).local().format("YYYY-MM-DDTHH:mm"));
+    end.val(moment.utc(end.val()).local().format("YYYY-MM-DDTHH:mm"));
     start.change()
     end.change()
   });
