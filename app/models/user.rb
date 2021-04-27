@@ -37,6 +37,6 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
   def to_label
-    "#{email}"
+    "#{email}#{'*' if admin}"
   end
 end
