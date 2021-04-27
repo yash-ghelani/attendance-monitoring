@@ -22,10 +22,10 @@
         %abbr{:title => "required"} *
       %input.form-control{:type => "datetime-local", :value => (Time.now.localtime+30.minutes).strftime('%Y-%m-%dT%H:%M'), id: 'end_time_picker', class: 'datetimepicker required'}
 
-    #lecturers
-    .h4.mt-3 Register Lecturers
-    = f.simple_fields_for :session_registered_lecturers do |lecturer|
-      = render 'session_registered_lecturer_fields', f: lecturer
+    %label Registered Lecturers
+    - unless f.object.registrees.empty?
+      = f.simple_fields_for :session_registered_lecturers do |lecturer|
+        = render 'session_registered_lecturer_fields', f: lecturer
     .links
       = link_to_add_association 'Register lecturer', f, :session_registered_lecturers, class: 'btn btn-outline-primary mb-2'
 

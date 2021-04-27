@@ -52,6 +52,7 @@ class TimetabledSessionsController < ApplicationController
   # GET /timetabled_sessions/new
   def new
     @timetabled_session = TimetabledSession.new
+    @timetabled_session.session_registered_lecturers.build
   end
 
   # GET /timetabled_sessions/1/edit
