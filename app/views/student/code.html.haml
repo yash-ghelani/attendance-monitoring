@@ -37,44 +37,27 @@
 
     - # Valid code
     #validCode.alert.text-center.boxy{"style"=>"display: none;"}
-      %h5.alert-heading
-        Session Found
-      %hr
-      - # For error messages
+      %h3.alert-heading.font-weight-light
+        #SessionNameField 
       #errorSection.alert.alert-warning{"style"=>"display: none"}
+      .d-inline-block
+        %span#SessionDateField.mr-2.text-muted
+          = icon "fas", "calendar"
+        %span#SessionTimeField.mr-2.text-muted
+          = icon "fas", "clock"
+      - # For error messages
+     
       - # Submit button
       #submitSection
         = simple_form_for 'session_code', url: "/student/attend", method: :post do |f|
           = f.input :session_code, :as => :hidden, :input_html => {:id => "SessionHiddenField" }
           %button.btn.btn-success.w-100{"type" => "submit"}
             Sign in
-      %hr
-      %table.table.borderless
-        %tbody
-
-          /Session Name
-          %tr                      
-            %th Name
-            %td
-              %span#SessionNameField
-
-          /Session Date
-          %tr                      
-            %th Date
-            %td
-              %span#SessionDateField
-
-          /Session Time
-          %tr                      
-            %th Start
-            %td
-              %span#SessionTimeField
-      
 
     - # Invalid code
     #invalidCode.alert.alert-danger.text-center{"style"=>"display: none;"}
       %h5.alert-heading.text-danger.mb-0
-        Code Invalid
+        No session found with that code
       
 
 / .code-di

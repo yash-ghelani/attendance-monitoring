@@ -149,15 +149,14 @@
         success: function (result) {
           //If the result isn't null
           if(result){
-
-            console.log(result)
+            errors = result["errors"]
+            sessionDetails = result["session"]
 
             //Parse errors
-            if("errors" in result){
-              errors = result["errors"]
+            if(errors){
               //Invalid code (error exists)
               if (errors.length > 0){
-                errorMessage = errors[0]
+                errorMessage = errors.pop()
                 showErrorMessage(errorMessage)
               }
               //Valid code (no error, show button)
@@ -167,23 +166,25 @@
             }
 
             //Then parse the details
-            if("session" in result){
-              sessionDetails = result["session"]
+            if(sessionDetails){
+              attendance = result["attendance"]
               //If the session is not found
               if(sessionDetails == null){
                 loadView("invalid")
-              }
-              else{
+              }else{
                 //Parse session details
                 var title = sessionDetails["session_title"]
-                var date = new Date(sessionDetails["start_time"])
-                let day = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
-                let time = date.getHours() + ":" + date.getMinutes()
+                var module = sessionDetails["module_code"]
+                var startDate = moment(sessionDetails["start_time"])
+                var endDate = moment(sessionDetails["end_time"])
+                let day = startDate.format("DD/MM/YYYY")
+                let startTime = startDate.format("HH:mm")
+                let endTime = endDate.format("HH:mm")
 
                 //Update session details on screen
-                sessionNameField.text(title)
-                sessionDateField.text(day)
-                sessionTimeField.text(time)
+                sessionNameField.text(module+"-"+title)
+                sessionDateField.append(day)
+                sessionTimeField.append(startTime+"-"+endTime)
                 sessionHiddenField.val(code)
                 loadView("valid")
               }
