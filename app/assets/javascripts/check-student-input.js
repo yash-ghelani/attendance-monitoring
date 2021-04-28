@@ -149,11 +149,10 @@
         success: function (result) {
           //If the result isn't null
           if(result){
-            errors = result["errors"]
-            sessionDetails = result["session"]
-
+                
             //Parse errors
-            if(errors){
+            if("errors" in result){
+              let errors = result["errors"]
               //Invalid code (error exists)
               if (errors.length > 0){
                 errorMessage = errors.pop()
@@ -166,10 +165,11 @@
             }
 
             //Then parse the details
-            if(sessionDetails){
-              attendance = result["attendance"]
+            if("session" in result){
+              let sessionDetails = result["session"]
               //If the session is not found
               if(sessionDetails == null){
+                console.log()
                 loadView("invalid")
               }else{
                 //Parse session details
@@ -183,8 +183,8 @@
 
                 //Update session details on screen
                 sessionNameField.text(module+"-"+title)
-                sessionDateField.append(day)
-                sessionTimeField.append(startTime+"-"+endTime)
+                sessionDateField.text(day)
+                sessionTimeField.text(startTime+"-"+endTime)
                 sessionHiddenField.val(code)
                 loadView("valid")
               }

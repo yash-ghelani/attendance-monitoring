@@ -39,13 +39,17 @@
     #validCode.alert.text-center.boxy{"style"=>"display: none;"}
       %h3.alert-heading.font-weight-light
         #SessionNameField 
+      - # For error messages
       #errorSection.alert.alert-warning{"style"=>"display: none"}
       .d-inline-block
-        %span#SessionDateField.mr-2.text-muted
-          = icon "fas", "calendar"
-        %span#SessionTimeField.mr-2.text-muted
-          = icon "fas", "clock"
-      - # For error messages
+        .d-inline-block.p-2
+          %span.text-muted
+            = icon "fas", "calendar"
+          %span#SessionDateField
+        .d-inline-block.p-2
+          %span.text-muted
+            = icon "fas", "clock"
+          %span#SessionTimeField
      
       - # Submit button
       #submitSection
