@@ -4,23 +4,28 @@
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
  
   .form-inputs
-    -#= f.input :session_code
-    = f.input :session_title
-    = f.input :module_code
+    .row
+      .col-md-6
+        = f.input :session_title, placeholder: "New Session"
+      .col-md-6
+        = f.input :module_code, placeholder: "COM123"
+
     = f.hidden_field :start_time, id: 'start_time'
     = f.hidden_field :end_time, id: 'end_time'
-    
-    .form-group
-      %label{:for => "start_time_picker"}
-        Start Time
-        %abbr{:title => "required"} *
-      %input.form-control{:type => "datetime-local", :value => Time.now.utc.strftime('%Y-%m-%dT%H:%M'), id: 'start_time_picker', class: 'datetimepicker required'}
-    
-    .form-group
-      %label{:for => "end_time_picker"}
-        End Time
-        %abbr{:title => "required"} *
-      %input.form-control{:type => "datetime-local", :value => (Time.now.utc+30.minutes).strftime('%Y-%m-%dT%H:%M'), id: 'end_time_picker', class: 'datetimepicker required'}
+
+    .row
+      .col-md-6
+        .form-group
+          %label{:for => "start_time_picker"}
+            Start Time
+            %abbr{:title => "required"} *
+          %input.form-control{:type => "datetime-local", :value => Time.now.utc.strftime('%Y-%m-%dT%H:%M'), id: 'start_time_picker', class: 'datetimepicker required' ,placeholder: "Y-M-D H:M"}
+      .col-md-6
+        .form-group
+          %label{:for => "end_time_picker"}
+            End Time
+            %abbr{:title => "required"} *
+          %input.form-control{:type => "datetime-local", :value => (Time.now.utc+30.minutes).strftime('%Y-%m-%dT%H:%M'), id: 'end_time_picker', class: 'datetimepicker required',placeholder: "Y-M-D H:M"}
 
     %label Registered Lecturers
     - unless f.object.registrees.empty?
@@ -31,7 +36,7 @@
 
   #addedLecturers.mb-5.mt-2
 
-
+  
   .form-actions
     = f.button :submit, class: "btn btn-primary"
 

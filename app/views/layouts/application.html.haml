@@ -10,16 +10,20 @@
 = content_for :foot do
   .container
     .row.align-items-center.pb-4
-      .col-2
+      .col-md-2
         %p
           &copy; #{Date.today.year}
           = link_to 'epiGenesys', 'https://www.epigenesys.org.uk', target: '_blank', title: 'Go to the epiGenesys website'
 
-      .col-10
-        For testing only, quickly change role access
-        %a.btn.btn-outline-primary{href: "/set-student"} Student
-        %a.btn.btn-outline-success{href: "/set-lecturer"} Lecturer
-        %a.btn.btn-outline-danger{href: "/set-admin"} Admin
+      - #TODO Delete when done
+      .col-md-10.text-center
+        .row
+          .col-md-3.py-1
+            %a.btn.btn-outline-primary.btn-block{href: "/set-student"} Student
+          .col-md-3.py-1
+            %a.btn.btn-outline-success.btn-block{href: "/set-lecturer"} Lecturer
+          .col-md-3.py-1
+            %a.btn.btn-outline-danger.btn-block{href: "/set-admin"} Admin
 
 
 = render "layouts/master"
