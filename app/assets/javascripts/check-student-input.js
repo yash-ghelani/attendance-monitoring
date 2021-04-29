@@ -169,7 +169,6 @@
               let sessionDetails = result["session"]
               //If the session is not found
               if(sessionDetails == null){
-                console.log()
                 loadView("invalid")
               }else{
                 //Parse session details
