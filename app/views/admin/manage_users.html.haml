@@ -24,48 +24,54 @@
     .col-md-6
         //Admin Table
         %h4.mt-5.mb-3 Admins
-        .table-responsive
-            %table.table.table-striped
-                %thead
-                    %tr
-                        %th Name
-                        %th{"colspan" => "2"} Email
-
-                %tbody
-                    - @admins.each do |admin|
+        - if @admins.empty?
+            .alert.alert-light.text-center No admins to display
+        - else
+            .table-responsive
+                %table.table.table-striped
+                    %thead
                         %tr
-                            %td
-                                = admin.username
-                            %td
-                                = admin.email
-                            %td.text-center
-                                = form_tag do
-                                    %input{:type=>"hidden", :value=>admin.id, :name=>:user_id}
-                                    %input{:type=>"hidden", :value=>"lecturer", :name=>:task}
-                                    %button.btn.btn-primary.btn-sm{:title => "Make this user a lecturer"}
-                                        %span
-                                            = icon "fas", "exchange-alt"
+                            %th Name
+                            %th{"colspan" => "2"} Email
+
+                    %tbody
+                        - @admins.each do |admin|
+                            %tr
+                                %td
+                                    = admin.username
+                                %td
+                                    = admin.email
+                                %td.text-center
+                                    = form_tag do
+                                        %input{:type=>"hidden", :value=>admin.id, :name=>:user_id}
+                                        %input{:type=>"hidden", :value=>"lecturer", :name=>:task}
+                                        %button.btn.btn-primary.btn-sm{:title => "Make this user a lecturer"}
+                                            %span
+                                                = icon "fas", "exchange-alt"
     .col-md-6                                      
         //Lecturer Table
         %h4.mt-5.mb-3 Lecturers
-        .table-responsive
-            %table.table.table-striped
-                %thead
-                    %tr
-                        %th Name
-                        %th{"colspan" => "2"} Email
-
-                %tbody
-                    - @lecturers.each do |lecturer|
+        - if @lecturers.empty?
+            .alert.alert-light.text-center No lecturers to display
+        - else
+            .table-responsive
+                %table.table.table-striped
+                    %thead
                         %tr
-                            %td
-                                = lecturer.username 
-                            %td
-                                = lecturer.email
-                            %td.text-center
-                                = form_tag do
-                                    %input{:type=>"hidden", :value=>lecturer.id, :name=>:user_id}
-                                    %input{:type=>"hidden", :value=>"admin", :name=>:task}
-                                    %button.btn.btn-primary.btn-sm{:title => "Make this user an admin"}
-                                        %span
-                                            = icon "fas", "exchange-alt"
+                            %th Name
+                            %th{"colspan" => "2"} Email
+
+                    %tbody
+                        - @lecturers.each do |lecturer|
+                            %tr
+                                %td
+                                    = lecturer.username 
+                                %td
+                                    = lecturer.email
+                                %td.text-center
+                                    = form_tag do
+                                        %input{:type=>"hidden", :value=>lecturer.id, :name=>:user_id}
+                                        %input{:type=>"hidden", :value=>"admin", :name=>:task}
+                                        %button.btn.btn-primary.btn-sm{:title => "Make this user an admin"}
+                                            %span
+                                                = icon "fas", "exchange-alt"

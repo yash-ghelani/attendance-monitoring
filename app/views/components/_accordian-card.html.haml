@@ -79,13 +79,16 @@
                   - if (lect_count > 1)
                     (#{lect_count})
 
-              .table-wrapper-scroll-y.table-custom-scrollbar
-                %table.table.borderless                     
-                  %tbody
-                    - session.session_registered_lecturers.each do |lecturer|
-                      %tr
-                        %td
-                          = lecturer.user.email
+              - if session.session_registered_lecturers.empty?
+                .alert.alert-light.text-center No lecturers to display
+              - else
+                .table-wrapper-scroll-y.table-custom-scrollbar
+                  %table.table.borderless                     
+                    %tbody
+                      - session.session_registered_lecturers.each do |lecturer|
+                        %tr
+                          %td
+                            = lecturer.user.email
                           
               
                   
