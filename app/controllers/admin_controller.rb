@@ -22,6 +22,33 @@ class AdminController < LecturerController
   end
 
   def manage_users
+    @admins = User.all.where(admin: true).order("email ASC")
+    @lecturers = User.all.where(lecturer: true,admin: false).order("email ASC")
+  end
+
+  #Post function for manage users
+  def change_permissions
+    #Get the user ID from params and attempt to find
+    @user = User.find(params[:user_id])
+    if (@user)
+      #Find the action to perform
+      action = params[:task]
+      case action
+      when "admin"
+        @user.admin=true
+        @user.lecturer=false
+      when "lecturer"
+        @user.admin=false
+        @user.lecturer=true
+      end
+
+      @user.save
+      redirect_to "/admin/manage", notice: "User updated"
+
+    else
+      redirect_to "/admin/manage", alert: "User not found"
+    end
+
   end
 
   
