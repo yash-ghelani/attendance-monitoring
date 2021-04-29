@@ -1,4 +1,8 @@
 -# frozen_string_literal: true
+
+- start_time = @timetabled_session.start_time.utc ||= Time.now.utc
+- end_time = @timetabled_session.end_time.utc ||= (Time.now.utc+30.minutes)
+
 = simple_form_for(@timetabled_session) do |f|
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
@@ -19,13 +23,13 @@
           %label{:for => "start_time_picker"}
             Start Time
             %abbr{:title => "required"} *
-          %input.form-control{:type => "datetime-local", :value => Time.now.utc.strftime('%Y-%m-%dT%H:%M'), id: 'start_time_picker', class: 'datetimepicker required' ,placeholder: "Y-M-D H:M"}
+          %input.form-control{:type => "datetime-local", :value => start_time.strftime('%Y-%m-%dT%H:%M'), id: 'start_time_picker', class: 'datetimepicker required' ,placeholder: "Y-M-D H:M"}
       .col-md-6
         .form-group
           %label{:for => "end_time_picker"}
             End Time
             %abbr{:title => "required"} *
-          %input.form-control{:type => "datetime-local", :value => (Time.now.utc+30.minutes).strftime('%Y-%m-%dT%H:%M'), id: 'end_time_picker', class: 'datetimepicker required',placeholder: "Y-M-D H:M"}
+          %input.form-control{:type => "datetime-local", :value => end_time.strftime('%Y-%m-%dT%H:%M'), id: 'end_time_picker', class: 'datetimepicker required',placeholder: "Y-M-D H:M"}
 
     %label Registered Lecturers
     - unless f.object.registrees.empty?
@@ -45,9 +49,15 @@
     const start = $("#start_time_picker.datetimepicker");
     const end = $("#end_time_picker.datetimepicker");
     
+
+    $("#start_time_picker, #end_time_picker").datetimepicker({
+        minDate: 0 /* This will be today */
+    });
+
     start.on('change', function(){
       $('#start_time').val(moment(start.val()).utc().format("YYYY-MM-DDTHH:mm"));
     })
+
     end.on('change', function(){
       $('#end_time').val(moment(end.val()).utc().format("YYYY-MM-DDTHH:mm"));
     })
@@ -56,4 +66,5 @@
     end.val(moment.utc(end.val()).local().format("YYYY-MM-DDTHH:mm"));
     start.change()
     end.change()
+
   });
