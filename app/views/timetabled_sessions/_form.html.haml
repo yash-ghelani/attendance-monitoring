@@ -1,7 +1,7 @@
 -# frozen_string_literal: true
 
-- start_time = @timetabled_session.start_time.utc ||= Time.now.utc
-- end_time = @timetabled_session.end_time.utc ||= (Time.now.utc+30.minutes)
+- start_time = @timetabled_session.start_time || Time.now
+- end_time = @timetabled_session.end_time || (Time.now)
 
 = simple_form_for(@timetabled_session) do |f|
   = f.error_notification
@@ -23,13 +23,13 @@
           %label{:for => "start_time_picker"}
             Start Time
             %abbr{:title => "required"} *
-          %input.form-control{:type => "datetime-local", :value => start_time.strftime('%Y-%m-%dT%H:%M'), id: 'start_time_picker', class: 'datetimepicker required' ,placeholder: "Y-M-D H:M"}
+          %input.form-control{:type => "datetime-local", :value => start_time.utc.strftime('%Y-%m-%dT%H:%M'), id: 'start_time_picker', class: 'datetimepicker required' ,placeholder: "Y-M-D H:M"}
       .col-md-6
         .form-group
           %label{:for => "end_time_picker"}
             End Time
             %abbr{:title => "required"} *
-          %input.form-control{:type => "datetime-local", :value => end_time.strftime('%Y-%m-%dT%H:%M'), id: 'end_time_picker', class: 'datetimepicker required',placeholder: "Y-M-D H:M"}
+          %input.form-control{:type => "datetime-local", :value => end_time.utc.strftime('%Y-%m-%dT%H:%M'), id: 'end_time_picker', class: 'datetimepicker required',placeholder: "Y-M-D H:M"}
 
     %label Registered Lecturers
     - unless f.object.registrees.empty?
