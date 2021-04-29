@@ -42,7 +42,7 @@
                                 = form_tag do
                                     %input{:type=>"hidden", :value=>admin.id, :name=>:user_id}
                                     %input{:type=>"hidden", :value=>"lecturer", :name=>:task}
-                                    %button.btn.btn-primary.btn-sm{:href => "#"}
+                                    %button.btn.btn-primary.btn-sm{:title => "Make this user a lecturer"}
                                         %span
                                             = icon "fas", "exchange-alt"
     .col-md-6                                      
@@ -66,6 +66,6 @@
                                 = form_tag do
                                     %input{:type=>"hidden", :value=>lecturer.id, :name=>:user_id}
                                     %input{:type=>"hidden", :value=>"admin", :name=>:task}
-                                    %button.btn.btn-primary.btn-sm{:href => "#"}
+                                    %button.btn.btn-primary.btn-sm{:title => "Make this user an admin"}
                                         %span
                                             = icon "fas", "exchange-alt"

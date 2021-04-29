@@ -109,10 +109,11 @@
                     %a.btn.btn-light-green.btn-block.h-100{:href => timetabled_session_path(session)}
                       Show Code
 
-              .col-lg-6
-                .row.justify-content-center
-                  .col-md-5.py-2
-                    %a.btn.btn-light-grey.btn-block.h-100{:href => edit_timetabled_session_path(session)}
-                      Edit
-                  .col-md-5.py-2
-                    = link_to 'Delete', session, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-block'
+              - if Time.now.utc < session.end_time      
+                .col-lg-6
+                  .row.justify-content-center
+                    .col-md-5.py-2
+                      %a.btn.btn-light-grey.btn-block.h-100{:href => edit_timetabled_session_path(session)}
+                        Edit
+                    .col-md-5.py-2
+                      = link_to 'Delete', session, method: :delete, data: { confirm: 'Are you sure?'}, :class => ["btn btn-danger btn-block",("disabled" if Time.now.utc > session.start_time)]
