@@ -43,28 +43,3 @@
   
   .form-actions
     = f.button :submit, class: "btn btn-primary"
-
-:javascript
-  $(document).ready( function() {
-    const start = $("#start_time_picker.datetimepicker");
-    const end = $("#end_time_picker.datetimepicker");
-    
-
-    $("#start_time_picker, #end_time_picker").datetimepicker({
-        minDate: 0 /* This will be today */
-    });
-
-    start.on('change', function(){
-      $('#start_time').val(moment(start.val()).utc().format("YYYY-MM-DDTHH:mm"));
-    })
-
-    end.on('change', function(){
-      $('#end_time').val(moment(end.val()).utc().format("YYYY-MM-DDTHH:mm"));
-    })
-    
-    start.val(moment.utc(start.val()).local().format("YYYY-MM-DDTHH:mm"));
-    end.val(moment.utc(end.val()).local().format("YYYY-MM-DDTHH:mm"));
-    start.change()
-    end.change()
-
-  });
