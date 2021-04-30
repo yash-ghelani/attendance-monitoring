@@ -5,30 +5,19 @@ COM Attendance is a system for monitoring student attendance in the Computer Sci
 
 ![COM Attendance Logo](logo.png "COM Logo")
 
-
-### Significant Features/Technology
-The system has the following:
-
-* Some significant thing...
-* Another one...
-
-### Special Development Pre-requisites
-None.
-
-### Deployment
-*QA -> Demo -> Production* using the `epi-deploy` gem.
-
-### Customer Contact
-Some Customer <some.customer@epigenesys.co.uk>
-
-
 ### Installing
 
-Provide some instructions here to explain how to install the software
 
-```
-Code can go here
-```
+* Download the code from the [repository](https://git.shefcompsci.org.uk/com3420-2020-21/team11/project).
+* Ensure your VPN is turned on
+* Install dependancies
+* Migrate database
+* Start rails server
+
+
+### Support
+Project Contact <agoody1@sheffield.ac.uk>
+
 
 ## Authors
 
