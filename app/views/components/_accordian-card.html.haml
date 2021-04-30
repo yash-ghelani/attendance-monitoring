@@ -1,8 +1,8 @@
 -# The accordian card component
 -# The variable used here is "session"
-#accordian
+%div{:id => "accordian-#{session.id}"}
   .card
-    %a.container{"style" => "cursor: pointer;text-decoration: none","data-toggle" => "collapse", "data-target" => "#collapse-#{session.id}"}
+    %a.container{"style" => "cursor: pointer;text-decoration: none","data-toggle" => "collapse", "data-target" => "#collapse-#{session.id}", :id => "open-close-#{session.id}"}
       .row
         .bg-primary.py-3.text-white.px-2.text-center.col-md-2.col-5{"style" => "border-top-left-radius: 0.25rem;"}
           = session.module_code

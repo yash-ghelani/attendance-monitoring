@@ -27,11 +27,12 @@ FactoryBot.define do
     sequence(:module_code) { |n| "COM#{n}" }
     start_time { Time.now.utc }
     end_time { Time.now.utc + 30.minutes }
-    creator { user }
-    report_email { user.email }
+
+    association(:creator, factory: [:lecturer, :admin])
+    report_email { creator.email }
 
     after(:create) do |session|
-      create(:registration, user: user, session: session)
+      create(:registration, user: creator, session: session)
     end
   end
 end

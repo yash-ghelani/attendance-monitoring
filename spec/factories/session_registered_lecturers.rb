@@ -20,8 +20,8 @@
 #  fk_rails_...  (user_id => users.id) ON DELETE => cascade
 #
 FactoryBot.define do
-  factory :regisration do
-    timetabled_session { session }
+  factory :registration do
     user
+    session
   end
 end

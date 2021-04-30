@@ -21,6 +21,7 @@
 #
 FactoryBot.define do
   factory :session_attendance do
-    joined_at { "2021-03-16 17:29:19" }
+    student
+    session
   end
 end
