@@ -2,8 +2,10 @@
   - @lecturers = User.where(lecturer: true)-[current_user]
   - if f.object.user and not @lecturers.include? f.object.user
     - @lecturers = @lecturers + [f.object.user]
-  .input-group.mb-2.w-50
-    = f.association :user, collection: @lecturers, label: false, placeholder: "Enter Lecturer email", include_blank: false, include_hidden: false
-    .input-group-append
-      = link_to_remove_association "Remove", f, class: 'btn btn-danger mb-3'
+  .input-group.mb-2.row
+    .col-9.col-md-7
+      = f.association :user, collection: @lecturers, label: false, placeholder: "Enter Lecturer email", include_blank: false, include_hidden: false, input_html: {class: 'w' }
+    .col-3.col-md-5
+      .input-group-append.mr-0
+        = link_to_remove_association "Remove", f, class: 'btn btn-danger mb-3'
   
