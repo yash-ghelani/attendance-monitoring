@@ -36,7 +36,8 @@ Rails.application.routes.draw do
   
   # Admin Routes
   get '/admin/manage', to: 'admin#manage_users'
- 
+  post '/admin/manage', to: 'admin#change_permissions'
+
   #Dev only routes TODO devOnly
   get '/set-student', to: 'home#set_student'
   get '/set-lecturer', to: 'home#set_lecturer'

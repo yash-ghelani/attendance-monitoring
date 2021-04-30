@@ -9,9 +9,9 @@
         .bg-accordion-right.col.py-3{"style" => "border-top-right-radius: 0.25rem;"}
           .d-flex.justify-content-between
             %h5.mb-0.text-secondary
-              %span{:class => ("text-muted" unless Time.now < session.start_time)}
+              %span{:class => ("text-muted" unless Time.now.utc < session.start_time)}
                 = session.session_title
-            - if Time.now > session.start_time
+            - if Time.now.utc > session.start_time
               %span.text-muted
                 = icon "fas", "check"
 
@@ -35,7 +35,7 @@
                         = icon "fas", "calendar"
                       Date
                     %td
-                      = session.start_time.strftime('%d/%m/%Y')
+                      = session.start_time.localtime.strftime('%d/%m/%Y')
 
                   /Session Time
                   %tr                     
@@ -44,7 +44,7 @@
                         = icon "fas", "hourglass-start"
                       Start
                     %td
-                      = session.start_time.to_s(:time)
+                      = session.start_time.localtime.to_s(:time)
 
                   /End Time
                   %tr                      
@@ -53,7 +53,7 @@
                         = icon "fas", "hourglass-end"
                       End
                     %td
-                      = session.end_time.to_s(:time)
+                      = session.end_time.localtime.to_s(:time)
                   
                   -unless current_user.lecturer? or current_user.admin?
                     - @attendance = session.session_attendances.find_by(user: current_user)
@@ -79,13 +79,16 @@
                   - if (lect_count > 1)
                     (#{lect_count})
 
-              .table-wrapper-scroll-y.table-custom-scrollbar
-                %table.table.borderless                     
-                  %tbody
-                    - session.session_registered_lecturers.each do |lecturer|
-                      %tr
-                        %td
-                          = lecturer.user.email
+              - if session.session_registered_lecturers.empty?
+                .alert.alert-light.text-center No lecturers to display
+              - else
+                .table-wrapper-scroll-y.table-custom-scrollbar
+                  %table.table.borderless                     
+                    %tbody
+                      - session.session_registered_lecturers.each do |lecturer|
+                        %tr
+                          %td
+                            = lecturer.user.email
                           
               
                   
@@ -109,10 +112,11 @@
                     %a.btn.btn-light-green.btn-block.h-100{:href => timetabled_session_path(session)}
                       Show Code
 
-              .col-lg-6
-                .row.justify-content-center
-                  .col-md-5.py-2
-                    %a.btn.btn-light-grey.btn-block.h-100{:href => edit_timetabled_session_path(session)}
-                      Edit
-                  .col-md-5.py-2
-                    = link_to 'Delete', session, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-block'
+              - if Time.now.utc < session.end_time      
+                .col-lg-6
+                  .row.justify-content-center
+                    .col-md-5.py-2
+                      %a.btn.btn-light-grey.btn-block.h-100{:href => edit_timetabled_session_path(session)}
+                        Edit
+                    .col-md-5.py-2
+                      = link_to 'Delete', session, method: :delete, data: { confirm: 'Are you sure?'}, :class => ["btn btn-danger btn-block",("disabled" if Time.now.utc > session.start_time)]

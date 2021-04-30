@@ -1,28 +1,46 @@
 -# frozen_string_literal: true
+
+- start_time = @timetabled_session.start_time || Time.now
+- end_time = @timetabled_session.end_time || (Time.now)
+
 = simple_form_for(@timetabled_session) do |f|
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
  
   .form-inputs
-    -#= f.input :session_code
-    = f.input :session_title
-    = f.input :module_code
+    .row
+      .col-md-6
+        = f.input :session_title, placeholder: "New Session"
+      .col-md-6
+        = f.input :module_code, placeholder: "COM123"
+
     = f.hidden_field :start_time, id: 'start_time'
     = f.hidden_field :end_time, id: 'end_time'
 
-    %input{:type => "datetime-local", :value => Time.now.localtime.strftime('%Y-%m-%dT%H:%M'), id: 'start_time_picker', class: 'datetimepicker'}
-    %input{:type => "datetime-local", :value => (Time.now.localtime+30.minutes).strftime('%Y-%m-%dT%H:%M'), id: 'end_time_picker', class: 'datetimepicker'}
+    .row
+      .col-md-6
+        .form-group
+          %label{:for => "start_time_picker"}
+            Start Time
+            %abbr{:title => "required"} *
+          %input.form-control{:type => "datetime-local", :value => start_time.utc.strftime('%Y-%m-%dT%H:%M'), id: 'start_time_picker', class: 'datetimepicker required' ,placeholder: "Y-M-D H:M"}
+      .col-md-6
+        .form-group
+          %label{:for => "end_time_picker"}
+            End Time
+            %abbr{:title => "required"} *
+          %input.form-control{:type => "datetime-local", :value => end_time.utc.strftime('%Y-%m-%dT%H:%M'), id: 'end_time_picker', class: 'datetimepicker required',placeholder: "Y-M-D H:M"}
 
-    #lecturers
-    .h4.mt-2 Register Lecturers
-    = f.simple_fields_for :session_registered_lecturers do |lecturer|
-      = render 'session_registered_lecturer_fields', f: lecturer
+    %label Registered Lecturers
+    - unless f.object.registrees.empty?
+      = f.simple_fields_for :session_registered_lecturers do |lecturer|
+        = render 'session_registered_lecturer_fields', f: lecturer
     .links
       = link_to_add_association 'Register lecturer', f, :session_registered_lecturers, class: 'btn btn-outline-primary mb-2'
 
   #addedLecturers.mb-5.mt-2
 
-
+  
   .form-actions
     = f.button :submit, class: "btn btn-primary"
 
@@ -30,13 +48,19 @@
   $(document).ready( function() {
     const start = $("#start_time_picker.datetimepicker");
     const end = $("#end_time_picker.datetimepicker");
+    
 
     start.on('change', function(){
       $('#start_time').val(moment(start.val()).utc().format("YYYY-MM-DDTHH:mm"));
     })
+
     end.on('change', function(){
       $('#end_time').val(moment(end.val()).utc().format("YYYY-MM-DDTHH:mm"));
     })
+    
+    start.val(moment.utc(start.val()).local().format("YYYY-MM-DDTHH:mm"));
+    end.val(moment.utc(end.val()).local().format("YYYY-MM-DDTHH:mm"));
     start.change()
     end.change()
+
   });
