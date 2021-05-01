@@ -15,8 +15,10 @@ describe 'Lecturer Home Page' do
     click_link('New Session')
     fill_in 'Session title', with: 'Practical Session'
     fill_in 'Module code', with: 'COM1001'
-    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", Time.now.strftime('%Y-%m-%dT%H:%M'))
-    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+30.minutes).strftime('%Y-%m-%dT%H:%M'))
+    page.execute_script("$('#date_picker').val(arguments[0]).change()", Time.now.strftime('%Y-%m-%d'))
+    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", Time.now.strftime('%H:%M'))
+    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+30.minutes).strftime('%H:%M'))
+
     click_button('Create Timetabled session')
     expect(page).to have_content 'Here you can present your session code and see students that join the session'
     expect(page).to have_content 'Practical Session'
@@ -34,8 +36,9 @@ describe 'Lecturer Home Page' do
     click_link('New Session')
     fill_in 'Session title', with: 'HTML Technologies'
     fill_in 'Module code', with: 'COM1008'
-    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", Time.now.strftime('%Y-%m-%dT%H:%M'))
-    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+30.minutes).strftime('%Y-%m-%dT%H:%M'))
+    page.execute_script("$('#date_picker').val(arguments[0]).change()", Time.now.strftime('%Y-%m-%d'))
+    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", Time.now.strftime('%H:%M'))
+    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+30.minutes).strftime('%H:%M'))
     
     click_link('Register Lecturer')
     lecturer_select_box = all("#new_timetabled_session .nested-fields").last.find('select').click
@@ -46,8 +49,8 @@ describe 'Lecturer Home Page' do
     visit '/'
     session = lecturer1.timetabled_sessions.last
     find("#open-close-#{session.id}").click
-    page.find("#accordian-#{session.id}").should have_text(lecturer1.email)
-    page.find("#accordian-#{session.id}").should have_text(lecturer3.email)
+    expect(page.find("#accordian-#{session.id}")).to have_content(lecturer1.email)
+    expect(page.find("#accordian-#{session.id}")).to have_content(lecturer3.email)
 
   end
 

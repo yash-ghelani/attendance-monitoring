@@ -15,27 +15,21 @@
 
 
 $(document).on('ready', function () {
-    $('.datetimepicker').each(function () {
-        const start = $("#start_time_picker.datetimepicker");
-        const end = $("#end_time_picker.datetimepicker");
+    $('.datepicker').each(function () {
         if (this.type === 'text') {
             // Native datepicker is not available
-            start.datetimepicker({
-                onShow: function (ct) {
-                    this.setOptions({
-                        maxDate: end.val() ? end.val() : false
-                    })
-                },
-            });
-            end.datetimepicker({
-                onShow: function (ct) {
-                    this.setOptions({
-                        minDate: start.val() ? start.val() : false
-                    })
-                },
-            });
-        }else if(this.type === 'datetime-local'){
-            // Add logic for native datetimepicker
+            $(this).datetimepicker({timepicker:false, format:'Y-m-d'});
+        }else if(this.type === 'date'){
+            // Add logic for native datepicker
+        }
+    })
+
+    $('.timepicker').each(function () {
+        if (this.type === 'text') {
+            // Native timepicker is not available
+            $(this).datetimepicker({datepicker:false, format:'H:i'});
+        }else if(this.type === 'time'){
+            // Add logic for native timepicker
         }
     })
 })
