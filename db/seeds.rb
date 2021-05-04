@@ -11,8 +11,7 @@ users = [{"username" => 'aca18mms', "email" => 'mmsarpatwar1@sheffield.ac.uk', "
                 {"username" => 'aca18rf', "email" => 'rfaiz1@sheffield.ac.uk', "admin" => true},
                 {"username" => 'acc18ag', "email" => 'agoody1@sheffield.ac.uk', "admin" => true},
                 {"username" => 'acd19yc', "email" => 'ychen1@sheffield.ac.uk', "admin" => true},
-                {"username" => 'mea17nh', "email" => 'nheath2@sheffield.ac.uk', "admin" => true},
-                {"username" => 'abc12ab', "email" => 'abc12ab@sheffield.ac.uk', "admin" => true}]
+                {"username" => 'mea17nh', "email" => 'nheath2@sheffield.ac.uk', "admin" => true}]
 
 users.each do |user_details|
     user = User.find_or_initialize_by({"username" => user_details['username'], "email" => user_details["email"]})

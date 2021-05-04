@@ -3,7 +3,7 @@
 - start_time = @timetabled_session.start_time || Time.now
 - end_time = @timetabled_session.end_time || Time.now+30.minutes
 
-= simple_form_for(@timetabled_session) do |f|
+= simple_form_for @timetabled_session, :html => { class: 'timetabled_session' } do |f|
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
  
@@ -38,12 +38,13 @@
           %input.form-control{:type => "time", :value => end_time.utc.strftime('%H:%M'), id: 'end_time_picker', class: 'timepicker required',placeholder: "H:M"}
 
     %label Registered Lecturers
-    - @lecturers = User.where(lecturer: true)-[current_user]
+    - @lecturers = User.where(lecturer: true)+f.object.registrees-[current_user]
+    - @lecturers = @lecturers.uniq
     - unless f.object.registrees.empty?
       = f.simple_fields_for :session_registered_lecturers do |lecturer|
         = render 'session_registered_lecturer_fields', f: lecturer
     .links
-      = link_to_add_association 'Register Lecturer', f, :session_registered_lecturers, class: "btn #{@lecturers.empty? ? 'btn-dark disabled' : 'btn-outline-primary'} mb-2", id: "register-lecturer-btn", render_options: {locals: {lecturers: @lecturers}}
+      = link_to_add_association 'Register Lecturer', f, :session_registered_lecturers, class: "btn #{@lecturers.empty? ? 'btn-dark disabled' : 'btn-outline-primary'} mb-2", id: "register-lecturer-btn"
 
   #addedLecturers.mb-5.mt-2
 
@@ -79,24 +80,43 @@
   });
 
 
+  // For the edit page where the lecturers are already registered
+  $('.timetabled_session .nested-fields select').each(function(){
+    const select = $(this);
+    const val = select.find('option:selected').val()
+
+    $('.timetabled_session .nested-fields select').each(function(){
+      if($(this).attr('id') != select.attr('id')){
+        // Remove current selection
+        $(this).find(`[value="${val}"]`).remove();
+      }
+    })
+    select.data('prev', {val: select.find(':selected').val(), text: select.find(':selected').text()})
+  })
+
   // Valdation for registering lecturers
   // Makes sure unique values are present in options
   // Works on events when adding a lecturer, removing a lecturer, and changing select input
-  $('#new_timetabled_session')
+  $('.timetabled_session')
       .on('cocoon:before-insert', function(e, lecturer) {
         const options = []
         const select = lecturer.find('select')
 
-        $('#new_timetabled_session .nested-fields select').each(function(){
-          options.push($(this).val())
+        $('.timetabled_session .nested-fields select').each(function(){
+          // Check if data was removed (cocoon merely hides the select, does not completely remove it)
+          if(!$(this).data('removed'))
+            options.push($(this).find(':selected').val())
         })
 
+        console.log(options);
+        // Remove already selected values
         for(const option of options){
           select.find(`[value="${option}"]`).remove();
         }
 
-        $('#new_timetabled_session .nested-fields select').each(function(){
-          $(this).find(`[value="${select.find('> option').val()}"]`).remove();
+        // Remove the selected value of to-be-added dropdown from all other selects
+        $('.timetabled_session .nested-fields select').each(function(){
+          $(this).find(`[value="${select.find(':selected').val()}"]`).remove();
         })
 
         // Exhausted all options
@@ -118,7 +138,7 @@
       .on("cocoon:after-remove", function(e, lecturer) {
         const select = lecturer.find('select')
         const option = select.find('option:selected')
-        $('#new_timetabled_session .nested-fields select').each(function(){
+        $('.timetabled_session .nested-fields select').each(function(){
           $(this).append($('<option>', {
               value: option.val(),
               text: option.text()
@@ -132,13 +152,16 @@
           button.addClass('btn-outline-primary')
           button.removeClass('btn-dark disabled');
         }
+
+        // Data was removed (necessary for edit page)
+       select.data('removed', true);
       })
       .on('change', '.nested-fields select', function(){
         const select = $(this)
         const prev = select.data('prev');
         const val = select.find('option:selected').val()
 
-        $('#new_timetabled_session .nested-fields select').each(function(){
+        $('.timetabled_session .nested-fields select').each(function(){
           if($(this).attr('id') != select.attr('id')){
             // Remove current selection
             $(this).find(`[value="${val}"]`).remove();
@@ -151,4 +174,7 @@
             $(this).data('prev', {val: $(this).find(':selected').val(), text: $(this).find(':selected').text()})
           }
         })
+
+        // Important to set the prev after
+        select.data('prev', {val: select.find(':selected').val(), text: select.find(':selected').text()})
       });

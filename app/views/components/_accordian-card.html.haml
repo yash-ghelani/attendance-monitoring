@@ -35,7 +35,7 @@
                         = icon "fas", "calendar"
                       Date
                     %td
-                      = session.start_time.localtime.strftime('%d/%m/%Y')
+                      = local_time(session.start_time, format: '%d/%m/%Y')
 
                   /Session Time
                   %tr                     
@@ -44,7 +44,7 @@
                         = icon "fas", "hourglass-start"
                       Start
                     %td
-                      = session.start_time.localtime.to_s(:time)
+                      = local_time(session.start_time, format: '%H:%M')
 
                   /End Time
                   %tr                      
@@ -53,7 +53,7 @@
                         = icon "fas", "hourglass-end"
                       End
                     %td
-                      = session.end_time.localtime.to_s(:time)
+                      = local_time(session.end_time, format: '%H:%M')
                   
                   -unless current_user.lecturer? or current_user.admin?
                     - @attendance = session.session_attendances.find_by(user: current_user)

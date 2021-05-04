@@ -12,7 +12,7 @@
 //= require cocoon
 //= require jquery-datetimepicker
 //= require moment
-
+//= require local-time
 
 $(document).on('ready', function () {
     $('.datepicker').each(function () {
