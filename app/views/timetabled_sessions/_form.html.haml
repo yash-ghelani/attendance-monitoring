@@ -38,11 +38,12 @@
           %input.form-control{:type => "time", :value => end_time.utc.strftime('%H:%M'), id: 'end_time_picker', class: 'timepicker required',placeholder: "H:M"}
 
     %label Registered Lecturers
+    - @lecturers = User.where(lecturer: true)-[current_user]
     - unless f.object.registrees.empty?
       = f.simple_fields_for :session_registered_lecturers do |lecturer|
         = render 'session_registered_lecturer_fields', f: lecturer
     .links
-      = link_to_add_association 'Register Lecturer', f, :session_registered_lecturers, class: 'btn btn-outline-primary mb-2'
+      = link_to_add_association 'Register Lecturer', f, :session_registered_lecturers, class: "btn #{@lecturers.empty? ? 'btn-dark disabled' : 'btn-outline-primary'} mb-2", id: "register-lecturer-btn", render_options: {locals: {lecturers: @lecturers}}
 
   #addedLecturers.mb-5.mt-2
 
@@ -76,3 +77,78 @@
     end.change()
 
   });
+
+
+  // Valdation for registering lecturers
+  // Makes sure unique values are present in options
+  // Works on events when adding a lecturer, removing a lecturer, and changing select input
+  $('#new_timetabled_session')
+      .on('cocoon:before-insert', function(e, lecturer) {
+        const options = []
+        const select = lecturer.find('select')
+
+        $('#new_timetabled_session .nested-fields select').each(function(){
+          options.push($(this).val())
+        })
+
+        for(const option of options){
+          select.find(`[value="${option}"]`).remove();
+        }
+
+        $('#new_timetabled_session .nested-fields select').each(function(){
+          $(this).find(`[value="${select.find('> option').val()}"]`).remove();
+        })
+
+        // Exhausted all options
+        if(select.find('> option').length === 1){
+          const button = $("#register-lecturer-btn")
+          $("#register-lecturer-btn").off('click');
+          button.removeClass('btn-outline-primary')
+          button.addClass('btn-dark disabled');
+        }
+
+        select.data('prev', {val: select.find(':selected').val(), text: select.find(':selected').text()})
+      })
+      .on('cocoon:after-insert', function(e, lecturer) {
+        /* ... do something ... */
+      })
+      .on("cocoon:before-remove", function() {
+        /* ... do something ... */
+      })
+      .on("cocoon:after-remove", function(e, lecturer) {
+        const select = lecturer.find('select')
+        const option = select.find('option:selected')
+        $('#new_timetabled_session .nested-fields select').each(function(){
+          $(this).append($('<option>', {
+              value: option.val(),
+              text: option.text()
+          }))
+        })
+        
+        // Exhausted all options
+        if(select.find('> option').length > 0){
+          const button = $("#register-lecturer-btn")
+          $("#register-lecturer-btn").on('click');
+          button.addClass('btn-outline-primary')
+          button.removeClass('btn-dark disabled');
+        }
+      })
+      .on('change', '.nested-fields select', function(){
+        const select = $(this)
+        const prev = select.data('prev');
+        const val = select.find('option:selected').val()
+
+        $('#new_timetabled_session .nested-fields select').each(function(){
+          if($(this).attr('id') != select.attr('id')){
+            // Remove current selection
+            $(this).find(`[value="${val}"]`).remove();
+          
+            // Add previous selection
+            $(this).append($('<option>', {
+                value: prev.val,
+                text: prev.text
+            }))
+            $(this).data('prev', {val: $(this).find(':selected').val(), text: $(this).find(':selected').text()})
+          }
+        })
+      });
