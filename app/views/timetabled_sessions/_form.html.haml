@@ -37,14 +37,15 @@
             %abbr{:title => "required"} *
           %input.form-control{:type => "time", :value => end_time.utc.strftime('%H:%M'), id: 'end_time_picker', class: 'timepicker required',placeholder: "H:M"}
 
-    %label Registered Lecturers
+    %br
+    %label.mb-3 Registered Lecturers
     - @lecturers = User.where(lecturer: true)+f.object.registrees-[current_user]
     - @lecturers = @lecturers.uniq
     - unless f.object.registrees.empty?
       = f.simple_fields_for :session_registered_lecturers do |lecturer|
         = render 'session_registered_lecturer_fields', f: lecturer
     .links
-      = link_to_add_association 'Register Lecturer', f, :session_registered_lecturers, class: "btn #{@lecturers.empty? ? 'btn-dark disabled' : 'btn-outline-primary'} mb-2", id: "register-lecturer-btn"
+      = link_to_add_association 'Register Lecturer', f, :session_registered_lecturers, class: "btn #{@lecturers.empty? ? 'btn-dark disabled' : 'btn-outline-secondary btn-sm'} mb-2", id: "register-lecturer-btn"
 
   #addedLecturers.mb-5.mt-2
 
