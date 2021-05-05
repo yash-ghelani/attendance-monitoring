@@ -126,7 +126,7 @@ describe 'Lecturer Home Page' do
 
   end
 
-  specify 'View show code in dashboard', js: true do
+  specify 'View show code button in session details', js: true do
     lecturer = FactoryBot.create(:lecturer)
     login_as lecturer
     visit '/'
@@ -146,8 +146,14 @@ describe 'Lecturer Home Page' do
     expect(page).to have_content 'Demo Session'
     expect(page).to have_content 'COM1234'
 
-    find("#open-close-1",wait: 10).click
-    click_button('Show Code')
+    print(page)
+    page.find("#open-close-1").click
+    click_on(class: 'btn btn-light-green btn-block h-100')
+    expect(page).to have_content 'Here you can present your session code and see students that join the session'
+    
+    print(page)
+    
+
     
   end
 
