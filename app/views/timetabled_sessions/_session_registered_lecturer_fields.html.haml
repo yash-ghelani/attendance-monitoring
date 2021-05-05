@@ -1,8 +1,11 @@
 .nested-fields
-  .input-group.mb-2.row
-    .col-10.col-md-4
-      = f.association :user, collection: @lecturers, label: false, placeholder: "Enter Lecturer email", include_blank: false, include_hidden: false, input_html: {class: 'w' }
-    .col-2.px-md-0
-      .input-group-append.mr-0
-        = link_to_remove_association f, class: 'btn btn-danger mb-3' do
-          .fa.fa-trash
+  .row
+    .input-group.mb-2
+      .col-md-6
+        .row
+          .col-md-9.col-lg-10.col-8
+            = f.association :user, collection: @lecturers, label: false, placeholder: "Enter Lecturer email", include_blank: false, include_hidden: false, input_html: {class: 'w' }
+          .col-md-3.col-lg-2.col-4
+            .input-group-append
+              = link_to_remove_association f, class: 'btn btn-danger btn-block mb-3' do
+                .fa.fa-trash

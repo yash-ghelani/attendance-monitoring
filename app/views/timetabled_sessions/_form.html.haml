@@ -123,8 +123,8 @@
         if(select.find('> option').length === 1){
           const button = $("#register-lecturer-btn")
           $("#register-lecturer-btn").off('click');
-          button.removeClass('btn-outline-primary')
-          button.addClass('btn-dark disabled');
+          //button.removeClass('btn-outline-primary')
+          button.addClass('disabled');
         }
 
         select.data('prev', {val: select.find(':selected').val(), text: select.find(':selected').text()})
@@ -149,8 +149,8 @@
         if(select.find('> option').length > 0){
           const button = $("#register-lecturer-btn")
           $("#register-lecturer-btn").on('click');
-          button.addClass('btn-outline-primary')
-          button.removeClass('btn-dark disabled');
+          // button.addClass('btn-outline-primary')
+          button.removeClass('disabled');
         }
 
         // Data was removed (necessary for edit page)
