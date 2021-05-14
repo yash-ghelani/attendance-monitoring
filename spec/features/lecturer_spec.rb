@@ -190,7 +190,7 @@ describe 'Lecturer Home Page' do
     
     fill_in 'Session title', with: 'Demo Session'
     fill_in 'Module code', with: 'COM1234'
-    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%Y-%m-%dT%H:%M'))
+    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", Time.now.strftime('%Y-%m-%dT%H:%M'))
     page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+120.minutes).strftime('%Y-%m-%dT%H:%M'))
     
     click_button('Create Timetabled session')
@@ -201,63 +201,20 @@ describe 'Lecturer Home Page' do
     expect(page).to have_content 'Demo Session'
     expect(page).to have_content 'COM1234'
 
-    session = FactoryBot.build(:session, creator: lecturer)
-    session.save
+    page.find("#open-close-1").click
+    click_on(class: 'btn btn-light-green btn-block h-100')
+    expect(page).to have_content 'Here you can present your session code and see students that join the session'
+    ses_code = find(:xpath, '//*[@id="main-container"]/div/div[3]/div/div[1]/div[1]/h2/b').text
+    
+
     login_as student
     visit '/'
-    session.session_code.split('').each_with_index do |val, i|
+    ses_code.split('').each_with_index do |val, i|
       fill_in "code-#{i+1}", with: val
     end
     wait_for_ajax
-    expect(page).to have_content session.session_title
-    expect(page).to have_content session.module_code
-    print(session.module_code)
-    click_button('Sign In')
-    expect(page).to have_content "You're signed in"
-    
-
-    login_as lecturer
-    visit '/'
-    expect(page).to have_content 'Welcome to COM attendance, from here you can view sessions as well as create new ones.'
-    page.find("#open-close-1").click
-    click_on(class: 'btn btn-light-blue btn-block h-100')
-    expect(page).to have_content 'No attendance data yet'
-
-  end
-
-  specify 'Check attendance monitoring in show attendance', js: true do
-    student = FactoryBot.create(:student)
-    lecturer = FactoryBot.create(:lecturer)
-
-    login_as lecturer
-    visit '/'
-    
-    click_link('New Session')
-    
-    fill_in 'Session title', with: 'Demo Session'
-    fill_in 'Module code', with: 'COM1234'
-    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%Y-%m-%dT%H:%M'))
-    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+120.minutes).strftime('%Y-%m-%dT%H:%M'))
-    
-    click_button('Create Timetabled session')
-    expect(page).to have_content 'COM1234'
-    visit '/'
-
-    expect(page).to have_content 'Welcome to COM attendance, from here you can view sessions as well as create new ones.'
     expect(page).to have_content 'Demo Session'
     expect(page).to have_content 'COM1234'
-
-    session = FactoryBot.build(:session, creator: lecturer)
-    session.save
-    login_as student
-    visit '/'
-    session.session_code.split('').each_with_index do |val, i|
-      fill_in "code-#{i+1}", with: val
-    end
-    wait_for_ajax
-    expect(page).to have_content session.session_title
-    expect(page).to have_content session.module_code
-    print(session.module_code)
     click_button('Sign In')
     expect(page).to have_content "You're signed in"
     
@@ -267,7 +224,7 @@ describe 'Lecturer Home Page' do
     expect(page).to have_content 'Welcome to COM attendance, from here you can view sessions as well as create new ones.'
     page.find("#open-close-1").click
     click_on(class: 'btn btn-light-blue btn-block h-100')
-    expect(page).to have_content 'No attendance data yet'
+    expect(page).to have_content 'Sign In Time'
 
   end
 
