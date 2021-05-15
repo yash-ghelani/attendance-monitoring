@@ -14,7 +14,14 @@
 //= require moment
 //= require local-time
 
+
+/*
+ * The functions for ensuring the datepicker
+ * works correctly on each screen
+ */
 $(document).on('ready', function () {
+
+    //Datepicker class
     $('.datepicker').each(function () {
         if (this.type === 'text') {
             // Native datepicker is not available
@@ -24,6 +31,7 @@ $(document).on('ready', function () {
         }
     })
 
+    //Timepicker class
     $('.timepicker').each(function () {
         if (this.type === 'text') {
             // Native timepicker is not available

@@ -1,3 +1,10 @@
+
+
+# This controller manages which lecturers are registered
+# to a session, it provides CRUD functions which allow
+# lecturers / admins to add or remove lecturers from sessions
+
+
 class SessionRegisteredLecturersController < ApplicationController
   before_action :set_session_registered_lecturer, only: [:show, :edit, :update, :destroy]
   #Authorise

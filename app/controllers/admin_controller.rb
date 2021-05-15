@@ -1,5 +1,12 @@
-#  The Admin Controller will manage actions belonging to
-#  just admins, but also inhreit all actions from lecturers
+
+# The admin controller manages the actions performed
+# by an admin, this includes...
+# - Rendering the dashboard with the relevant sessions
+# - Rendering the manage users page, to allow the admin to change user roles
+# - change_permissions : change the permissions of the given user, i.e make admin etc
+# This controller inherits from the Lecturer controller, so admins can
+# share all the abilities of lecturers
+
 
 class AdminController < LecturerController
   #Authorise without needing a model

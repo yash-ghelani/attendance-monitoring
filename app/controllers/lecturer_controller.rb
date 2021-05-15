@@ -1,7 +1,10 @@
-#  The Lecturer controller will control
-#  the actions shared between lecturers and admins
+
+# The Lecturer controller, manages all the actions
+# for the lecturer users, the main actions are...
+# - Rendering the dashboard
 
 class LecturerController < ApplicationController
+
   #Authorise without needing a model
   authorize_resource :class => LecturerController
 
@@ -26,12 +29,6 @@ class LecturerController < ApplicationController
     @sessions = @sessions.where(session_registered_lecturers: {user: current_user}, start_time: @week_start..@week_end)
     @sessions = @sessions.order(created_at: :asc)
     render :dashboard
-  end
-
-  def upcoming 
-  end
-
-  def previous
   end
 
 end

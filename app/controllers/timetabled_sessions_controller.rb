@@ -1,4 +1,7 @@
 
+# This controller is the main resource controller for the system, it is responsible 
+# for managing the logic for each timetabled session, it contains the standard CRUD functions as well as ajax functions for our javascript files, there are also some CSV functions which allow the generation and downloading of SAM reports
+
 require 'uri'
 
 class TimetabledSessionsController < ApplicationController

@@ -1,5 +1,7 @@
-#  The student controller manages the actions
-#  for students
+
+# This is the student controller, it provides the logic for student actions
+# in the system, it renders the relevant student views such as dashboards and history pages
+# it also handles the logic of signing in a student and validating the code they enter etc
 
 class StudentController < ApplicationController
   #Authorise without needing a model
