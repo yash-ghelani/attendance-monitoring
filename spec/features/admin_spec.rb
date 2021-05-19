@@ -23,11 +23,11 @@ describe 'Admin Home Page' do
     expect(page).to have_content 'COM1001'
   end
 
-  skip 'Create new session with a registered lecturer', js: true do
-    admin1 = FactoryBot.create(:admin)
-    admin2 = FactoryBot.create(:admin)
-    admin3 = FactoryBot.create(:admin)
-    admin4 = FactoryBot.create(:admin)
+  specify 'Create new session with a registered lecturer', js: true do
+    admin1 = FactoryBot.create(:lecturer)
+    lecturer2 = FactoryBot.create(:lecturer)
+    lecturer3 = FactoryBot.create(:lecturer)
+    lecturer4 = FactoryBot.create(:lecturer)
 
     login_as admin1
     visit '/'
@@ -38,8 +38,8 @@ describe 'Admin Home Page' do
     page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+30.minutes).strftime('%Y-%m-%dT%H:%M'))
     
     click_link('Register Lecturer')
-    admin_select_box = all("#new_timetabled_session .nested-fields").last.find('select').click
-    admin_select_box.find('option', :text => admin3.email).click
+    lecturer_select_box = all("#new_timetabled_session .nested-fields").last.find('select').click
+    lecturer_select_box.find('option', :text => lecturer3.email).click
     
     click_button('Create Timetabled session')
 
@@ -47,7 +47,7 @@ describe 'Admin Home Page' do
     session = admin1.timetabled_sessions.last
     find("#open-close-#{session.id}").click
     page.find("#accordian-#{session.id}").should have_text(admin1.email)
-    page.find("#accordian-#{session.id}").should have_text(admin3.email)
+    page.find("#accordian-#{session.id}").should have_text(lecturer3.email)
 
   end
 
