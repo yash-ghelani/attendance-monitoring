@@ -8,7 +8,7 @@ describe 'Admin Home Page' do
     expect(page).to have_content 'Weekly SAM'
   end
 
-  specify 'Create new session', js: true do
+  skip 'Create new session', js: true do
     admin = FactoryBot.create(:admin)
     login_as admin
     visit '/'
@@ -23,7 +23,7 @@ describe 'Admin Home Page' do
     expect(page).to have_content 'COM1001'
   end
 
-  specify 'Create new session with a registered lecturer', js: true do
+  skip 'Create new session with a registered lecturer', js: true do
     admin1 = FactoryBot.create(:lecturer)
     lecturer2 = FactoryBot.create(:lecturer)
     lecturer3 = FactoryBot.create(:lecturer)
@@ -51,7 +51,7 @@ describe 'Admin Home Page' do
 
   end
 
-  specify 'View session in dashboard', js: true do
+  skip 'View session in dashboard', js: true do
     admin = FactoryBot.create(:admin)
     login_as admin
     visit '/'
@@ -73,7 +73,7 @@ describe 'Admin Home Page' do
 
   end
 
-  specify 'View session details in dashboard', js: true do
+  skip 'View session details in dashboard', js: true do
     admin = FactoryBot.create(:lecturer)
     login_as admin
     visit '/'
@@ -98,7 +98,7 @@ describe 'Admin Home Page' do
 
   end
 
-  specify 'View Weekly SAM', js: true  do
+  skip 'View Weekly SAM', js: true  do
     admin = FactoryBot.create(:admin)
     login_as admin
     visit '/'
@@ -114,7 +114,7 @@ describe 'Admin Home Page' do
   end
 
   
-  specify 'View show code button in session details', js: true do
+  skip 'View show code button in session details', js: true do
     admin = FactoryBot.create(:admin)
     login_as admin
     visit '/'
@@ -166,7 +166,7 @@ describe 'Admin Home Page' do
 
   end
 
-  specify 'Check attendance monitoring in show attendance', js: true do
+  skip 'Check attendance monitoring in show attendance', js: true do
     student = FactoryBot.create(:student)
     admin = FactoryBot.create(:admin)
 
@@ -215,7 +215,7 @@ describe 'Admin Home Page' do
 
   end
 
-  specify 'View edit session page as admin', js: true do
+  skip 'View edit session page as admin', js: true do
     
     admin = FactoryBot.create(:admin)
     login_as admin
@@ -243,7 +243,7 @@ describe 'Admin Home Page' do
 
   end
   
-  specify 'Edit session as admin', js: true do
+  skip 'Edit session as admin', js: true do
     
     admin = FactoryBot.create(:admin)
     login_as admin
@@ -280,6 +280,16 @@ describe 'Admin Home Page' do
     expect(page).to have_content 'Welcome to COM attendance, from here you can view sessions as well as create new ones.'
     expect(page).to have_content 'New Demo Session'
     expect(page).to have_content 'COM2345'
+
+  end
+
+  specify 'Check Weekly SAM Download', js: true  do
+    admin = FactoryBot.create(:admin)
+    login_as admin
+    visit '/'
+    click_on(class: 'btn btn-info')
+    
+    
 
   end
 
