@@ -241,5 +241,46 @@ describe 'Admin Home Page' do
     click_on(class: 'btn btn-light-grey btn-block h-100')
     expect(page).to have_content 'Edit Session'
 
-  end  
+  end
+  
+  specify 'Edit session as admin', js: true do
+    
+    admin = FactoryBot.create(:admin)
+    login_as admin
+    visit '/'
+    
+    click_link('New Session')
+    
+    fill_in 'Session title', with: 'Demo Session'
+    fill_in 'Module code', with: 'COM1234'
+    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+120.minutes).strftime('%Y-%m-%dT%H:%M'))
+    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+180.minutes).strftime('%Y-%m-%dT%H:%M'))
+    
+    click_button('Create Timetabled session')
+
+    visit '/'
+
+    expect(page).to have_content 'Welcome to COM attendance, from here you can view sessions as well as create new ones.'
+    expect(page).to have_content 'Demo Session'
+    expect(page).to have_content 'COM1234'
+
+    page.find("#open-close-1").click
+    click_on(class: 'btn btn-light-grey btn-block h-100')
+    expect(page).to have_content 'Edit Session'
+
+    fill_in 'Session title', with: 'New Demo Session'
+    fill_in 'Module code', with: 'COM2345'
+    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%Y-%m-%dT%H:%M'))
+    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+120.minutes).strftime('%Y-%m-%dT%H:%M'))
+
+    click_button('Update Timetabled session')
+
+    visit '/'
+
+    expect(page).to have_content 'Welcome to COM attendance, from here you can view sessions as well as create new ones.'
+    expect(page).to have_content 'New Demo Session'
+    expect(page).to have_content 'COM2345'
+
+  end
+
 end
