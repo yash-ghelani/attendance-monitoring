@@ -9,7 +9,7 @@ describe 'Admin Home Page' do
   end
 
 
-  specify 'View Weekly SAM', js: true  do
+  skip 'View Weekly SAM', js: true  do
     admin = FactoryBot.create(:admin)
     login_as admin
     visit '/'
@@ -24,7 +24,7 @@ describe 'Admin Home Page' do
     visit '/'
   end
 
-  specify 'View show code button in session details', js: true do
+  skip 'View show code button in session details', js: true do
     admin = FactoryBot.create(:admin)
     login_as admin
     visit '/'
@@ -50,5 +50,30 @@ describe 'Admin Home Page' do
     
   end
 
+  specify 'View attendance page in session details', js: true do
+    admin = FactoryBot.create(:admin)
+    login_as admin
+    visit '/'
+    
+    click_link('New Session')
+    
+    fill_in 'Session title', with: 'Demo Session'
+    fill_in 'Module code', with: 'COM1234'
+    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%Y-%m-%dT%H:%M'))
+    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+120.minutes).strftime('%Y-%m-%dT%H:%M'))
+    
+    click_button('Create Timetabled session')
+    expect(page).to have_content 'COM1234'
+    visit '/'
+
+    expect(page).to have_content 'Welcome to COM attendance, from here you can view sessions as well as create new ones.'
+    expect(page).to have_content 'Demo Session'
+    expect(page).to have_content 'COM1234'
+
+    page.find("#open-close-1").click
+    click_on(class: 'btn btn-light-blue btn-block h-100')
+    expect(page).to have_content 'Here you can view the attendance for a session'
+
+  end
 
 end
