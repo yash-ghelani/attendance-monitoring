@@ -289,7 +289,41 @@ describe 'Admin Home Page' do
     visit '/'
     click_on(class: 'btn btn-info')
     
+  end
+
+  specify 'View manage users page as admin', js: true do
     
+    admin = FactoryBot.create(:admin)
+    lecturer = FactoryBot.create(:lecturer)
+    login_as lecturer
+    visit '/'
+    
+    login_as admin
+    visit '/'
+
+    click_link('Manage users')
+
+    expect(page).to have_content 'Here you can manage user roles, you can convert lecturers to admins and vice versa.'
+    expect(page).to have_content admin.email
+    expect(page).to have_content lecturer.email
+
+  end
+
+  specify 'Change user role as admin', js: true do
+    
+    admin = FactoryBot.create(:admin)
+    lecturer = FactoryBot.create(:lecturer)
+    login_as lecturer
+    visit '/'
+    
+    login_as admin
+    visit '/'
+
+    click_link('Manage users')
+
+    expect(page).to have_content 'Here you can manage user roles, you can convert lecturers to admins and vice versa.'
+    expect(page).to have_content admin.email
+    expect(page).to have_content lecturer.email
 
   end
 
