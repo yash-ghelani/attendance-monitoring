@@ -140,7 +140,7 @@ describe 'Admin Home Page' do
     
   end
 
-  specify 'View attendance page in session details', js: true do
+  skip 'View attendance page in session details', js: true do
     admin = FactoryBot.create(:admin)
     login_as admin
     visit '/'
@@ -280,10 +280,10 @@ describe 'Admin Home Page' do
     expect(page).to have_content 'Welcome to COM attendance, from here you can view sessions as well as create new ones.'
     expect(page).to have_content 'New Demo Session'
     expect(page).to have_content 'COM2345'
-
+    
   end
 
-  specify 'Check Weekly SAM Download', js: true  do
+  specify 'Check Weekly SAM Download', :js => false do
     admin = FactoryBot.create(:admin)
     login_as admin
     visit '/'
