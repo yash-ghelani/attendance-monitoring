@@ -9,7 +9,7 @@ describe 'Admin Home Page' do
   end
 
 
-  specify 'View Weekly SAM' do
+  specify 'View Weekly SAM', js: true  do
     admin = FactoryBot.create(:admin)
     login_as admin
     visit '/'
