@@ -73,6 +73,31 @@ describe 'Admin Home Page' do
 
   end
 
+  specify 'View session details in dashboard', js: true do
+    admin = FactoryBot.create(:lecturer)
+    login_as admin
+    visit '/'
+    
+    click_link('New Session')
+    
+    fill_in 'Session title', with: 'Demo Session'
+    fill_in 'Module code', with: 'COM1234'
+    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%Y-%m-%dT%H:%M'))
+    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+120.minutes).strftime('%Y-%m-%dT%H:%M'))
+    
+    click_button('Create Timetabled session')
+    expect(page).to have_content 'COM1234'
+    visit '/'
+
+    expect(page).to have_content 'Welcome to COM attendance, from here you can view sessions as well as create new ones.'
+    expect(page).to have_content 'Demo Session'
+    expect(page).to have_content 'COM1234'
+
+    find("#open-close-1").click
+    expect(page).to have_content 'Show Code'
+
+  end
+
   specify 'View Weekly SAM', js: true do
     admin = FactoryBot.create(:admin)
     login_as admin
@@ -87,6 +112,8 @@ describe 'Admin Home Page' do
     expect(page).to have_content 'Practical'
     visit '/'
   end
+
+  
 
   
 end
