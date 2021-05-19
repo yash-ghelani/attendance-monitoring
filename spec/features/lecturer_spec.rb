@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 describe 'Lecturer Home Page' do
-  skip 'View Create New Session Button' do
+  specify 'View Create New Session Button' do
     lecturer = FactoryBot.create(:lecturer)
     login_as lecturer
     visit '/'
     expect(page).to have_content 'New Session'
   end
 
-  skip 'Create new session', js: true do
+  specify 'Create new session', js: true do
     lecturer = FactoryBot.create(:lecturer)
     login_as lecturer
     visit '/'
@@ -23,7 +23,7 @@ describe 'Lecturer Home Page' do
     expect(page).to have_content 'COM1001'
   end
 
-  skip 'Create new session with a registered lecturer', js: true do
+  specify 'Create new session with a registered lecturer', js: true do
     lecturer1 = FactoryBot.create(:lecturer)
     lecturer2 = FactoryBot.create(:lecturer)
     lecturer3 = FactoryBot.create(:lecturer)
@@ -51,7 +51,7 @@ describe 'Lecturer Home Page' do
 
   end
 
-  skip 'View session in dashboard', js: true do
+  specify 'View session in dashboard', js: true do
     lecturer = FactoryBot.create(:lecturer)
     login_as lecturer
     visit '/'
