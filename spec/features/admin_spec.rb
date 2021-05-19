@@ -295,8 +295,6 @@ describe 'Admin Home Page' do
     
     admin = FactoryBot.create(:admin)
     lecturer = FactoryBot.create(:lecturer)
-    login_as lecturer
-    visit '/'
     
     login_as admin
     visit '/'
@@ -313,8 +311,6 @@ describe 'Admin Home Page' do
     
     admin = FactoryBot.create(:admin)
     lecturer = FactoryBot.create(:lecturer)
-    login_as lecturer
-    visit '/'
     
     login_as admin
     visit '/'
@@ -322,8 +318,8 @@ describe 'Admin Home Page' do
     click_link('Manage users')
 
     expect(page).to have_content 'Here you can manage user roles, you can convert lecturers to admins and vice versa.'
-    expect(page).to have_content admin.email
-    expect(page).to have_content lecturer.email
+    find(:xpath, '//*[@id="main-container"]/div/div[2]/div[2]/div/table/tbody/tr[1]/td[3]/form/button').click
+    expect(page).to have_content 'No lecturers to display'
 
   end
 
