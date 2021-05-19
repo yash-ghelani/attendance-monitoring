@@ -19,6 +19,7 @@ The system has the following:
 - Students can enter a session code given to them by a lecturer for a particular session in order to register as present for that session.
 - Students can view which sessions they have attended in the past by accessing the history page from the dashboard.
 - Students can scan a QR code provided by the lecturer which will take them to a page where they can log in and then confirm their attendance at that particular session in order to log in. This is an alternative to signing in using a code.
+<img src="https://i.imgur.com/87wRLiG.png" width="250">
  
  
 ##### Lecturers
@@ -29,6 +30,8 @@ The system has the following:
 - Lecturers can see a list of upcoming sessions on their dashboard. This is filtered by week.
 - Lecturers can edit an existing session’s details and update the same details as when they created the session.
 - Lecturers have the option to delete an upcoming session of theirs.
+<img src="https://i.imgur.com/mhD4FlR.png" width="250">
+
  
 ##### Admins
 - Initially there is a single admin that is able to create new lecturers and admins that will use the attendance system.
@@ -36,7 +39,7 @@ The system has the following:
 - The administrators will use the system to download SAM reports for past sessions as csv files - which should contain all of the required information automatically.
 - The past sessions are accessible from the dashboard in chronological order.
 - Admins can create sessions in bulk from the dashboard by uploading a csv file.
-<img src="https://i.imgur.com/J74wB1P.png" width="200">
+<img src="https://i.imgur.com/ovijOI2.png" width="250">
  
  
  
