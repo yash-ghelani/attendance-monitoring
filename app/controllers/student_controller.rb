@@ -52,9 +52,6 @@ class StudentController < ApplicationController
     else
       @attendance = SessionAttendance.new(timetabled_session: @timetabled_session, user: current_user)
       if @attendance.save
-        puts "---------------------------------"
-        puts "Attendance registered succesfully"
-        puts "---------------------------------"
         @session_name = "#{@timetabled_session.module_code} - #{@timetabled_session.session_title}"
         render "success"
         #redirect_to student_history_path, notice: 'Successfully signed in!'
