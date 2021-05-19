@@ -36,6 +36,7 @@ The system has the following:
 - The administrators will use the system to download SAM reports for past sessions as csv files - which should contain all of the required information automatically.
 - The past sessions are accessible from the dashboard in chronological order.
 - Admins can create sessions in bulk from the dashboard by uploading a csv file.
+![](https://i.imgur.com/J74wB1P.png)
  
  
  
