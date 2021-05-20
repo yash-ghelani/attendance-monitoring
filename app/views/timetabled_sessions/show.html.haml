@@ -50,7 +50,7 @@
               = icon "fas", "hourglass-start"
             Start
           %td
-            = @timetabled_session.start_time.localtime.to_s(:time)
+            = local_time(@timetabled_session.start_time, format: '%H:%M')
 
         /End Time
         %tr                      
@@ -59,7 +59,7 @@
               = icon "fas", "hourglass-end"
             End
           %td
-            = @timetabled_session.end_time.localtime.to_s(:time)
+            = local_time(@timetabled_session.end_time, format: '%H:%M')
   
 
 .w-100.text-center

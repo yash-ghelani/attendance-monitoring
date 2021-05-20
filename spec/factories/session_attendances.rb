@@ -19,8 +19,10 @@
 #  fk_rails_...  (timetabled_session_id => timetabled_sessions.id) ON DELETE => cascade
 #  fk_rails_...  (user_id => users.id) ON DELETE => cascade
 #
+
 FactoryBot.define do
-  factory :session_attendance do
-    joined_at { "2021-03-16 17:29:19" }
+  factory :attendance,class: "SessionAttendance" do
+    user
+    session
   end
 end

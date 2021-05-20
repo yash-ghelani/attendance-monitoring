@@ -22,14 +22,17 @@
 #  fk_rails_...  (creator_id => users.id) ON DELETE => cascade
 #
 FactoryBot.define do
-  factory :timetabled_session do
-    session_code { "MyString" }
-    session_title { "MyString" }
-    session_desc { "MyString" }
-    department_code { "MyString" }
-    start_time { "2021-03-17 12:23:17" }
-    end_time { "2021-03-17 12:23:17" }
-    creator { 1 }
-    report_email { "MyString" }
+  factory :session, class: "TimetabledSession" do
+    sequence(:session_title) { |n| "COM#{n} - Practical Session" }
+    sequence(:module_code) { |n| "COM#{n}" }
+    start_time { Time.now.utc }
+    end_time { Time.now.utc + 30.minutes }
+
+    association(:creator, factory: [:lecturer, :admin])
+    report_email { creator.email }
+
+    after(:create) do |session|
+      create(:registration, user: creator, session: session)
+    end
   end
 end

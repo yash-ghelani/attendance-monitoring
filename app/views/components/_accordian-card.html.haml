@@ -1,14 +1,14 @@
 -# The accordian card component
 -# The variable used here is "session"
-#accordian
+%div{:id => "accordian-#{session.id}"}
   .card
-    %a.container{"style" => "cursor: pointer;text-decoration: none","data-toggle" => "collapse", "data-target" => "#collapse-#{session.id}"}
+    %a.container{"style" => "cursor: pointer;text-decoration: none","data-toggle" => "collapse", "data-target" => "#collapse-#{session.id}", :id => "open-close-#{session.id}"}
       .row
         .bg-primary.py-3.text-white.px-2.text-center.col-md-2.col-5{"style" => "border-top-left-radius: 0.25rem;"}
           = session.module_code
         .bg-accordion-right.col.py-3{"style" => "border-top-right-radius: 0.25rem;"}
           .d-flex.justify-content-between
-            %h5.mb-0.text-secondary
+            %h5.mb-0.text-accordion-text
               %span{:class => ("text-muted" unless Time.now.utc < session.start_time)}
                 = session.session_title
             - if Time.now.utc > session.start_time
@@ -35,7 +35,7 @@
                         = icon "fas", "calendar"
                       Date
                     %td
-                      = session.start_time.localtime.strftime('%d/%m/%Y')
+                      = local_time(session.start_time, format: '%d/%m/%Y')
 
                   /Session Time
                   %tr                     
@@ -44,7 +44,7 @@
                         = icon "fas", "hourglass-start"
                       Start
                     %td
-                      = session.start_time.localtime.to_s(:time)
+                      = local_time(session.start_time, format: '%H:%M')
 
                   /End Time
                   %tr                      
@@ -53,7 +53,7 @@
                         = icon "fas", "hourglass-end"
                       End
                     %td
-                      = session.end_time.localtime.to_s(:time)
+                      = local_time(session.end_time, format: '%H:%M')
                   
                   -unless current_user.lecturer? or current_user.admin?
                     - @attendance = session.session_attendances.find_by(user: current_user)

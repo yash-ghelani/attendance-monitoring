@@ -1,3 +1,8 @@
+
+# This controller manages the attendance for
+# a session, it is a resource controller which means it provides basic CRUD
+# functions for managing the attendance of a session 
+
 class SessionAttendancesController < ApplicationController
   before_action :set_session_attendance, only: [:show, :edit, :update, :destroy]
   #Authorise

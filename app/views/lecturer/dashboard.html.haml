@@ -19,7 +19,7 @@
                 %a.btn.btn-success{:href => "/admin/manage",:title => "Manage users"}
                     Manage Users
             .p-2  
-                %a.btn.btn-info{:title => "Download this weeks SAM reports", :href => timetabled_session_sam_path(start_date: @week_start.strftime('%Y-%m-%d'), end_date: @week_end.strftime('%Y-%m-%d'), format: :csv)}
+                %a.btn.btn-info{:title => "Download this weeks SAM reports", :href => timetabled_session_sam_path(start_date: @week_start.strftime('%Y-%m-%d'), end_date: @week_end.strftime('%Y-%m-%d'), format: :csv), :class => @sessions.empty? ? "disabled" : ""}
                     Weekly SAM  
                 
   

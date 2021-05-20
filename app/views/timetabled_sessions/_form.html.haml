@@ -1,9 +1,9 @@
 -# frozen_string_literal: true
 
 - start_time = @timetabled_session.start_time || Time.now
-- end_time = @timetabled_session.end_time || (Time.now)
+- end_time = @timetabled_session.end_time || Time.now+30.minutes
 
-= simple_form_for(@timetabled_session) do |f|
+= simple_form_for @timetabled_session, :html => { class: 'timetabled_session' } do |f|
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
  
@@ -20,23 +20,32 @@
     .row
       .col-md-6
         .form-group
+          %label{:for => "date_picker"}
+            Date
+            %abbr{:title => "required"} *
+          %input.form-control{:type => "date", :value => start_time.utc.strftime('%Y-%m-%d'), id: 'date_picker', class: 'datepicker required' ,placeholder: "Y-M-D"}
+      .col-md-3
+        .form-group
           %label{:for => "start_time_picker"}
             Start Time
             %abbr{:title => "required"} *
-          %input.form-control{:type => "datetime-local", :value => start_time.utc.strftime('%Y-%m-%dT%H:%M'), id: 'start_time_picker', class: 'datetimepicker required' ,placeholder: "Y-M-D H:M"}
-      .col-md-6
+          %input.form-control{:type => "time", :value => start_time.utc.strftime('%H:%M'), id: 'start_time_picker', class: 'timepicker required' ,placeholder: "H:M"}
+      .col-md-3
         .form-group
           %label{:for => "end_time_picker"}
             End Time
             %abbr{:title => "required"} *
-          %input.form-control{:type => "datetime-local", :value => end_time.utc.strftime('%Y-%m-%dT%H:%M'), id: 'end_time_picker', class: 'datetimepicker required',placeholder: "Y-M-D H:M"}
+          %input.form-control{:type => "time", :value => end_time.utc.strftime('%H:%M'), id: 'end_time_picker', class: 'timepicker required',placeholder: "H:M"}
 
-    %label Registered Lecturers
+    %br
+    %label.mb-3 Registered Lecturers
+    - @lecturers = User.where(lecturer: true)+f.object.registrees-[current_user]
+    - @lecturers = @lecturers.uniq
     - unless f.object.registrees.empty?
       = f.simple_fields_for :session_registered_lecturers do |lecturer|
         = render 'session_registered_lecturer_fields', f: lecturer
     .links
-      = link_to_add_association 'Register lecturer', f, :session_registered_lecturers, class: 'btn btn-outline-primary mb-2'
+      = link_to_add_association 'Register Lecturer', f, :session_registered_lecturers, class: "btn #{@lecturers.empty? ? 'btn-dark disabled' : 'btn-outline-secondary btn-sm'} mb-2", id: "register-lecturer-btn"
 
   #addedLecturers.mb-5.mt-2
 
@@ -44,23 +53,129 @@
   .form-actions
     = f.button :submit, class: "btn btn-primary"
 
+- # Javascript sets the hidden start and end time fields according to custom date and time inputs
 :javascript
   $(document).ready( function() {
-    const start = $("#start_time_picker.datetimepicker");
-    const end = $("#end_time_picker.datetimepicker");
-    
+    const start = $("#start_time_picker");
+    const end = $("#end_time_picker");
+    const date = $("#date_picker");
+
+    date.on('change', function(){
+      start.change()
+      end.change()
+    })
 
     start.on('change', function(){
-      $('#start_time').val(moment(start.val()).utc().format("YYYY-MM-DDTHH:mm"));
+      $('#start_time').val(moment(date.val()+'T'+start.val()).utc().format("YYYY-MM-DDTHH:mm"));
     })
 
     end.on('change', function(){
-      $('#end_time').val(moment(end.val()).utc().format("YYYY-MM-DDTHH:mm"));
+      $('#end_time').val(moment(date.val()+'T'+end.val()).utc().format("YYYY-MM-DDTHH:mm"));
     })
     
-    start.val(moment.utc(start.val()).local().format("YYYY-MM-DDTHH:mm"));
-    end.val(moment.utc(end.val()).local().format("YYYY-MM-DDTHH:mm"));
+    start.val(moment.utc(date.val()+'T'+start.val()).local().format("HH:mm"));
+    end.val(moment.utc(date.val()+'T'+end.val()).local().format("HH:mm"));
     start.change()
     end.change()
 
   });
+
+
+  // For the edit page where the lecturers are already registered
+  $('.timetabled_session .nested-fields select').each(function(){
+    const select = $(this);
+    const val = select.find('option:selected').val()
+
+    $('.timetabled_session .nested-fields select').each(function(){
+      if($(this).attr('id') != select.attr('id')){
+        // Remove current selection
+        $(this).find(`[value="${val}"]`).remove();
+      }
+    })
+    select.data('prev', {val: select.find(':selected').val(), text: select.find(':selected').text()})
+  })
+
+  // Valdation for registering lecturers
+  // Makes sure unique values are present in options
+  // Works on events when adding a lecturer, removing a lecturer, and changing select input
+  $('.timetabled_session')
+      .on('cocoon:before-insert', function(e, lecturer) {
+        const options = []
+        const select = lecturer.find('select')
+
+        $('.timetabled_session .nested-fields select').each(function(){
+          // Check if data was removed (cocoon merely hides the select, does not completely remove it)
+          if(!$(this).data('removed'))
+            options.push($(this).find(':selected').val())
+        })
+
+        console.log(options);
+        // Remove already selected values
+        for(const option of options){
+          select.find(`[value="${option}"]`).remove();
+        }
+
+        // Remove the selected value of to-be-added dropdown from all other selects
+        $('.timetabled_session .nested-fields select').each(function(){
+          $(this).find(`[value="${select.find(':selected').val()}"]`).remove();
+        })
+
+        // Exhausted all options
+        if(select.find('> option').length === 1){
+          const button = $("#register-lecturer-btn")
+          $("#register-lecturer-btn").off('click');
+          //button.removeClass('btn-outline-primary')
+          button.addClass('disabled');
+        }
+
+        select.data('prev', {val: select.find(':selected').val(), text: select.find(':selected').text()})
+      })
+      .on('cocoon:after-insert', function(e, lecturer) {
+        /* ... do something ... */
+      })
+      .on("cocoon:before-remove", function() {
+        /* ... do something ... */
+      })
+      .on("cocoon:after-remove", function(e, lecturer) {
+        const select = lecturer.find('select')
+        const option = select.find('option:selected')
+        $('.timetabled_session .nested-fields select').each(function(){
+          $(this).append($('<option>', {
+              value: option.val(),
+              text: option.text()
+          }))
+        })
+        
+        // Exhausted all options
+        if(select.find('> option').length > 0){
+          const button = $("#register-lecturer-btn")
+          $("#register-lecturer-btn").on('click');
+          // button.addClass('btn-outline-primary')
+          button.removeClass('disabled');
+        }
+
+        // Data was removed (necessary for edit page)
+       select.data('removed', true);
+      })
+      .on('change', '.nested-fields select', function(){
+        const select = $(this)
+        const prev = select.data('prev');
+        const val = select.find('option:selected').val()
+
+        $('.timetabled_session .nested-fields select').each(function(){
+          if($(this).attr('id') != select.attr('id')){
+            // Remove current selection
+            $(this).find(`[value="${val}"]`).remove();
+          
+            // Add previous selection
+            $(this).append($('<option>', {
+                value: prev.val,
+                text: prev.text
+            }))
+            $(this).data('prev', {val: $(this).find(':selected').val(), text: $(this).find(':selected').text()})
+          }
+        })
+
+        // Important to set the prev after
+        select.data('prev', {val: select.find(':selected').val(), text: select.find(':selected').text()})
+      });

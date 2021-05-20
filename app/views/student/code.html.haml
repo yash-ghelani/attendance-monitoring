@@ -18,7 +18,7 @@
 
   .input-group.input-group-lg
     - (1..8).each do |i|
-      %input.form-control.text-center.code-box.p-0{"maxlength"=>"1"}
+      %input.form-control.text-center.code-box.p-0{"maxlength"=>"1", "name": "code-#{i}"}
 
 
   .mt-3.d-flex.justify-content-center
@@ -60,8 +60,8 @@
       #submitSection.mt-2.mb-1
         = simple_form_for 'session_code', url: "/student/attend", method: :post do |f|
           = f.input :session_code, :as => :hidden, :input_html => {:id => "SessionHiddenField" }
-          %button.btn.btn-success.w-100{"type" => "submit"}
-            Sign in
+          %button.btn.btn-success.w-100{"type" => "submit", "name" => "sign-in"}
+            Sign In
 
     - # Invalid code
     #invalidCode.alert.alert-danger.text-center{"style"=>"display: none;"}
