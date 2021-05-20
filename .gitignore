@@ -2,6 +2,8 @@
 # Team 11 super cool gitignore file
 # =================================
 
+*.csv
+
 # Your basic boi ignores for Rails
 .bundle
 config/database.yml
