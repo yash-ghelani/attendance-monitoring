@@ -63,8 +63,9 @@ describe 'Lecturer Home Page' do
     
     fill_in 'Session title', with: 'Demo Session'
     fill_in 'Module code', with: 'COM1234'
-    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%Y-%m-%dT%H:%M'))
-    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+120.minutes).strftime('%Y-%m-%dT%H:%M'))
+    page.execute_script("$('#date_picker').val(arguments[0]).change()", Time.now.strftime('%Y-%m-%d'))
+    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%H:%M'))
+    page.execute_script("$('#end_time_picker').val(arguments[0]).change()", (Time.now+120.minutes).strftime('%H:%M'))
     
     click_button('Create Timetabled session')
     expect(page).to have_content 'COM1234'
@@ -85,8 +86,10 @@ describe 'Lecturer Home Page' do
     
     fill_in 'Session title', with: 'Demo Session'
     fill_in 'Module code', with: 'COM1234'
-    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%Y-%m-%dT%H:%M'))
-    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+120.minutes).strftime('%Y-%m-%dT%H:%M'))
+    page.execute_script("$('#date_picker').val(arguments[0]).change()", Time.now.strftime('%Y-%m-%d'))
+    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%H:%M'))
+    page.execute_script("$('#end_time_picker').val(arguments[0]).change()", (Time.now+120.minutes).strftime('%H:%M'))
+    
     
     click_button('Create Timetabled session')
     expect(page).to have_content 'COM1234'
@@ -110,8 +113,10 @@ describe 'Lecturer Home Page' do
     
     fill_in 'Session title', with: 'Demo Session'
     fill_in 'Module code', with: 'COM1234'
-    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%Y-%m-%dT%H:%M'))
-    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+120.minutes).strftime('%Y-%m-%dT%H:%M'))
+    page.execute_script("$('#date_picker').val(arguments[0]).change()", Time.now.strftime('%Y-%m-%d'))
+    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%H:%M'))
+    page.execute_script("$('#end_time_picker').val(arguments[0]).change()", (Time.now+120.minutes).strftime('%H:%M'))
+    
     
     click_button('Create Timetabled session')
     expect(page).to have_content 'COM1234'
@@ -137,8 +142,10 @@ describe 'Lecturer Home Page' do
     
     fill_in 'Session title', with: 'Demo Session'
     fill_in 'Module code', with: 'COM1234'
-    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%Y-%m-%dT%H:%M'))
-    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+120.minutes).strftime('%Y-%m-%dT%H:%M'))
+    page.execute_script("$('#date_picker').val(arguments[0]).change()", Time.now.strftime('%Y-%m-%d'))
+    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%H:%M'))
+    page.execute_script("$('#end_time_picker').val(arguments[0]).change()", (Time.now+120.minutes).strftime('%H:%M'))
+    
     
     click_button('Create Timetabled session')
     expect(page).to have_content 'COM1234'
@@ -165,8 +172,10 @@ describe 'Lecturer Home Page' do
     
     fill_in 'Session title', with: 'Demo Session'
     fill_in 'Module code', with: 'COM1234'
-    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", Time.now.strftime('%Y-%m-%dT%H:%M'))
-    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+120.minutes).strftime('%Y-%m-%dT%H:%M'))
+    page.execute_script("$('#date_picker').val(arguments[0]).change()", Time.now.strftime('%Y-%m-%d'))
+    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", Time.now.strftime('%H:%M'))
+    page.execute_script("$('#end_time_picker').val(arguments[0]).change()", (Time.now+30.minutes).strftime('%H:%M'))
+    
     
     click_button('Create Timetabled session')
     expect(page).to have_content 'COM1234'
@@ -213,8 +222,10 @@ describe 'Lecturer Home Page' do
     
     fill_in 'Session title', with: 'Demo Session'
     fill_in 'Module code', with: 'COM1234'
-    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%Y-%m-%dT%H:%M'))
-    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+120.minutes).strftime('%Y-%m-%dT%H:%M'))
+    page.execute_script("$('#date_picker').val(arguments[0]).change()", Time.now.strftime('%Y-%m-%d'))
+    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%H:%M'))
+    page.execute_script("$('#end_time_picker').val(arguments[0]).change()", (Time.now+120.minutes).strftime('%H:%M'))
+    
     
     click_button('Create Timetabled session')
     expect(page).to have_content 'COM1234'
@@ -241,8 +252,10 @@ describe 'Lecturer Home Page' do
     
     fill_in 'Session title', with: 'Demo Session'
     fill_in 'Module code', with: 'COM1234'
-    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+120.minutes).strftime('%Y-%m-%dT%H:%M'))
-    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+180.minutes).strftime('%Y-%m-%dT%H:%M'))
+    page.execute_script("$('#date_picker').val(arguments[0]).change()", Time.now.strftime('%Y-%m-%d'))
+    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%H:%M'))
+    page.execute_script("$('#end_time_picker').val(arguments[0]).change()", (Time.now+120.minutes).strftime('%H:%M'))
+    
     
     click_button('Create Timetabled session')
 
@@ -258,8 +271,10 @@ describe 'Lecturer Home Page' do
 
     fill_in 'Session title', with: 'New Demo Session'
     fill_in 'Module code', with: 'COM2345'
-    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%Y-%m-%dT%H:%M'))
-    page.execute_script("$('#end_time_picker').val(arguments[0]).change()",(Time.now+120.minutes).strftime('%Y-%m-%dT%H:%M'))
+    page.execute_script("$('#date_picker').val(arguments[0]).change()", Time.now.strftime('%Y-%m-%d'))
+    page.execute_script("$('#start_time_picker').val(arguments[0]).change()", (Time.now+60.minutes).strftime('%H:%M'))
+    page.execute_script("$('#end_time_picker').val(arguments[0]).change()", (Time.now+120.minutes).strftime('%H:%M'))
+    
 
     click_button('Update Timetabled session')
 
