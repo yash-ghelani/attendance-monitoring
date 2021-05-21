@@ -50,6 +50,19 @@ The system has the following:
 * Install dependancies with `bundle install`
 * Migrate database with `rails db:create db:migrate`
 * Start rails server with `bundle exec rails s`
+* Download the code from the repository https://git.shefcompsci.org.uk/com3420-2020-21/team11/project
+* Ensure your VPN is turned on
+* If on WSL, start postgresql server with `sudo service postgresql start`
+* Create a new file called database.yml in config folder `config/database.yml`
+* Copy from all content from `config/database_sample-pg.yml` if using postgres else `config/database_sample-sqlite.yml` to `config/database.yml`
+* If on WSL, comment out lines as instructed in `config/database.yml`
+* Run `./bin/setup`
+* Install rails dependencies with `bundle install`
+* Install yarn dependencies with `yarn install`
+* Migrate database with rails `db:migrate`
+* Seed database with rails `db:seed`
+* Start rails server with `bundle exec rails s`
+
  
 ### Tests
 To run the RSpec tests for the system, please run:
