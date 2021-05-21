@@ -171,8 +171,11 @@ describe 'Admin Home Page' do
     expect(page).to have_content 'Demo Session'
     expect(page).to have_content 'COM1234'
 
-    page.find("#open-close-1").click
-    click_on(class: 'btn btn-light-blue btn-block h-100')
+    session = admin.timetabled_sessions.last
+    page.find("#open-close-#{session.id}").click
+    within("#accordian-#{session.id}") do  
+      find_link('Attendance').click
+    end
     expect(page).to have_content 'Here you can view the attendance for a session'
 
   end

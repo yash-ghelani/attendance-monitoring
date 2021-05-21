@@ -8,9 +8,9 @@ class HomeController < ApplicationController
     #Update the navbar label
     @current_nav_identifier = :home
     #Redirect to appropriate controllers
-    if(current_user.admin)
+    if current_user.admin?
       redirect_to :controller => 'admin', :action => 'home'
-    elsif (current_user.lecturer)
+    elsif current_user.lecturer?
       redirect_to :controller => 'lecturer', :action => 'home'
     else
       redirect_to :controller => 'student', :action => 'code'

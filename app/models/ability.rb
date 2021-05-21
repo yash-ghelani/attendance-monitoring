@@ -6,10 +6,7 @@ class Ability
   def initialize(user)
     #Create default user if not defined
     user ||= User.new
-
-    #Everyone can read sessions
-    can :read, TimetabledSession
-
+   
     #Admin abilities (manage everything)
     if user.admin?
         can :manage, :all #This means, admins will be able to access ALL student controller actions

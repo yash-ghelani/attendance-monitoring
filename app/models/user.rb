@@ -39,4 +39,18 @@ class User < ApplicationRecord
   def to_label
     "#{email}#{'*' if admin}"
   end
+
+  def generate_attributes_from_ldap_info
+    self.username = self.uid
+    self.email    = self.mail
+   
+    if self.admin.nil? and self.lecturer.nil?
+      group = self.dn.split(",")[1]
+     
+      if group.eql? "ou=Staff"
+        self.admin = false
+        self.lecturer = true
+      end
+    end
+  end
 end

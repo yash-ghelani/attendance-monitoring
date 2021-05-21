@@ -35,25 +35,30 @@ class AdminController < LecturerController
 
   #Post function for manage users
   def change_permissions
-    #Get the user ID from params and attempt to find
-    @user = User.find(params[:user_id])
-    if (@user)
-      #Find the action to perform
-      action = params[:task]
-      case action
-      when "admin"
-        @user.admin=true
-        @user.lecturer=false
-      when "lecturer"
-        @user.admin=false
-        @user.lecturer=true
-      end
-
-      @user.save
-      redirect_to "/admin/manage", notice: "User updated"
-
+    #Admins cannot change role for themselves
+    if params[:user_id].to_i == current_user.id
+      redirect_to admin_manage_path, alert: "Cannot make role changes for yourself. You must ask another admin."
     else
-      redirect_to "/admin/manage", alert: "User not found"
+      #Get the user ID from params and attempt to find
+      @user = User.find(params[:user_id])
+      if (@user)
+        #Find the action to perform
+        action = params[:task]
+        case action
+        when "admin"
+          @user.admin=true
+          @user.lecturer=false
+        when "lecturer"
+          @user.admin=false
+          @user.lecturer=true
+        end
+
+        @user.save
+        redirect_to admin_manage_path, notice: "User updated"
+
+      else
+        redirect_to admin_manage_path, alert: "User not found"
+      end
     end
 
   end
