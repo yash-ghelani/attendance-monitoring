@@ -3,6 +3,14 @@
 - content_for :title, "Enter Code"
 
 
+-# REMOVE
+-# ------------------------------------------------------
+.w-100.text-center
+  - current_user.dn.split(",").each do |field|
+    %h1
+      = "#{field},"
+-# ------------------------------------------------------
+
 .w-100.text-center
   %h1.display-4 
     Enter Code
