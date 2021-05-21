@@ -28,7 +28,6 @@
 #
 class User < ApplicationRecord
   include EpiCas::DeviseHelper
-  USER_GROUPS = EpiCas::WhitelistChecker.new
 
   has_many :session_attendances
   
