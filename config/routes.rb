@@ -38,10 +38,12 @@ Rails.application.routes.draw do
   get '/admin/manage', to: 'admin#manage_users'
   post '/admin/manage', to: 'admin#change_permissions'
 
-  #Dev only routes TODO devOnly
-  get '/set-student', to: 'home#set_student'
-  get '/set-lecturer', to: 'home#set_lecturer'
-  get '/set-admin', to: 'home#set_admin'
+  if Rails.env.development?
+    #Dev only routes TODO devOnly
+    get '/set-student', to: 'home#set_student'
+    get '/set-lecturer', to: 'home#set_lecturer'
+    get '/set-admin', to: 'home#set_admin'
+  end
   
   #Index
   root to: "home#index"

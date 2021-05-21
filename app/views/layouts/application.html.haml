@@ -15,15 +15,16 @@
           &copy; #{Date.today.year}
           = link_to 'epiGenesys', 'https://www.epigenesys.org.uk', target: '_blank', title: 'Go to the epiGenesys website'
 
-      - #TODO Delete when done
-      .col-md-10.text-center
-        .row
-          .col-md-3.py-1
-            %a.btn.btn-outline-primary.btn-block{href: "/set-student"} Student
-          .col-md-3.py-1
-            %a.btn.btn-outline-success.btn-block{href: "/set-lecturer"} Lecturer
-          .col-md-3.py-1
-            %a.btn.btn-outline-danger.btn-block{href: "/set-admin"} Admin
+      -# Development only buttons to change role
+      - if Rails.env.development?
+        .col-md-10.text-center
+          .row
+            .col-md-3.py-1
+              %a.btn.btn-outline-primary.btn-block{href: "/set-student"} Student
+            .col-md-3.py-1
+              %a.btn.btn-outline-success.btn-block{href: "/set-lecturer"} Lecturer
+            .col-md-3.py-1
+              %a.btn.btn-outline-danger.btn-block{href: "/set-admin"} Admin
 
 
 = render "layouts/master"
