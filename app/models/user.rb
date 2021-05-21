@@ -28,6 +28,8 @@
 #
 class User < ApplicationRecord
   include EpiCas::DeviseHelper
+  USER_GROUPS = EpiCas::WhitelistChecker.new
+
   has_many :session_attendances
   
   has_many :attendances, through: :session_attendances, source: :timetabled_session
@@ -40,14 +42,18 @@ class User < ApplicationRecord
     "#{email}#{'*' if admin}"
   end
 
+  def group
+    # dn contains uid as well, remove it
+    dn = self.dn.downcase.split(",", 2).last
+    return EpiCas::WhitelistChecker::USER_GROUPS[dn]
+  end
+
   def generate_attributes_from_ldap_info
     self.username = self.uid
     self.email    = self.mail
    
-    if self.admin.nil? and self.lecturer.nil?
-      group = self.dn.split(",")[1]
-     
-      if group.eql? "ou=Staff"
+    if self.admin.nil? and self.lecturer.nil?     
+      if self.group.eql? :staff
         self.admin = false
         self.lecturer = true
       end
