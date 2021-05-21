@@ -46,11 +46,17 @@ The system has the following:
 ### Installing
 * Download the code from the [repository](https://git.shefcompsci.org.uk/com3420-2020-21/team11/project).
 * Ensure your VPN is turned on
-* Install dependancies
-* Migrate database
-* Start rails server
+* If on WSL, start postgresql server with `sudo service postgresql start`
+* Install dependancies with `bundle install`
+* Migrate database with `rails db:create db:migrate`
+* Start rails server with `bundle exec rails s`
  
- 
+### Tests
+To run the RSpec tests for the system, please run:
+
+`bundle exec rspec spec`
+
+
 ### Support
 Project Contact <agoody1@sheffield.ac.uk>
  
