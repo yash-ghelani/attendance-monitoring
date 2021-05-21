@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-users = [{"username" => 'ac1jww', "email" => 'jacob.walker@sheffield.ac.uk', "admin" => true}
+users = [{"username" => 'ac1jww', "email" => 'jacob.walker@sheffield.ac.uk', "admin" => true},
                 {"username" => 'aca18mms', "email" => 'mmsarpatwar1@sheffield.ac.uk', "admin" => true},
                 {"username" => 'aca18yg', "email" => 'yghelani1@sheffield.ac.uk', "admin" => true},
                 {"username" => 'aca18rf', "email" => 'rfaiz1@sheffield.ac.uk', "admin" => true},
