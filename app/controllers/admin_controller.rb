@@ -35,10 +35,11 @@ class AdminController < LecturerController
 
   #Post function for manage users
   def change_permissions
-    #Get the user ID from params and attempt to find
-    if params[:user_id] == current_user.id
+    #Admins cannot change role for themselves
+    if params[:user_id].to_i == current_user.id
       redirect_to admin_manage_path, alert: "Cannot make role changes for yourself. You must ask another admin."
     else
+      #Get the user ID from params and attempt to find
       @user = User.find(params[:user_id])
       if (@user)
         #Find the action to perform

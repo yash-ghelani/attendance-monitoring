@@ -35,7 +35,7 @@
                             %th{"colspan" => "2"} Email
 
                     %tbody
-                        - (@admins-[current_user]).each do |admin|
+                        - @admins.each do |admin|
                             %tr
                                 %td
                                     = admin.username
@@ -58,7 +58,7 @@
                 %table.table.table-striped
                     %thead
                         %tr
-                            %th Name
+                            %th Username
                             %th{"colspan" => "2"} Email
 
                     %tbody
