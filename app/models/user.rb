@@ -43,7 +43,7 @@ class User < ApplicationRecord
 
   def group
     # dn contains uid as well, remove it
-    dn = self.dn.downcase.split(",", 2).last
+    dn = self.dn[/ou=.*dc=uk/].to_s.downcase
     return EpiCas::WhitelistChecker::USER_GROUPS[dn]
   end
 
