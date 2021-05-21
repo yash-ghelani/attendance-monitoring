@@ -5,6 +5,7 @@
         = image_tag "logo.svg", height: "28"
     %button.navbar-toggler{ aria: { controls: "navbar-content", expanded: false, label: "Toggle navigation" }, data: { target: "#navbar-content", toggle: "collapse" }, type: "button" }
       %span.navbar-toggler-icon
+
     .collapse.navbar-collapse#navbar-content
       %ul.nav.navbar-nav
 
@@ -12,7 +13,6 @@
           = navbar_link_to student_history_path, title: "History", identifier: :history do
             = icon 'fas', 'history'
             History
-      = current_user.dn
 
       - if user_signed_in?
         %ul.nav.navbar-nav.ml-auto

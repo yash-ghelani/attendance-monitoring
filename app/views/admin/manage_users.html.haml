@@ -35,7 +35,7 @@
                             %th{"colspan" => "2"} Email
 
                     %tbody
-                        - @admins.each do |admin|
+                        - (@admins-[current_user]).each do |admin|
                             %tr
                                 %td
                                     = admin.username

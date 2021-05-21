@@ -45,7 +45,7 @@
       = f.simple_fields_for :session_registered_lecturers do |lecturer|
         = render 'session_registered_lecturer_fields', f: lecturer
     .links
-      = link_to_add_association 'Register Lecturer', f, :session_registered_lecturers, class: "btn #{@lecturers.empty? ? 'btn-dark disabled' : 'btn-outline-secondary btn-sm'} mb-2", id: "register-lecturer-btn"
+      = link_to_add_association 'Register Lecturer', f, :session_registered_lecturers, class: "btn #{@lecturers.empty? ? 'btn-dark disabled' : 'btn-outline-secondary'} mb-2", id: "register-lecturer-btn"
 
   #addedLecturers.mb-5.mt-2
 
@@ -109,7 +109,6 @@
             options.push($(this).find(':selected').val())
         })
 
-        console.log(options);
         // Remove already selected values
         for(const option of options){
           select.find(`[value="${option}"]`).remove();
